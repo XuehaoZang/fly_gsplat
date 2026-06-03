@@ -1,0 +1,14 @@
+# Data and output
+data/
+output/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Env setup test
+env_setup/test_env
+
+# VS Code
+.vscode/
