@@ -125,14 +125,19 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
 
         # 1.2 decompose KRX0 from coefs using Roni's RQ decomposition
         P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
-        # print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
+        print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
         H = P[:, :3]  # 3x3
         # print(f"H 3x3:\n{H}")
         h = P[:, 3]  # 3x1
         # print(f"h 3x1:\n{h}")
+        print(f"[orig] det(H)={np.linalg.det(H):.3f}")      # Note from easywand det(H) < 0 (left-hand) - which does not satisfy nerfstudio convention
 
         X0_2 = -np.linalg.inv(H) @ h
         K_2, R_w2c = rq(H)        # R_w2c: world to cam
+        K_2 = K_2 / K_2[2, 2]
+        print(f"[orig] K=\n{K_2}")
+        print(f"[orig] det(K)={np.linalg.det(K_2):.3f}") 
+        print(f"[orig] det(R_w2c)={np.linalg.det(R_w2c):.3f}") 
         # print(f"decomposed R w2c:\n{R_w2c}")
         # the decomposition is not unique!! potentially with sign flip
 
@@ -140,37 +145,50 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         ew_rot = ew_data.rotationMatrices[:, :, i]
         # print(f"ew_rotation matrix:\n{ew_rot}")
         change_ax_dir = np.sign(np.sum(ew_rot * R_w2c, axis=1))
-        # print(f"change_ax_dir:\n{change_ax_dir}")
+        print(f"[after] change_ax_dir = {change_ax_dir}")
         Rot_to_ew = np.diag(change_ax_dir)
         # print(f"Rot_to_ew:\n{Rot_to_ew}")
 
-        K_2 = K_2  @ Rot_to_ew
+        K_2 = K_2 @ Rot_to_ew
+        print(f"[after] det(K)={np.linalg.det(K_2):.3f}") 
         K_2 = K_2 / K_2[2, 2]
+        print(f"[After] K=\n{K_2}")
 
-        # # K_2[1,1] = - K_2[1,1]       #        K(2,2) = -K(2,2)
-        # # K_2[1,2] = h_full - K_2[1,2]                        #K(2,3) = 801 -K(2,3)
-        # # K_2 = K_2 / K_2[2, 2]
+
+        # K_2[1,1] = - K_2[1,1]       #        K(2,2) = -K(2,2)
+        # K_2[1,2] = h_full - K_2[1,2]                        #K(2,3) = 801 -K(2,3)
+        # K_2 = K_2 / K_2[2, 2]
         # # print("[2] K after flipping:\n", K_2)
 
-        R_w2c = Rot_to_ew @ R_w2c
-        # print(f"[diag] change_ax_dir = {change_ax_dir}")
+        R_w2c = Rot_to_ew @ R_w2c 
+        print(f"[after] det(R_w2c)={np.linalg.det(R_w2c):.3f}") 
         # print(f"[diag] det(R_w2c) = {np.linalg.det(R_w2c):.4f}")
-        print(f"[diag] det(R)={np.linalg.det(R_w2c):.3f}, Kdiag={np.diag(K_2)}")
-
         # print(f"after correction:\n{R_w2c}")
         R_2 = R_w2c.T
 
         ############################ NEW ##############################
-        # F = np.array([[-1.0, 0.0, w_full - 1.0],
-        #               [ 0.0, 1.0, 0.0],
-        #               [ 0.0, 0.0, 1.0]])
-        # K_2, R_w2c = rq(F @ H)
+        # P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
+        # # print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
+        # H = P[:, :3]  # 3x3
+        # # print(f"H 3x3:\n{H}")
+        # h = P[:, 3]  # 3x1
+        # # print(f"h 3x1:\n{h}")
+        # print(f"[orig] det(H)={np.linalg.det(H):.3f}")      # Note from easywand det(H) < 0 (left-hand) - which does not satisfy nerfstudio convention
+
+        # X0_2 = -np.linalg.inv(H) @ h
+        # K_2, R_w2c = rq(H)
         # K_2 = K_2 / K_2[2, 2]
-        # D = np.diag(np.sign(np.diag(K_2)))     # 强制对角为正,唯一化 rq 符号
+        # # 强制 K 对角为正(唯一化 rq 符号), 把负号搬进 R
+        # D = np.diag(np.sign(np.diag(K_2)))
         # K_2 = K_2 @ D
+        # print(f"[debug] det(R_w2c) before = {np.linalg.det(R_w2c):.3f}")
         # R_w2c = D @ R_w2c
+        # print(f"[debug] det(R_w2c) after @ D = {np.linalg.det(R_w2c):.3f}")
+        
+        # R_w2c[:, 0] = -R_w2c[:, 0]
+        # X0_2[0] = -X0_2[0]
+        # print(f"[debug] det(R_w2c) final = {np.linalg.det(R_w2c):.3f}")
         # R_2 = R_w2c.T
-        # print(f"[diag] det(R)={np.linalg.det(R_w2c):.3f}, Kdiag={np.diag(K_2)}")
         ############################ NEW ##############################
 
         # print("[2] K from RQ decomposition:\n", K_2)
@@ -201,7 +219,6 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         #     cx, cy, w, h = cx_orig, cy_orig, w_full, h_full
 
         # Save processed image
-        im = cv2.flip(im, 1)   # NEW 水平翻转，吸收反射
         cv2.imwrite(str(img_dir / img_name), im)
         # gray_to_rgba(str(img_dir / img_name), str(img_dir / img_name))
 

@@ -102,7 +102,30 @@ def main():
     # plot_camera_coordinates(cameras_info)
 
     # 1. view frustum
+    def ray_from_dlt(L, u, v):
+        # DLT: [u;v;1]~[H|h][X;1]; 反投影方向 = H^{-1}[u,v,1]^T, 光心 = -H^{-1}h
+        H = np.array([[L[0],L[1],L[2]],[L[4],L[5],L[6]],[L[8],L[9],L[10]]])
+        h = np.array([L[3],L[7],1.0])
+        C = -np.linalg.inv(H) @ h
+        d = np.linalg.inv(H) @ np.array([u, v, 1.0]); d /= np.linalg.norm(d)
+        return C, d
 
+    def closest_point(rays):
+        A=np.zeros((3,3)); b=np.zeros(3)
+        for C,d in rays:
+            P=np.eye(3)-np.outer(d,d); A+=P; b+=P@C
+        return np.linalg.lstsq(A,b,rcond=None)[0], A, b
+
+    for assume_flip in [False, True]:
+        rays=[]
+        for cam in cameras_info:
+            L=np.append(_coefs[:,cam["cam_idx"]-1],1.0)
+            u,v=cam["target_uv"]
+            if assume_flip: u=(cam["mask"].shape[1]-1)-u   # 若图被翻了,centroid 要翻回原图坐标喂给原始DLT
+            rays.append(ray_from_dlt(L, u+1, v+1))         # +1: 回到 MATLAB 1-index
+        X,A,b=closest_point(rays)
+        res=np.mean([np.linalg.norm((np.eye(3)-np.outer(d,d))@(X-C)) for C,d in rays])
+        print(f"assume_flip={assume_flip}: X={X}, mean_residual={res*1000:.3f} mm")
     target_center = compute_target_center(cameras_info)
     all_clouds = []
     
@@ -127,17 +150,18 @@ def main():
         print(f"  Cam {cam['cam_idx']} DLT=({u_dlt:.0f},{v_dlt:.0f}) vs mine=({u:.0f},{v:.0f})")
         cv2.imwrite(str(debug_dir / f"sphere_overlay_cam_{cam['cam_idx']:02d}.png"), vis)
         print(f"  Cam {cam['cam_idx']} depth={-Xc[2]:.3f} r_px={r_px:.0f}")
+        print(f"  Cam {cam['cam_idx']} centroid={cam['target_uv'][0]:.0f},{cam['target_uv'][1]:.0f} | DLT={u_dlt:.0f} | DLT_flip={(im.shape[1]-1)-u_dlt:.0f} | mine={u:.0f}")
 
-    # for cam in cameras_info:
-    #     pts, cols = generate_mask_frustum(
-    #         cam, 
-    #         target_center=target_center, 
-    #         color=cam_colors.get(cam["cam_idx"], [255, 255, 255]),
-    #         depth_steps=800,   # 光束切片数量，越多越密
-    #         pixel_step=2     # 像素降采样，越小越密
-    #     )
-    #     all_clouds.append((pts, cols))
-        # print(f"  Cam {cam['cam_idx']} beam generated: {len(pts)} points")
+    for cam in cameras_info:
+        pts, cols = generate_mask_frustum(
+            cam, 
+            target_center=target_center, 
+            color=cam_colors.get(cam["cam_idx"], [255, 255, 255]),
+            depth_steps=800,   # 光束切片数量，越多越密
+            pixel_step=2     # 像素降采样，越小越密
+        )
+        all_clouds.append((pts, cols))
+        print(f"  Cam {cam['cam_idx']} beam generated: {len(pts)} points")
 
         # # ----------------------DEBUG-----------------------
         # # [Debug Section - 需要在获取修正后的 R_c2w 和 X0_2 之后执行]
