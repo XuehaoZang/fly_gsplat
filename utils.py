@@ -18,8 +18,8 @@ def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R: np.ndar
     """
     Format the camera parameters into a Nerfstudio-compatible frame dictionary.
     """
-    fl_x = abs(K[0,0])
-    fl_y = abs(K[1,1])
+    fl_x = K[0,0]
+    fl_y = K[1,1]
     cx = K[0,2]
     cy = K[1,2]
 

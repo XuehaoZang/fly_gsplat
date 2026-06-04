@@ -102,56 +102,20 @@ def main():
     # plot_camera_coordinates(cameras_info)
 
     # 1. view frustum
-    def ray_from_dlt(L, u, v):
-        # DLT: [u;v;1]~[H|h][X;1]; 反投影方向 = H^{-1}[u,v,1]^T, 光心 = -H^{-1}h
-        H = np.array([[L[0],L[1],L[2]],[L[4],L[5],L[6]],[L[8],L[9],L[10]]])
-        h = np.array([L[3],L[7],1.0])
-        C = -np.linalg.inv(H) @ h
-        d = np.linalg.inv(H) @ np.array([u, v, 1.0]); d /= np.linalg.norm(d)
-        return C, d
-
-    def closest_point(rays):
-        A=np.zeros((3,3)); b=np.zeros(3)
-        for C,d in rays:
-            P=np.eye(3)-np.outer(d,d); A+=P; b+=P@C
-        return np.linalg.lstsq(A,b,rcond=None)[0], A, b
-
-    for assume_flip in [False, True]:
-        rays=[]
-        for cam in cameras_info:
-            L=np.append(_coefs[:,cam["cam_idx"]-1],1.0)
-            u,v=cam["target_uv"]
-            if assume_flip: u=(cam["mask"].shape[1]-1)-u   # 若图被翻了,centroid 要翻回原图坐标喂给原始DLT
-            rays.append(ray_from_dlt(L, u+1, v+1))         # +1: 回到 MATLAB 1-index
-        X,A,b=closest_point(rays)
-        res=np.mean([np.linalg.norm((np.eye(3)-np.outer(d,d))@(X-C)) for C,d in rays])
-        print(f"assume_flip={assume_flip}: X={X}, mean_residual={res*1000:.3f} mm")
     target_center = compute_target_center(cameras_info)
     all_clouds = []
     
     sphere_r = 0.0010   # 球半径(米)，先按 ~半个果蝇调
     for cam in cameras_info:
         c2w = cam["transform_matrix"]
-        Rwc = c2w[:3, :3].T
-        C   = c2w[:3, 3]
-        Xc  = Rwc @ (target_center - C)              # OpenGL 相机系
-        u   = cam["cx"] + cam["fl_x"] * (Xc[0] / -Xc[2])
-        # u   = (im.shape[1] - 1) - (cam["cx"] + cam["fl_x"] * (Xc[0] / -Xc[2]))
-        v   = cam["cy"] - cam["fl_y"] * (Xc[1] / -Xc[2])
-        r_px = cam["fl_x"] * sphere_r / (-Xc[2])
-        vis = cv2.cvtColor(cam["mask"], cv2.COLOR_GRAY2BGR)
-        cv2.circle(vis, (int(u), int(v)), max(int(r_px), 2), (0, 0, 255), 2)
-        L = np.append(_coefs[:, cam["cam_idx"]-1], 1.0)
-        X, Y, Z = target_center
-        den = L[8]*X + L[9]*Y + L[10]*Z + 1.0
-        u_dlt = (L[0]*X + L[1]*Y + L[2]*Z + L[3]) / den - 1   # -1: MATLAB 1-index
-        v_dlt = (L[4]*X + L[5]*Y + L[6]*Z + L[7]) / den - 1
-        cv2.circle(vis, (int(u_dlt), int(v_dlt)), 8, (0, 255, 0), 2)
-        print(f"  Cam {cam['cam_idx']} DLT=({u_dlt:.0f},{v_dlt:.0f}) vs mine=({u:.0f},{v:.0f})")
-        cv2.imwrite(str(debug_dir / f"sphere_overlay_cam_{cam['cam_idx']:02d}.png"), vis)
-        print(f"  Cam {cam['cam_idx']} depth={-Xc[2]:.3f} r_px={r_px:.0f}")
-        print(f"  Cam {cam['cam_idx']} centroid={cam['target_uv'][0]:.0f},{cam['target_uv'][1]:.0f} | DLT={u_dlt:.0f} | DLT_flip={(im.shape[1]-1)-u_dlt:.0f} | mine={u:.0f}")
-
+        C = c2w[:3, 3]
+        fwd_gl  = -c2w[:3, 2]   # OpenGL 前向 = -Z 列
+        fwd_cv  =  c2w[:3, 2]   # OpenCV 前向 = +Z 列
+        to_tgt = target_center - C; to_tgt /= np.linalg.norm(to_tgt)
+        ang_gl = np.degrees(np.arccos(np.clip(np.dot(fwd_gl/np.linalg.norm(fwd_gl), to_tgt),-1,1)))
+        ang_cv = np.degrees(np.arccos(np.clip(np.dot(fwd_cv/np.linalg.norm(fwd_cv), to_tgt),-1,1)))
+        print(f"Cam {cam['cam_idx']}: angle_to_target  GL={ang_gl:.1f}°  CV={ang_cv:.1f}°")
+        
     for cam in cameras_info:
         pts, cols = generate_mask_frustum(
             cam, 
