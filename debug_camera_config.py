@@ -11,7 +11,7 @@ from utils import cam_colors, binarize_mask, dilate_mask, compute_target_center,
 
 
 def main():
-    data_dir = r"./data2"
+    data_dir = r"./data/removed_002_009"
     base_dir = Path(data_dir)
     json_path = base_dir / "transforms.json"
     
@@ -21,6 +21,11 @@ def main():
     with open(json_path, 'r') as f:
         transforms_data = json.load(f)
     frames = transforms_data.get("frames", [])
+
+    import scipy.io as sio
+    _mat = sio.loadmat(str(base_dir / "calibration_easyWandData.mat"),
+                    struct_as_record=False, squeeze_me=True)
+    _coefs = _mat['easyWandData'].coefs        # shape (11, nCams)
     
     print(f"[Info] Loaded {len(frames)} frames from {json_path}")
 
@@ -101,16 +106,38 @@ def main():
     target_center = compute_target_center(cameras_info)
     all_clouds = []
     
+    sphere_r = 0.0010   # 球半径(米)，先按 ~半个果蝇调
     for cam in cameras_info:
-        pts, cols = generate_mask_frustum(
-            cam, 
-            target_center=target_center, 
-            color=cam_colors.get(cam["cam_idx"], [255, 255, 255]),
-            depth_steps=800,   # 光束切片数量，越多越密
-            pixel_step=2     # 像素降采样，越小越密
-        )
-        all_clouds.append((pts, cols))
-        print(f"  Cam {cam['cam_idx']} beam generated: {len(pts)} points")
+        c2w = cam["transform_matrix"]
+        Rwc = c2w[:3, :3].T
+        C   = c2w[:3, 3]
+        Xc  = Rwc @ (target_center - C)              # OpenGL 相机系
+        u   = cam["cx"] + cam["fl_x"] * (Xc[0] / -Xc[2])
+        # u   = (im.shape[1] - 1) - (cam["cx"] + cam["fl_x"] * (Xc[0] / -Xc[2]))
+        v   = cam["cy"] - cam["fl_y"] * (Xc[1] / -Xc[2])
+        r_px = cam["fl_x"] * sphere_r / (-Xc[2])
+        vis = cv2.cvtColor(cam["mask"], cv2.COLOR_GRAY2BGR)
+        cv2.circle(vis, (int(u), int(v)), max(int(r_px), 2), (0, 0, 255), 2)
+        L = np.append(_coefs[:, cam["cam_idx"]-1], 1.0)
+        X, Y, Z = target_center
+        den = L[8]*X + L[9]*Y + L[10]*Z + 1.0
+        u_dlt = (L[0]*X + L[1]*Y + L[2]*Z + L[3]) / den - 1   # -1: MATLAB 1-index
+        v_dlt = (L[4]*X + L[5]*Y + L[6]*Z + L[7]) / den - 1
+        cv2.circle(vis, (int(u_dlt), int(v_dlt)), 8, (0, 255, 0), 2)
+        print(f"  Cam {cam['cam_idx']} DLT=({u_dlt:.0f},{v_dlt:.0f}) vs mine=({u:.0f},{v:.0f})")
+        cv2.imwrite(str(debug_dir / f"sphere_overlay_cam_{cam['cam_idx']:02d}.png"), vis)
+        print(f"  Cam {cam['cam_idx']} depth={-Xc[2]:.3f} r_px={r_px:.0f}")
+
+    # for cam in cameras_info:
+    #     pts, cols = generate_mask_frustum(
+    #         cam, 
+    #         target_center=target_center, 
+    #         color=cam_colors.get(cam["cam_idx"], [255, 255, 255]),
+    #         depth_steps=800,   # 光束切片数量，越多越密
+    #         pixel_step=2     # 像素降采样，越小越密
+    #     )
+    #     all_clouds.append((pts, cols))
+        # print(f"  Cam {cam['cam_idx']} beam generated: {len(pts)} points")
 
         # # ----------------------DEBUG-----------------------
         # # [Debug Section - 需要在获取修正后的 R_c2w 和 X0_2 之后执行]

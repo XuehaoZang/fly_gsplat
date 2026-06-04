@@ -92,7 +92,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
             [0.0,  fl_y_1, cy_orig_1],
             [0.0,  0.0,  1.0]
         ])
-        print("[1] K from focolLengths and ppts:\n", K_1)
+        # print("[1] K from focolLengths and ppts:\n", K_1)
         
         # 2.1 using DLTrotationMatrices
         # R_dlt = ew_data.DLTrotationMatrices[:, :, i].T    # 4x4
@@ -103,10 +103,10 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         # 2.2. using rotationMatrices, translationVector
         R_w2c = np.array(ew_data.rotationMatrices[:, :, i])      # 3x3
         R_c2w = R_w2c.T
-        print("[1] R_c2w from ew_data.rotationMatrices:\n", R_c2w)
+        # print("[1] R_c2w from ew_data.rotationMatrices:\n", R_c2w)
         t = np.array(ew_data.translationVector[:, i])     # 3x1
         X0 = np.array(ew_data.DLTtranslationVector[:, i])     # 3x1
-        print("[1] X0 from ew_data.DLTtranslationVector:\n", X0)
+        # print("[1] X0 from ew_data.DLTtranslationVector:\n", X0)
 
         # 2.3 import .mat and create transform matrix
         # mat = sio.loadmat(str(data_dir / "camera_KRX0.mat"), struct_as_record=False, squeeze_me=True)
@@ -125,7 +125,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
 
         # 1.2 decompose KRX0 from coefs using Roni's RQ decomposition
         P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
-        print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
+        # print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
         H = P[:, :3]  # 3x3
         # print(f"H 3x3:\n{H}")
         h = P[:, 3]  # 3x1
@@ -144,36 +144,53 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         Rot_to_ew = np.diag(change_ax_dir)
         # print(f"Rot_to_ew:\n{Rot_to_ew}")
 
-        # K_2 = K_2  @ Rot_to_ew
+        K_2 = K_2  @ Rot_to_ew
         K_2 = K_2 / K_2[2, 2]
 
-        # K_2[1,1] = - K_2[1,1]       #        K(2,2) = -K(2,2)
-        # K_2[1,2] = h_full - K_2[1,2]                        #K(2,3) = 801 -K(2,3)
-        # K_2 = K_2 / K_2[2, 2]
-        # print("[2] K after flipping:\n", K_2)
+        # # K_2[1,1] = - K_2[1,1]       #        K(2,2) = -K(2,2)
+        # # K_2[1,2] = h_full - K_2[1,2]                        #K(2,3) = 801 -K(2,3)
+        # # K_2 = K_2 / K_2[2, 2]
+        # # print("[2] K after flipping:\n", K_2)
 
         R_w2c = Rot_to_ew @ R_w2c
-        print(f"after correction:\n{R_w2c}")
+        # print(f"[diag] change_ax_dir = {change_ax_dir}")
+        # print(f"[diag] det(R_w2c) = {np.linalg.det(R_w2c):.4f}")
+        print(f"[diag] det(R)={np.linalg.det(R_w2c):.3f}, Kdiag={np.diag(K_2)}")
+
+        # print(f"after correction:\n{R_w2c}")
         R_2 = R_w2c.T
 
-        print("[2] K from RQ decomposition:\n", K_2)
-        print("[2] R_c2w from RQ decomposition:\n", R_2)
-        print("[2] X0 from inv(H) @ h:\n", X0_2)
+        ############################ NEW ##############################
+        # F = np.array([[-1.0, 0.0, w_full - 1.0],
+        #               [ 0.0, 1.0, 0.0],
+        #               [ 0.0, 0.0, 1.0]])
+        # K_2, R_w2c = rq(F @ H)
+        # K_2 = K_2 / K_2[2, 2]
+        # D = np.diag(np.sign(np.diag(K_2)))     # 强制对角为正,唯一化 rq 符号
+        # K_2 = K_2 @ D
+        # R_w2c = D @ R_w2c
+        # R_2 = R_w2c.T
+        # print(f"[diag] det(R)={np.linalg.det(R_w2c):.3f}, Kdiag={np.diag(K_2)}")
+        ############################ NEW ##############################
+
+        # print("[2] K from RQ decomposition:\n", K_2)
+        # print("[2] R_c2w from RQ decomposition:\n", R_2)
+        # print("[2] X0 from inv(H) @ h:\n", X0_2)
 
         # exit()
 
         # 3. use P=[H|h] and use rotationMatrix
-        P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
-        H = P[:, :3]  # 3x3
-        h = P[:, 3]  # 3x1
+        # P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
+        # H = P[:, :3]  # 3x3
+        # h = P[:, 3]  # 3x1
 
-        R_w2c = np.array(ew_data.rotationMatrices[:, :, i])      # 3x3
-        R_c2w = R_w2c.T
-        t = np.array(ew_data.translationVector[:, i])     # 3x1
-        X0 = np.array(ew_data.DLTtranslationVector[:, i])     # 3x1
+        # R_w2c = np.array(ew_data.rotationMatrices[:, :, i])      # 3x3
+        # R_c2w = R_w2c.T
+        # t = np.array(ew_data.translationVector[:, i])     # 3x1
+        # X0 = np.array(ew_data.DLTtranslationVector[:, i])     # 3x1
 
-        K = H @ R_w2c.T
-        print(K / K[2,2])
+        # K = H @ R_w2c.T
+        # print(K / K[2,2])
 
 
         # 5. Dynamic Cropping
@@ -184,11 +201,12 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         #     cx, cy, w, h = cx_orig, cy_orig, w_full, h_full
 
         # Save processed image
+        im = cv2.flip(im, 1)   # NEW 水平翻转，吸收反射
         cv2.imwrite(str(img_dir / img_name), im)
         # gray_to_rgba(str(img_dir / img_name), str(img_dir / img_name))
 
         # Append frame metadata
-        frame = generate_frame_dict(img_name, w_full, h_full, K_2, R_2, X0)
+        frame = generate_frame_dict(img_name, w_full, h_full, K_2, R_2, X0_2)
         
         frames.append(frame)
 
@@ -209,7 +227,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
 if __name__ == "__main__":
     # Example usage: Extract frame 1500 directly to our processed folder
     # sudo mount -t drvfs X: /mnt/x
-    data_dir = r"./data2"
-    # sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
-    sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
-    generate_dataset(data_dir, sparse_dir, target_frame=10)
+    data_dir = r"./data/removed_002_009"
+    sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
+    # sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
+    generate_dataset(data_dir, sparse_dir, target_frame=2000)

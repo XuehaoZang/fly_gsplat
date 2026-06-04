@@ -34,7 +34,7 @@ def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R: np.ndar
             [0,  0,  0, 1]
         ])
     # transform_matrix = flip_gravity @ M @ flip_gravity
-    transform_matrix =  M 
+    transform_matrix =  M @ flip
 
     return {
         "file_path": f"images/{img_name}",
