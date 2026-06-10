@@ -15,10 +15,9 @@ import io, contextlib
 import numpy as np
 import scipy.io as sio
 from scipy.linalg import rq
-from scipy import ndimage
 import cv2
 from pathlib import Path
-from utils import proj, backproj, triangulate, mask_centroid, check_ortho
+from utils.calib import proj, backproj, triangulate, mask_centroid, check_ortho
 
 # ------------------------------------------------------------------ config ---
 BASE     = Path("./data/ctrl_009_002")

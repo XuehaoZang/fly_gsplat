@@ -1,14 +1,10 @@
 import json
-import os
 from pathlib import Path
-from typing import List, Dict, Any, Optional
 import numpy as np
 from scipy import ndimage
 import cv2
-import open3d as o3d
-import matplotlib.pyplot as plt
-from utils import cam_colors, binarize_mask, dilate_mask, compute_target_center, plot_camera_coordinates, generate_mask_frustum
-
+from utils.viz import cam_colors, compute_target_center, plot_camera_coordinates, generate_mask_frustum
+from utils.image import binarize_mask, dilate_mask
 
 def main():
     data_dir = r"./data/removed_002_009"

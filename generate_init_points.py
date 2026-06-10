@@ -7,7 +7,8 @@ from scipy import ndimage
 import cv2
 import open3d as o3d
 import matplotlib.pyplot as plt
-from utils import binarize_mask, dilate_mask, compute_target_center, plot_camera_coordinates
+from utils.image import binarize_mask, dilate_mask
+from utils.viz import compute_target_center, plot_camera_coordinates
 
 def generate_init_points(data_dir: str) -> Optional[List[Dict[str, Any]]]:
     """

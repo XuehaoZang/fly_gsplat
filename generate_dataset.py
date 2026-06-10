@@ -7,7 +7,8 @@ import scipy.io as sio
 from scipy.linalg import rq
 import cv2
 import h5py
-from utils import generate_frame_dict, crop_image, gray_to_rgba, extract_camera_params_from_P
+from utils.dataset import generate_frame_dict
+from utils.image import crop_image, gray_to_rgba
 
 # TODO now the sparse script is without the tracking
 # TODO initialize from wand points or 3D hull?
