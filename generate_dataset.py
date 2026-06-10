@@ -259,7 +259,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
 if __name__ == "__main__":
     # Example usage: Extract frame 1500 directly to our processed folder
     # sudo mount -t drvfs X: /mnt/x
-    data_dir = r"./data/removed_002_009"
-    sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
-    # sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
-    generate_dataset(data_dir, sparse_dir, target_frame=2000)
+    data_dir = r"./data/ctrl_009_002"
+    # sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
+    sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
+    generate_dataset(data_dir, sparse_dir, target_frame=10)
