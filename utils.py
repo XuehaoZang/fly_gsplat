@@ -14,6 +14,42 @@ cam_colors = {
         4: [255, 255, 30]
     }
 
+# camera projection maths
+def proj(K, R, X0, X):
+    """OpenCV projection -> (u, v, depth)."""
+    xc = R @ (X - X0)
+    p  = K @ xc
+    return p[0] / p[2], p[1] / p[2], xc[2]
+
+def backproj(K, R, u, v):
+    """Pixel (u,v) -> unit ray direction in world frame."""
+    d = R.T @ (np.linalg.inv(K) @ np.array([u, v, 1.0]))
+    return d / np.linalg.norm(d)
+
+def triangulate(rays):
+    """Least-squares intersection of rays [(origin, unit_dir), ...].
+    Returns (point_3d, mean_residual_metres)."""
+    A = np.zeros((3, 3)); b = np.zeros(3)
+    for C, d in rays:
+        P = np.eye(3) - np.outer(d, d)
+        A += P; b += P @ C
+    X   = np.linalg.solve(A, b)
+    res = np.mean([np.linalg.norm((np.eye(3) - np.outer(d, d)) @ (X - C))
+                   for C, d in rays])
+    return X, res
+
+def check_ortho(R):
+    """Rotation sanity check. Returns (det, ortho_norm, passed)."""
+    det   = np.linalg.det(R)
+    ortho = np.linalg.norm(R @ R.T - np.eye(3))
+    return det, ortho, (abs(det - 1.0) < 1e-3 and ortho < 1e-3)
+
+def mask_centroid(gray):
+    """Returns (u, v) centroid of non-zero pixels."""
+    v, u = ndimage.center_of_mass(gray > 0)
+    return u, v
+
+# dataset
 def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R: np.ndarray, X0: np.ndarray) -> Dict[str, Any]:
     """
     Format the camera parameters into a Nerfstudio-compatible frame dictionary.
@@ -47,6 +83,7 @@ def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R: np.ndar
         "transform_matrix": transform_matrix.tolist()
     }
 
+# image processing
 def crop_image(im: np.ndarray, cx: float, cy: float, crop_size: int = 160) -> Tuple[np.ndarray, float, float, int, int]:
     """
     Crop image around non-zero pixels and update camera principal points.
@@ -79,7 +116,6 @@ def crop_image(im: np.ndarray, cx: float, cy: float, crop_size: int = 160) -> Tu
     cy_new = cy - y_min
 
     return cropped_im, cx_new, cy_new, crop_size, crop_size
-
 
 def gray_to_rgba(gray_path: Path, rgba_path: Path) -> bool:
     """grayscale -> RGBA PNG"""
@@ -161,57 +197,6 @@ def compute_target_center(cameras_info):
     target_center, residuals, _, _ = np.linalg.lstsq(A, b, rcond=None)
     
     return target_center
-
-import numpy as np
-
-def extract_camera_params_from_P(coefs_11):
-    """
-    从 11 个 DLT 系数中严格按照射影几何原理解析出真实的 K 和 R, t。
-    绝对不使用黑盒 RQ 分解，确保物理符号完全正确。
-    """
-    # 构造 3x4 投影矩阵
-    P = np.append(coefs_11, 1.0).reshape(3, 4)
-    H = P[:, :3]
-    h = P[:, 3]
-
-    # 1. 提取光心 X0
-    X0 = -np.linalg.inv(H) @ h
-
-    # 2. 提取并归一化 Z 轴 (R 矩阵的第三行)
-    r3 = H[2, :]
-    norm_r3 = np.linalg.norm(r3)
-    r3 = r3 / norm_r3
-
-    # 3. 提取极其关键的真实光心 (cx, cy)
-    cx = np.dot(H[0, :], r3)
-    cy = np.dot(H[1, :], r3)
-
-    # 4. 提取并归一化焦距 (fx, fy) 和 X, Y 轴
-    r1_unscaled = H[0, :] - cx * r3
-    fx = np.linalg.norm(r1_unscaled)
-    r1 = r1_unscaled / fx
-
-    r2_unscaled = H[1, :] - cy * r3
-    fy = np.linalg.norm(r2_unscaled)
-    r2 = r2_unscaled / fy
-
-    # 5. 组装最纯正的旋转矩阵 R
-    R = np.vstack((r1, r2, r3))
-    
-    # 6. 安全护城河：如果物理空间被镜像了，翻转它以满足右手系
-    if np.linalg.det(R) < 0:
-        R = -R
-        # 翻转 R 意味着我们需要重新调整 fx, fy 的符号逻辑，
-        # 但通常真实的 DLT 标定矩阵的 det(R) 都会是 1。
-        print("[警告] 遇到左手系旋转矩阵，已强制翻转！")
-
-    K = np.array([
-            [float(fx), 0.0,  float(cx)],
-            [0.0,  float(fy), float(cy)],
-            [0.0,  0.0,  1.0]
-        ])
-    
-    return K, R, X0
 
 def plot_camera_coordinates(cameras_info, point_clouds=None):
 
@@ -295,10 +280,6 @@ def plot_camera_coordinates(cameras_info, point_clouds=None):
     print("关闭 Viser 可视化，程序继续运行...")
     # 可选：如果希望继续执行时不占用端口，可以停掉 server
     # server.stop()
-
-import viser
-import numpy as np
-import time
 
 def plot_point_cloud_viser(points_3d, colors=None):
     """
