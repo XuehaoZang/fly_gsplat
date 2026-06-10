@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Dict, Any, Tuple
 
-def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R: np.ndarray, X0: np.ndarray) -> Dict[str, Any]:
+def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R_c2w: np.ndarray, X0: np.ndarray) -> Dict[str, Any]:
     """
     Format the camera parameters into a Nerfstudio-compatible frame dictionary.
     """
@@ -10,18 +10,9 @@ def generate_frame_dict(img_name: str, w: int, h: int, K: np.ndarray, R: np.ndar
     cx = K[0,2]
     cy = K[1,2]
 
-    M = np.eye(4)
-    M[:3, :3] = R
-    M[:3, 3] = X0.flatten()
-
-    flip = np.array([
-            [1,  0,  0, 0],
-            [0,  -1,  0, 0],
-            [0,  0,  -1, 0],
-            [0,  0,  0, 1]
-        ])
-    # transform_matrix = flip_gravity @ M @ flip_gravity
-    transform_matrix =  M
+    transform_matrix = np.eye(4)
+    transform_matrix[:3, :3] = R_c2w        
+    transform_matrix[:3,  3] = X0.flatten()
 
     return {
         "file_path": f"images/{img_name}",

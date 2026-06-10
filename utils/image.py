@@ -2,7 +2,6 @@ from pathlib import Path
 from typing import Dict, Any, Tuple
 import numpy as np
 import cv2
-from scipy.spatial.transform import Rotation
 
 # image processing
 def crop_image(im: np.ndarray, cx: float, cy: float, crop_size: int = 160) -> Tuple[np.ndarray, float, float, int, int]:

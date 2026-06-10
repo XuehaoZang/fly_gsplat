@@ -10,10 +10,6 @@ import h5py
 from utils.dataset import generate_frame_dict
 from utils.image import crop_image, gray_to_rgba
 
-# TODO now the sparse script is without the tracking
-# TODO initialize from wand points or 3D hull?
-# TODO now that camera axes are correct, the image flipping needs to be examined.
-
 def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> None:
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
@@ -40,8 +36,8 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
     # print(f"ew data import type:{type(ew_data)}")
     # print(f"coefs precision: {ew_data.coefs.dtype}")
     n_cams = ew_data.nCams
-    w_full = int(ew_data.imageWidth[0])
-    h_full = int(ew_data.imageHeight[1] if isinstance(ew_data.imageHeight, np.ndarray) else ew_data.imageHeight) 
+    w_full = int(ew_data.imageWidth[0] if isinstance(ew_data.imageHeight, np.ndarray) else 1280) 
+    h_full = int(ew_data.imageHeight[1] if isinstance(ew_data.imageHeight, np.ndarray) else 800) 
 
     frames = []
     for i in range(n_cams):
@@ -68,164 +64,11 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
                 valid = (rows >= 0) & (rows < frame_size[0]) & (cols >= 0) & (cols < frame_size[1])
                 im[rows[valid], cols[valid]] = vals[valid].astype(np.uint8)
 
-        '''
-        Calibration EasyWandData fields
-        1. Intrinsics:
-            1.1 using focalLengths, ppts=principalPoints(default center)
-            1.2 using coefs to decompose K, R, X0, normalize K
-            1.3 compare with Roni's code generated camera_KRX0.mat
-        2. Extrinsics
-            2.1 using DLTrotationMatrices.T --> get [R|T] --> gravity flip --> reasonable config, not intersecting beam
-            2.2 old setup: using coefs to construct P, use inv(K) from 1.1 to get [R|T]
-            2.3 new setup, hull recon: using rotationMatrices to get R - camera direction, DLTtranslationVector to get X0 - camera center
-            2.4 Roni's version: using coefs and QR decomposition
-
-        testing Roni's version of KRX0 mat file.
-            
-        '''
-        # 1.1 Process Intrinsics
-        # fl_x_1 = np.float64(ew_data.focalLengths[i])
-        # fl_y_1 = np.float64(ew_data.focalLengths[i])
-        # cx_orig_1 = np.float64(ew_data.principalPoints[2*i]) - 1
-        # cy_orig_1 = np.float64(ew_data.principalPoints[2*i+1]) - 1
-        # K_1 = np.array([
-        #     [fl_x_1, 0.0,  cx_orig_1],
-        #     [0.0,  fl_y_1, cy_orig_1],
-        #     [0.0,  0.0,  1.0]
-        # ])
-        # print("[1] K from focolLengths and ppts:\n", K_1)
         
-        # 2.1 using DLTrotationMatrices
-        # R_dlt = ew_data.DLTrotationMatrices[:, :, i].T    # 4x4
-        # R_w2c = R_dlt[0:3, 0:3]                        # roation matrix 3x3
-        # R_c2w = R_w2c.T
-        # X0 = R_dlt[0:3, 3]                         # camera center position X0 3x1
-
-        # 2.2. using rotationMatrices, translationVector
-        # R_w2c = np.array(ew_data.rotationMatrices[:, :, i])      # 3x3
-        # R_c2w = R_w2c.T
-        # # print("[1] R_c2w from ew_data.rotationMatrices:\n", R_c2w)
-        # t = np.array(ew_data.translationVector[:, i])     # 3x1
-        # X0 = np.array(ew_data.DLTtranslationVector[:, i])     # 3x1
-        # print("[1] X0 from ew_data.DLTtranslationVector:\n", X0)
-
-        # 2.3 import .mat and create transform matrix
-        mat = sio.loadmat(str(data_dir / "camera_KRX0.mat"), struct_as_record=False, squeeze_me=True)
-        KRX0_data = mat['camera']
-        # print(KRX0_data[:,:,i])
-        K = KRX0_data[:,0:3,i]
-        K[0,2]  = K[0,2] - 1
-        K[1,2]  = K[1,2] - 1
-
-        R = KRX0_data[:,3:6,i].T
-        X0 = KRX0_data[:,6,i]
-        
-        print("[DEBUG] K from Roni .mat data:\n", K)
-        print("[DEBUG] R from Roni .mat data:\n", R)
-        print("[DEBUG] X0 from Roni .mat data:\n", X0)
-
-        # # 1.2 decompose KRX0 from coefs using Roni's RQ decomposition
-        # P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
-        # # print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
-        # H = P[:, :3]  # 3x3
-        # # print(f"H 3x3:\n{H}")
-        # h = P[:, 3]  # 3x1
-        # # print(f"h 3x1:\n{h}")
-        # # print(f"[orig] det(H)={np.linalg.det(H):.3f}")      # Note from easywand det(H) < 0 (left-hand) - which does not satisfy nerfstudio convention
-
-        # X0_2 = -np.linalg.inv(H) @ h
-        # K_2, R_w2c = rq(H)        # R_w2c: world to cam
-        # K_2 = K_2 / K_2[2, 2]
-        # # print(f"[orig] K=\n{K_2}")
-        # # print(f"[orig] det(K)={np.linalg.det(K_2):.3f}") 
-        # # print(f"[orig] det(R_w2c)={np.linalg.det(R_w2c):.3f}") 
-        # # print(f"decomposed R w2c:\n{R_w2c}")
-        # # the decomposition is not unique!! potentially with sign flip
-
-        # # align with roationMatrices direction
-        # ew_rot = ew_data.rotationMatrices[:, :, i]
-        # # print(f"ew_rotation matrix:\n{ew_rot}")
-        # change_ax_dir = np.sign(np.sum(ew_rot * R_w2c, axis=1))
-        # # print(f"[after] change_ax_dir = {change_ax_dir}")
-        # Rot_to_ew = np.diag(change_ax_dir)
-        # # print(f"Rot_to_ew:\n{Rot_to_ew}")
-
-        # K_2 = K_2 @ Rot_to_ew
-        # # print(f"[after] det(K)={np.linalg.det(K_2):.3f}") 
-        # K_2 = K_2 / K_2[2, 2]
-        # # print(f"[After] K=\n{K_2}")
-
-
-        # # K_2[1,1] = - K_2[1,1]       #        K(2,2) = -K(2,2)
-        # # K_2[1,2] = h_full - K_2[1,2]                        #K(2,3) = 801 -K(2,3)
-        # # K_2 = K_2 / K_2[2, 2]
-        # # # print("[2] K after flipping:\n", K_2)
-
-        # R_w2c = Rot_to_ew @ R_w2c 
-        # # print(f"[after] det(R_w2c)={np.linalg.det(R_w2c):.3f}") 
-        # # print(f"[diag] det(R_w2c) = {np.linalg.det(R_w2c):.4f}")
-        # # print(f"after correction:\n{R_w2c}")
-        # R_2 = R_w2c.T
-
-        # print("[DEBUG] K from RQ decompose:\n", K_2)
-        # print("[DEBUG] R from RQ decompose:\n", R_2)
-        # print("[DEBUG] X0 from RQ decompose:\n", X0_2)
-
-        ############################ NEW ##############################
-        # P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
-        # # print(f"Perspective mat from 11 coefs P=[H|h]:\n{P}")
-        # H = P[:, :3]  # 3x3
-        # # print(f"H 3x3:\n{H}")
-        # h = P[:, 3]  # 3x1
-        # # print(f"h 3x1:\n{h}")
-        # # print(f"[orig] det(H)={np.linalg.det(H):.3f}")      # Note from easywand det(H) < 0 (left-hand) - which does not satisfy nerfstudio convention
-
-        # X0_2 = -np.linalg.inv(H) @ h
-
-        # # 直接 RQ 分解 H = K_2 @ R_w2c (K 上三角, R world->cam)
-        # K_2, R_w2c = rq(H)
-        # K_2 = K_2 / K_2[2, 2]
-
-        # # 符号对齐: 用 ew_rotation 对齐 R 各轴方向 (Roni 的 change_ax_dir)
-        # ew_rot = ew_data.rotationMatrices[:, :, i]
-        # change_ax_dir = np.sign(np.diag(ew_rot @ R_w2c.T))
-        # change_ax_dir[change_ax_dir == 0] = 1
-        # Rot_to_ew   = np.diag(change_ax_dir)
-        # Rot_to_stan = np.diag([1.0, -1.0, -1.0])      # OpenCV -> OpenGL
-
-        # # K 侧: 先对齐符号并归一
-        # K_2 = K_2 @ Rot_to_ew
-        # K_2 = K_2 / K_2[2, 2]
-        # # 垂直翻转 (Roni: K(2,2)=-K(2,2); K(2,3)=801-K(2,3))
-        # K_2[1, 1] = -K_2[1, 1]
-        # K_2[1, 2] = h_full - K_2[1, 2]          # 801 - cy
-        # K_2 = K_2 / K_2[2, 2]
-
-        # # R 侧: 同样的两个翻转, 再转成 c2w (OpenGL)
-        # R_w2c = Rot_to_stan @ Rot_to_ew @ R_w2c
-        # R_2 = R_w2c.T
-        # print("[2] K from RQ decomposition:\n", K_2)
-        # print("[2] R_c2w from RQ decomposition:\n", R_2)
-        # print("[2] X0 from inv(H) @ h:\n", X0_2)
-        ############################ NEW ##############################
-
-        
-
-        # exit()
-
-        # 3. use P=[H|h] and use rotationMatrix
-        # P = np.append(ew_data.coefs[:, i], 1.0).reshape(3, 4)
-        # H = P[:, :3]  # 3x3
-        # h = P[:, 3]  # 3x1
-
-        # R_w2c = np.array(ew_data.rotationMatrices[:, :, i])      # 3x3
-        # R_c2w = R_w2c.T
-        # t = np.array(ew_data.translationVector[:, i])     # 3x1
-        # X0 = np.array(ew_data.DLTtranslationVector[:, i])     # 3x1
-
-        # K = H @ R_w2c.T
-        # print(K / K[2,2])
-
+        # calibration: RQ decomposition of EasyWand DLT coefs
+        from utils.calib import rq_decompose_dlt
+        K, R_w2c, X0 = rq_decompose_dlt(ew_data, i)
+        R_c2w = R_w2c.T
 
         # 5. Dynamic Cropping
         # DO_CROP = False
@@ -239,7 +82,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         # gray_to_rgba(str(img_dir / img_name), str(img_dir / img_name))
 
         # Append frame metadata
-        frame = generate_frame_dict(img_name, w_full, h_full, K, R, X0)
+        frame = generate_frame_dict(img_name, w_full, h_full, K, R_c2w, X0)
         
         frames.append(frame)
 

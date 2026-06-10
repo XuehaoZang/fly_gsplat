@@ -11,6 +11,21 @@ Methods:
   native - focalLengths + rotMats   (diagnostic; Cam4 principal point unreliable)
 """
 
+'''
+# TODO clean up notes
+Calibration from EasyWandData
+1. Intrinsics:
+    1.1 using focalLengths, ppts=principalPoints(default center)
+    1.2 using coefs to decompose K, R, X0, normalize K
+    1.3 compare with Roni's code generated camera_KRX0.mat
+2. Extrinsics
+    2.1 using DLTrotationMatrices.T --> get [R|T] --> gravity flip --> reasonable config, not intersecting beam
+    2.2 old setup: using coefs to construct P, use inv(K) from 1.1 to get [R|T]
+    2.3 new setup, hull recon: using rotationMatrices to get R - camera direction, DLTtranslationVector to get X0 - camera center
+    2.4 Roni's version: using coefs and QR decomposition
+
+'''
+
 import io, contextlib
 import numpy as np
 import scipy.io as sio
@@ -33,9 +48,11 @@ def adapt_roni(ew, krx0, i):
     return K, R, X0
 
 def adapt_rq(ew, krx0, i):
-    """RQ decomposition of coefs, sign-aligned to ew.rotationMatrices.
+    """
+    RQ decomposition of coefs, sign-aligned to ew.rotationMatrices.
     Mirrors Roni's MATLAB decompose_dlt exactly.
-    Returns K with positive fx/fy, R_w2c with det=+1."""
+    Returns K with positive fx/fy, R_w2c with det=+1.
+    """
     coefs      = ew.coefs[:, i]
     ew_rot_w2c = ew.rotationMatrices[:, :, i]
 
@@ -68,11 +85,9 @@ def adapt_rq(ew, krx0, i):
     return K, R_w2c, X0
 
 def adapt_native(ew, krx0, i):
-    """K from focalLengths/principalPoints + R from rotationMatrices.
-    NOTE: principalPoints is a placeholder (image centre) for Cam4;
-          ew.rotationMatrices is a secondary decomposition of coefs and
-          has ~100px inconsistency vs coefs for all cameras. Kept for
-          diagnostics only - do not use in production."""
+    """
+    K from focalLengths/principalPoints + R from rotationMatrices.
+    """
     f  = float(ew.focalLengths[i])
     cx = float(ew.principalPoints[2 * i])
     cy = float(ew.principalPoints[2 * i + 1])

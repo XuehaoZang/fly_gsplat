@@ -1,6 +1,5 @@
 import numpy as np
 from scipy import ndimage
-from scipy.spatial.transform import Rotation
 
 # camera projection maths
 def proj(K, R, X0, X):
@@ -36,3 +35,36 @@ def mask_centroid(gray):
     """Returns (u, v) centroid of non-zero pixels."""
     v, u = ndimage.center_of_mass(gray > 0)
     return u, v
+
+from scipy.linalg import rq as scipy_rq
+
+def rq_decompose_dlt(ew, i):
+    """Decompose EasyWand DLT coefs into (K, R_w2c, X0).
+    Mirrors Roni's MATLAB decompose_dlt exactly.
+    Returns K (positive fx/fy), R_w2c (det=+1), X0 (camera centre)."""
+    coefs      = ew.coefs[:, i]
+    ew_rot_w2c = ew.rotationMatrices[:, :, i]
+
+    H = np.array([[coefs[0], coefs[1], coefs[2]],
+                  [coefs[4], coefs[5], coefs[6]],
+                  [coefs[8], coefs[9], coefs[10]]])
+    h = np.array([coefs[3], coefs[7], 1.0])
+
+    X0    = -np.linalg.inv(H) @ h
+    K_raw, R_raw = scipy_rq(H)
+    K_raw = K_raw / K_raw[2, 2]
+
+    # resolve RQ sign ambiguity by aligning to ew.rotationMatrices
+    s = np.sign(np.diag(ew_rot_w2c @ R_raw.T))
+    s[s == 0] = 1.0
+    S = np.diag([1., -1., -1.]) @ np.diag(s)   # Rot_to_stan @ Rot_to_ew
+
+    K     = K_raw @ S;  K = K / K[2, 2]
+    R_w2c = S @ R_raw
+
+    # vertical flip: image Y-axis orientation (EasyWand -> OpenCV)
+    h_img   = int(ew.imageHeight[0] if isinstance(ew.imageHeight, np.ndarray) else 800)
+    K[1, 2] = h_img - K[1, 2]
+    K[1, 1] = -K[1, 1]
+
+    return K, R_w2c, X0
