@@ -1,7 +1,7 @@
 """
 debug_calib.py
 Compares EasyWand calibration methods by projecting a shared 3D sphere
-into each camera view (OpenCV convention throughout).
+into each camera view (OpenCV convention).
 
 Convention: (K, R_w2c, X0)  ->  uv ~ K @ R_w2c @ (X - X0)
 
@@ -23,7 +23,6 @@ Calibration from EasyWandData
     2.2 old setup: using coefs to construct P, use inv(K) from 1.1 to get [R|T]
     2.3 new setup, hull recon: using rotationMatrices to get R - camera direction, DLTtranslationVector to get X0 - camera center
     2.4 Roni's version: using coefs and QR decomposition
-
 '''
 
 import io, contextlib
@@ -32,7 +31,7 @@ import scipy.io as sio
 from scipy.linalg import rq
 import cv2
 from pathlib import Path
-from utils.calib import proj, backproj, triangulate, mask_centroid, check_ortho
+from utils.calib import proj, backproj, triangulate, mask_centroid, check_ortho, rq_decompose_dlt
 
 # ------------------------------------------------------------------ config ---
 BASE     = Path("./data/ctrl_009_002")
@@ -53,36 +52,7 @@ def adapt_rq(ew, krx0, i):
     Mirrors Roni's MATLAB decompose_dlt exactly.
     Returns K with positive fx/fy, R_w2c with det=+1.
     """
-    coefs      = ew.coefs[:, i]
-    ew_rot_w2c = ew.rotationMatrices[:, :, i]
-
-    # build H (3x3) and h (3,) from the 11 DLT coefs
-    H = np.array([[coefs[0], coefs[1], coefs[2]],
-                  [coefs[4], coefs[5], coefs[6]],
-                  [coefs[8], coefs[9], coefs[10]]])
-    h = np.array([coefs[3], coefs[7], 1.0])
-
-    X0 = -np.linalg.inv(H) @ h          # camera centre (independent of K/R)
-
-    K_raw, R_raw = rq(H)                 # H = K_raw @ R_raw
-    K_raw = K_raw / K_raw[2, 2]
-
-    # sign-align axes to ew.rotationMatrices (resolves RQ ambiguity)
-    s = np.sign(np.diag(ew_rot_w2c @ R_raw.T))
-    s[s == 0] = 1.0
-    Rot_to_ew   = np.diag(s)
-    Rot_to_stan = np.diag([1., -1., -1.])   # EasyWand -> OpenCV convention
-    S = Rot_to_stan @ Rot_to_ew
-
-    K     = K_raw @ S;  K = K / K[2, 2]
-    R_w2c = S @ R_raw
-
-    # vertical flip: cy -> H-cy, fy -> -fy  (image Y-axis orientation)
-    h_img    = int(ew.imageHeight[0] if isinstance(ew.imageHeight, np.ndarray) else 800)
-    K[1, 2]  = h_img - K[1, 2]
-    K[1, 1]  = -K[1, 1]
-
-    return K, R_w2c, X0
+    return rq_decompose_dlt(ew, i)
 
 def adapt_native(ew, krx0, i):
     """

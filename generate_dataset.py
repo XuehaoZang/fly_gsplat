@@ -1,12 +1,10 @@
 from pathlib import Path
-from typing import List, Dict, Any
 import json
-
 import numpy as np
 import scipy.io as sio
-from scipy.linalg import rq
 import cv2
 import h5py
+from utils.camera import CameraConfig
 from utils.dataset import generate_frame_dict
 from utils.image import crop_image, gray_to_rgba
 
@@ -14,7 +12,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
     """
-    # 1. Path initialization and directory setup
+    # Path initialization and directory setup
     data_dir = Path(_data_dir)
     img_dir = data_dir / "images"
     mat_path = data_dir / "calibration_easyWandData.mat"
@@ -29,14 +27,11 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         print("Error: No sparse files found.")
         return
 
-    # 2. Load Matlab EasyWand calibration data
+    # Load Matlab EasyWand calibration data
     mat = sio.loadmat(str(mat_path), struct_as_record=False, squeeze_me=True)
-    # print(f"mat import type:{type(mat)}")
     ew_data = mat['easyWandData']
-    # print(f"ew data import type:{type(ew_data)}")
-    # print(f"coefs precision: {ew_data.coefs.dtype}")
     n_cams = ew_data.nCams
-    w_full = int(ew_data.imageWidth[0] if isinstance(ew_data.imageHeight, np.ndarray) else 1280) 
+    w_full = int(ew_data.imageWidth[0] if isinstance(ew_data.imageWidth, np.ndarray) else 1280) 
     h_full = int(ew_data.imageHeight[1] if isinstance(ew_data.imageHeight, np.ndarray) else 800) 
 
     frames = []
@@ -45,7 +40,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         img_name = f"P{target_frame}CAM{cam_idx}.png" 
         sparse_file = sparse_files[i]
 
-        # 3. Reconstruct image from sparse pixel data
+        # Reconstruct image from sparse pixel data
         with h5py.File(sparse_file, 'r') as sp:
             refs = sp['/frames/indIm'][0]
             indIm = sp[refs[target_frame]][:]
@@ -64,13 +59,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
                 valid = (rows >= 0) & (rows < frame_size[0]) & (cols >= 0) & (cols < frame_size[1])
                 im[rows[valid], cols[valid]] = vals[valid].astype(np.uint8)
 
-        
-        # calibration: RQ decomposition of EasyWand DLT coefs
-        from utils.calib import rq_decompose_dlt
-        K, R_w2c, X0 = rq_decompose_dlt(ew_data, i)
-        R_c2w = R_w2c.T
-
-        # 5. Dynamic Cropping
+        # Dynamic Cropping
         # DO_CROP = False
         # if DO_CROP:
         #     im, cx, cy, w, h = crop_image(im, cx_orig, cy_orig, crop_size=160)
@@ -82,11 +71,12 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         # gray_to_rgba(str(img_dir / img_name), str(img_dir / img_name))
 
         # Append frame metadata
-        frame = generate_frame_dict(img_name, w_full, h_full, K, R_c2w, X0)
-        
+        # calibration: RQ decomposition of EasyWand DLT coefs
+        cam = CameraConfig.easywand_dlt(ew_data, i)
+        frame = generate_frame_dict(img_name, cam)
         frames.append(frame)
 
-    # 7. Export metadata to JSON
+    # Export metadata to JSON
     transforms = {
         "ply_file_path": "init_points.ply",
         "camera_model": "OPENCV",
@@ -95,13 +85,10 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
 
     with open(json_path, 'w') as f:
         json.dump(transforms, f, indent=4)
-
-
     print(f"Dataset generated successfully at: {data_dir}")
 
 
 if __name__ == "__main__":
-    # Example usage: Extract frame 1500 directly to our processed folder
     # sudo mount -t drvfs X: /mnt/x
     data_dir = r"./data/ctrl_009_002"
     # sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"

@@ -2,12 +2,13 @@ import json
 from pathlib import Path
 import numpy as np
 from scipy import ndimage
+import scipy.io as sio
 import cv2
 from utils.viz import cam_colors, compute_target_center, plot_camera_coordinates, generate_mask_frustum
 from utils.image import binarize_mask, dilate_mask
 
 def main():
-    data_dir = r"./data/removed_002_009"
+    data_dir = r"./data/ctrl_009_002"
     base_dir = Path(data_dir)
     json_path = base_dir / "transforms.json"
     
@@ -18,7 +19,6 @@ def main():
         transforms_data = json.load(f)
     frames = transforms_data.get("frames", [])
 
-    import scipy.io as sio
     _mat = sio.loadmat(str(base_dir / "calibration_easyWandData.mat"),
                     struct_as_record=False, squeeze_me=True)
     _coefs = _mat['easyWandData'].coefs        # shape (11, nCams)
