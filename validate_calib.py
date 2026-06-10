@@ -1,5 +1,5 @@
 """
-debug_calib.py
+validate_calib.py
 Compares EasyWand calibration methods by projecting a shared 3D sphere
 into each camera view (OpenCV convention).
 

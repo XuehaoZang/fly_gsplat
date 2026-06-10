@@ -32,7 +32,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
     ew_data = mat['easyWandData']
     n_cams = ew_data.nCams
     w_full = int(ew_data.imageWidth[0] if isinstance(ew_data.imageWidth, np.ndarray) else 1280) 
-    h_full = int(ew_data.imageHeight[1] if isinstance(ew_data.imageHeight, np.ndarray) else 800) 
+    h_full = int(ew_data.imageHeight[0] if isinstance(ew_data.imageHeight, np.ndarray) else 800) 
 
     frames = []
     for i in range(n_cams):

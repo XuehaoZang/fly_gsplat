@@ -110,4 +110,27 @@ class CameraConfig:
         w = int(ew.imageWidth[0]  if isinstance(ew.imageWidth,  np.ndarray) else 1280)
         h = int(ew.imageHeight[0] if isinstance(ew.imageHeight, np.ndarray) else 800)
         return cls(cam_idx=i + 1, K=K, R_w2c=R_w2c, X0=X0, w=w, h=h)
+
+    @classmethod
+    def from_opengl(cls, frame: dict) -> "CameraConfig":
+        """
+        Build CameraConfig from a Nerfstudio transforms.json frame dict (OpenGL convention).
+        Reverses the OpenCV -> OpenGL conversion applied in transform_opengl.
+        frame: single entry from transforms.json['frames']
+        """
+        M    = np.array(frame["transform_matrix"])
+        X0   = M[:3, 3]
+        FLIP = np.diag([1., -1., -1.])
+        # R_c2w_opengl = R_c2w_opencv @ FLIP  =>  R_c2w_opencv = R_c2w_opengl @ FLIP
+        R_w2c = (M[:3, :3] @ FLIP).T
+
+        K = np.array([
+            [frame["fl_x"], 0.,           frame["cx"]],
+            [0.,            frame["fl_y"], frame["cy"]],
+            [0.,            0.,            1.          ]
+        ])
+        w = int(frame["w"])
+        h = int(frame["h"])
+        cam_idx = 0   # unknown from json; caller can override after construction
+        return cls(cam_idx=cam_idx, K=K, R_w2c=R_w2c, X0=X0, w=w, h=h)
     
