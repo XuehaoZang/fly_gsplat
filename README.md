@@ -55,6 +55,18 @@ ns-train splatfacto \
 # Viser training viewer at http://localhost:7007
 ```
 
+```bash
+ns-train splatfacto \
+  --data ./data/ctrl_009_002 \
+  --pipeline.model.background-color black \
+  --vis viewer+tensorboard \
+  --pipeline.datamanager.dataparser.train_split_fraction 1.0
+  --pipeline.datamanager.masks-on-gpu True
+
+tensorboard --logdir outputs/ctrl_009_002
+# http://localhost:6006
+```
+
 ---
 
 ## Data layout
