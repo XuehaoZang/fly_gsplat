@@ -113,8 +113,8 @@ def generate_hull(data_dir: str) -> None:
     print(f"Seed: {seed}  triangulation residual={res*1000:.3f} mm")
 
     # sample points in 2mm sphere
-    N_SAMPLES = 1_000_000
-    RADIUS    = 0.002   # metres
+    N_SAMPLES = 10_000      # 10k points
+    RADIUS    = 0.002       # metres
     points    = sample_sphere(seed, RADIUS, N_SAMPLES)
     print(f"Sampled {N_SAMPLES} points in {RADIUS*1000:.0f}mm sphere")
 

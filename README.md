@@ -58,10 +58,16 @@ ns-train splatfacto \
 ```bash
 ns-train splatfacto \
   --data ./data/ctrl_009_002 \
-  --pipeline.model.background-color black \
   --vis viewer+tensorboard \
-  --pipeline.datamanager.dataparser.train_split_fraction 1.0
-  --pipeline.datamanager.masks-on-gpu True
+  --max-num-iterations 30000 \
+  --pipeline.model.background-color black \
+  --pipeline.model.num-downscales 0 \
+  --pipeline.model.cull-alpha-thresh 0.005 \
+  --pipeline.model.reset-alpha-every 500 \
+  --pipeline.model.warmup-length 1000 \
+  --pipeline.model.sh-degree 0 \
+  nerfstudio-data \
+  --eval-mode all
 
 tensorboard --logdir outputs/ctrl_009_002
 # http://localhost:6006

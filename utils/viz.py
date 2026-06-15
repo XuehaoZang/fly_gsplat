@@ -16,7 +16,7 @@ cam_colors = {
 def start_viser(port: int = 8080) -> viser.ViserServer:
     """Start Viser server and add world origin axes. Returns server handle."""
     server = viser.ViserServer(port=port)
-    server.scene.add_frame("/World", axes_length=0.002, axes_radius=0.0002)
+    # server.scene.add_frame("/World", axes_length=0.002, axes_radius=0.0002)
     print(f"Viser running at http://localhost:{port}")
     return server
 
