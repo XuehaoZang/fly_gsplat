@@ -81,7 +81,7 @@ def main(data_dir: Path, splat_dir: Path) -> None:
 
     # --------------------------------------------------------- Viser viewer --
     server = start_viser()
-    # add_camera_axes(server, cameras)
+    add_camera_axes(server, cameras)
 
     offset = hull_rescaled.mean(axis=0)
 

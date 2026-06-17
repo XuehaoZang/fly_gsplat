@@ -2,7 +2,7 @@ import numpy as np
 from typing import Dict, Any
 from utils.camera import CameraConfig
 
-def generate_frame_dict(img_name: str, cam: "CameraConfig") -> Dict[str, Any]:
+def generate_frame_dict(img_name: str, mask_name: str, cam: "CameraConfig") -> Dict[str, Any]:
 
     """
     Format the camera parameters into OpenGL (Nerfstudio) frame dictionary.
@@ -13,7 +13,7 @@ def generate_frame_dict(img_name: str, cam: "CameraConfig") -> Dict[str, Any]:
     cy   = cam.cy
     transform_matrix = cam.transform_opengl
 
-    return {
+    frame = {
         "file_path": f"images/{img_name}",
         "fl_x": fl_x,
         "fl_y": fl_y,
@@ -23,3 +23,6 @@ def generate_frame_dict(img_name: str, cam: "CameraConfig") -> Dict[str, Any]:
         "h": cam.h,
         "transform_matrix": transform_matrix.tolist()
     }
+    if mask_name is not None:
+        frame["mask_path"] = f"masks/{mask_name}"
+    return frame

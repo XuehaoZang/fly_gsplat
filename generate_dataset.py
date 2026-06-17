@@ -6,7 +6,7 @@ import cv2
 import h5py
 from utils.camera import CameraConfig
 from utils.dataset import generate_frame_dict
-from utils.image import crop_image, gray_to_rgba
+from utils.image import binarize_mask, crop_image, gray_to_rgba
 
 def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> None:
     """
@@ -15,12 +15,14 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
     # Path initialization and directory setup
     data_dir = Path(_data_dir)
     img_dir = data_dir / "images"
+    mask_dir = data_dir / "masks"
     mat_path = data_dir / "calibration_easyWandData.mat"
     json_path = data_dir / "transforms.json"
     
     # Path handling for server/local compatibility
     sparse_dir = Path(_sparse_dir.replace('X:', '/mnt/x').replace('\\', '/'))
     img_dir.mkdir(parents=True, exist_ok=True)
+    mask_dir.mkdir(parents=True, exist_ok=True)
 
     sparse_files = sorted(list(sparse_dir.glob("Camera*_sparse.mat")))
     if not sparse_files:
@@ -70,10 +72,15 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         cv2.imwrite(str(img_dir / img_name), im)
         # gray_to_rgba(str(img_dir / img_name), str(img_dir / img_name))
 
+        # Generate and save binary mask (white = train, black = ignore)
+        mask = binarize_mask(im, threshold=1)
+        mask_name = img_name
+        cv2.imwrite(str(mask_dir / mask_name), mask)
+
         # Append frame metadata
         # calibration: RQ decomposition of EasyWand DLT coefs
         cam = CameraConfig.easywand_dlt(ew_data, i)
-        frame = generate_frame_dict(img_name, cam)
+        frame = generate_frame_dict(img_name, mask_name, cam)
         frames.append(frame)
 
     # Export metadata to JSON
