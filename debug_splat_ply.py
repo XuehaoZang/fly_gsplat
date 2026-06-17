@@ -94,16 +94,16 @@ def main(data_dir: Path, splat_dir: Path) -> None:
                         np.tile(np.uint8([50, 200, 50]), (len(hull_rescaled), 1)),
                         name="/hull_rescaled", point_size=0.0002)
 
-    # if len(splat_pts):
-    #     add_point_cloud(server, splat_pts - offset,
-    #                     np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
-    #                     name="/splat", point_size=0.0002)
+    if len(splat_pts):
+        add_point_cloud(server, splat_pts - offset,
+                        np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
+                        name="/splat", point_size=0.0002)
 
     stop_viser(server)
 
 
 if __name__ == "__main__":
     data_dir  = Path("./data/ctrl_009_002")
-    splat_dir = Path("./outputs/ctrl_009_002/splatfacto/2026-06-11_161701")
+    splat_dir = Path("./outputs/ctrl_009_002/splatfacto/2026-06-17_145409")
 
     main(data_dir, splat_dir)

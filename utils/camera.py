@@ -74,6 +74,18 @@ class CameraConfig:
         M[:3,  3] = self.X0
         return M
 
+    def apply_crop(self, x_min: int, y_min: int, w_new: int, h_new: int) -> None:
+        """
+        In-place update of intrinsics after cropping the image.
+        x_min, y_min : top-left corner of the crop window (pixels, original image frame)
+        w_new, h_new : cropped image dimensions
+        Only cx, cy, w, h change; fx, fy, R_w2c, X0 are unaffected by cropping.
+        """
+        self.K[0, 2] -= x_min
+        self.K[1, 2] -= y_min
+        self.w = w_new
+        self.h = h_new
+        
     @classmethod
     def easywand_dlt(cls, ew, i: int)-> "CameraConfig":
         """

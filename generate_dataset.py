@@ -7,8 +7,9 @@ import h5py
 from utils.camera import CameraConfig
 from utils.dataset import generate_frame_dict
 from utils.image import binarize_mask, crop_image, gray_to_rgba
+from utils.calib import mask_centroid
 
-def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> None:
+def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int, if_crop: bool = False, crop_size: int = 160) -> None:
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
     """
@@ -61,12 +62,17 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
                 valid = (rows >= 0) & (rows < frame_size[0]) & (cols >= 0) & (cols < frame_size[1])
                 im[rows[valid], cols[valid]] = vals[valid].astype(np.uint8)
 
+        # calibration: RQ decomposition of EasyWand DLT coefs
+        cam = CameraConfig.easywand_dlt(ew_data, i)
+
         # Dynamic Cropping
-        # DO_CROP = False
-        # if DO_CROP:
-        #     im, cx, cy, w, h = crop_image(im, cx_orig, cy_orig, crop_size=160)
-        # else:
-        #     cx, cy, w, h = cx_orig, cy_orig, w_full, h_full
+        if if_crop:
+            u, v = mask_centroid(im)
+            if np.isnan(u) or np.isnan(v):
+                u, v = cam.cx, cam.cy
+                print(f"[Warning] Cam {cam_idx}: empty mask, using principal point as crop centre")
+            im, x_min, y_min = crop_image(im, u, v, crop_size=crop_size)
+            cam.apply_crop(x_min, y_min, crop_size, crop_size)
 
         # Save processed image
         cv2.imwrite(str(img_dir / img_name), im)
@@ -78,8 +84,6 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int) -> Non
         cv2.imwrite(str(mask_dir / mask_name), mask)
 
         # Append frame metadata
-        # calibration: RQ decomposition of EasyWand DLT coefs
-        cam = CameraConfig.easywand_dlt(ew_data, i)
         frame = generate_frame_dict(img_name, mask_name, cam)
         frames.append(frame)
 
@@ -100,4 +104,4 @@ if __name__ == "__main__":
     data_dir = r"./data/ctrl_009_002"
     # sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
     sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
-    generate_dataset(data_dir, sparse_dir, target_frame=10)
+    generate_dataset(data_dir, sparse_dir, target_frame=10, if_crop=True, crop_size=160)

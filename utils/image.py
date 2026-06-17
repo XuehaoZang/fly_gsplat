@@ -3,39 +3,27 @@ from typing import Dict, Any, Tuple
 import numpy as np
 import cv2
 
-# image processing
-def crop_image(im: np.ndarray, cx: float, cy: float, crop_size: int = 160) -> Tuple[np.ndarray, float, float, int, int]:
+def crop_image(im: np.ndarray, cx: float, cy: float, crop_size: int = 160) -> Tuple[np.ndarray, int, int]:
     """
-    Crop image around non-zero pixels and update camera principal points.
+    Crop image around a given centre (cx, cy), e.g. mask centroid.
+    Returns the cropped image and the crop window's top-left corner (x_min, y_min),
+    which the caller uses to update camera intrinsics via CameraConfig.apply_crop.
     """
     h_orig, w_orig = im.shape[:2]
 
-    # 1. Locate target centroid from non-zero pixels
-    y_coords, x_coords = np.nonzero(im)
-    
-    if len(y_coords) == 0:
-        center_x, center_y = w_orig // 2, h_orig // 2
-    else:
-        center_x = int(np.mean(x_coords))
-        center_y = int(np.mean(y_coords))
-
-    # 2. Calculate top-left corner of the crop window
+    # 1. Calculate top-left corner of the crop window, centred on (cx, cy)
     half_size = crop_size // 2
-    x_min = center_x - half_size
-    y_min = center_y - half_size
+    x_min = int(round(cx)) - half_size
+    y_min = int(round(cy)) - half_size
 
-    # 3. Constraint window within image boundaries
+    # 2. Constrain window within image boundaries
     x_min = max(0, min(x_min, w_orig - crop_size))
     y_min = max(0, min(y_min, h_orig - crop_size))
 
-    # 4. Execute crop
+    # 3. Execute crop
     cropped_im = im[y_min:y_min + crop_size, x_min:x_min + crop_size]
 
-    # 5. Offset principal points to maintain 3D ray consistency
-    cx_new = cx - x_min
-    cy_new = cy - y_min
-
-    return cropped_im, cx_new, cy_new, crop_size, crop_size
+    return cropped_im, x_min, y_min
 
 def gray_to_rgba(gray_path: Path, rgba_path: Path) -> bool:
     """grayscale -> RGBA PNG"""
