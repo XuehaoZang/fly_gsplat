@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.camera import CameraConfig
 from utils.viz    import start_viser, add_camera_axes, add_point_cloud, stop_viser, plot_reprojection
-from utils.ply    import export_splat, load_ply, print_stats, unrescale, characterize_sphere
+from utils.ply    import export_splat, load_ply, print_stats, unrescale, characterize_sphere, clean_ply
 
 
 def load_cameras(json_path: Path) -> list:
@@ -29,7 +29,7 @@ def load_cameras(json_path: Path) -> list:
 
 
 def main(data_dir: Path, splat_dir: Path) -> None:
-    hull_path  = data_dir  / "init_sphere.ply"
+    hull_path  = data_dir  / "init_points.ply"
     splat_path = splat_dir / "splat.ply"
     json_path  = data_dir  / "transforms.json"
     transform_path = splat_dir / "dataparser_transforms.json"
@@ -71,29 +71,35 @@ def main(data_dir: Path, splat_dir: Path) -> None:
 
     offset = hull_rescaled.mean(axis=0)
 
-    if len(hull_pts):
+    # if len(hull_pts):
         # add_point_cloud(server, hull_pts,
         #                 np.tile(np.uint8([50, 200, 50]),  (len(hull_pts),  1)),
         #                 name="/hull",  point_size=0.0002)
 
-        add_point_cloud(server, hull_rescaled - offset,
-                        np.tile(np.uint8([50, 200, 50]), (len(hull_rescaled), 1)),
-                        name="/hull_rescaled", point_size=0.0002)
+        # add_point_cloud(server, hull_rescaled - offset,
+        #                 np.tile(np.uint8([50, 200, 50]), (len(hull_rescaled), 1)),
+        #                 name="/hull_rescaled", point_size=0.0002)
 
     if len(splat_pts):
-        add_point_cloud(server, splat_pts - offset,
-                        np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
-                        name="/splat", point_size=0.0002)
+        # add_point_cloud(server, splat_pts - offset,
+        #                 np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
+        #                 name="/splat", point_size=0.0002)
+        
+        splat_clean, splat_removed = clean_ply(splat_pts, eps=0.0008, min_samples=8)
+        add_point_cloud(server, splat_clean - offset,
+                        np.tile(np.uint8([50, 50, 200]), (len(splat_clean), 1)),
+                        name="/splat_clean", point_size=0.0002)
+        
 
     splat_pts_physical = unrescale(splat_pts, R_ns, t_ns, scale) if len(splat_pts) else np.empty((0, 3))
 
     plot_reprojection(data_dir, splat_dir, cameras, hull_pts, splat_pts_physical)
-    characterize_sphere(splat_pts_physical, expected_radius=0.001)
+    # characterize_sphere(splat_pts_physical, expected_radius=0.001)
     stop_viser(server)
 
 
 if __name__ == "__main__":
-    data_dir  = Path("./data/test_03_whitebg_grayfg_nomask")
-    splat_dir = Path("./outputs/test_03_whitebg_grayfg_nomask/splatfacto/2026-07-02_162920")
+    data_dir  = Path("./data/ctrl_009_002")
+    splat_dir = Path("./outputs//ctrl_009_002/splatfacto/2026-07-02_170527")
     
     main(data_dir, splat_dir)

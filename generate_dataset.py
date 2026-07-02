@@ -9,21 +9,23 @@ from utils.dataset import generate_frame_dict
 from utils.image import binarize_mask, crop_image, gray_to_rgba
 from utils.calib import mask_centroid
 
-def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int, if_crop: bool = False, crop_size: int = 160) -> None:
+def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
+                      if_crop: bool = False, 
+                      crop_size: int = 160, 
+                      white_bg: bool = False, 
+                      if_mask: bool = False) -> None:
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
     """
     # Path initialization and directory setup
     data_dir = Path(_data_dir)
     img_dir = data_dir / "images"
-    mask_dir = data_dir / "masks"
     mat_path = data_dir / "calibration_easyWandData.mat"
     json_path = data_dir / "transforms.json"
     
     # Path handling for server/local compatibility
     sparse_dir = Path(_sparse_dir.replace('X:', '/mnt/x').replace('\\', '/'))
     img_dir.mkdir(parents=True, exist_ok=True)
-    mask_dir.mkdir(parents=True, exist_ok=True)
 
     sparse_files = sorted(list(sparse_dir.glob("Camera*_sparse.mat")))
     if not sparse_files:
@@ -51,7 +53,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int, if_cro
                 indIm = indIm.T  
             
             frame_size = (h_full, w_full)
-            im = np.zeros(frame_size, dtype=np.uint8)
+            im = np.full(frame_size, 255, dtype=np.uint8) if white_bg else np.zeros(frame_size, dtype=np.uint8)
 
             if indIm.size > 0:
                 rows = indIm[:, 0].astype(int) - 1
@@ -78,13 +80,18 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int, if_cro
         cv2.imwrite(str(img_dir / img_name), im)
         # gray_to_rgba(str(img_dir / img_name), str(img_dir / img_name))
 
-        # Generate and save binary mask (white = train, black = ignore)
-        mask = binarize_mask(im, threshold=1)
-        mask_name = img_name
-        cv2.imwrite(str(mask_dir / mask_name), mask)
+        if if_mask:
+            mask_dir = data_dir / "masks"
+            mask_dir.mkdir(parents=True, exist_ok=True)
+            # Generate and save binary mask (white = train, black = ignore)
+            mask = binarize_mask(im, threshold=1)
+            mask_name = img_name
+            cv2.imwrite(str(mask_dir / mask_name), mask)
 
-        # Append frame metadata
-        frame = generate_frame_dict(img_name, mask_name, cam)
+            # Append frame metadata
+            frame = generate_frame_dict(img_name, mask_name, cam)
+        else:
+            frame = generate_frame_dict(img_name, None, cam)
         frames.append(frame)
 
     # Export metadata to JSON
@@ -104,4 +111,4 @@ if __name__ == "__main__":
     data_dir = r"./data/ctrl_009_002"
     # sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
     sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
-    generate_dataset(data_dir, sparse_dir, target_frame=10, if_crop=False, crop_size=160)
+    generate_dataset(data_dir, sparse_dir, target_frame=10, if_crop=False, crop_size=160, white_bg=True, if_mask=False)

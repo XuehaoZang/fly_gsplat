@@ -73,3 +73,12 @@ ns-train splatfacto \
 | loss 终值 | 最低但平滑 | 抖动最大 | **最低且最平滑** |
 
 test_03 三项指标都最好——高斯数最少（没有多余 floater 去填充白色背景）、径向分布最接近真实球壳（mean 是期望值的 45%，三组里最高）、loss 最干净。
+
+test run ctrl 009 002
+1. white bg, no mask, 5k step
+2026-07-02_165328
+有初步形状，仍有散点
+ ns-train splatfacto   --data ./data/ctrl_009_002   --vis tensorboard   --max-num-iterations 5000   --pipeline.model.background-color white   nerfstudio-data   --eval-mode all
+
+12 white bg, no mask, 30k step
+ ns-train splatfacto   --data ./data/ctrl_009_002   --vis tensorboard   --max-num-iterations 30000   --pipeline.model.background-color white   nerfstudio-data   --eval-mode all

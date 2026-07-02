@@ -2,7 +2,7 @@ import subprocess
 from pathlib import Path
 import open3d as o3d
 import numpy as np
-
+from sklearn.cluster import DBSCAN
 
 def export_splat(splat_dir: Path) -> None:
     config_path = splat_dir / "config.yml"
@@ -51,3 +51,31 @@ def characterize_sphere(pts: np.ndarray, expected_radius: float) -> None:
     print(f"  radius histogram (10 bins, 0~{expected_radius*1.2:.4f}):")
     for h, e in zip(hist, edges):
         print(f"    {e:.5f}: ({h})")
+
+def clean_ply(pts: np.ndarray, eps: float, min_samples: int = 5,
+              min_cluster_frac: float = 0.02) -> tuple:
+    """
+    DBSCAN 密度聚类去噪：保留所有"足够大"的簇（可能是主体+翅膀，多个连通分量），
+    丢弃孤立小簇（floaters）。返回 (kept_pts, removed_pts)。
+
+    eps              : DBSCAN 邻域半径（米）。建议从 hull 点间平均最近邻距离的 2~3 倍开始试。
+    min_samples      : DBSCAN 核心点最小邻居数。
+    min_cluster_frac : 簇大小占总点数的最小比例，低于此比例的簇视为 floaters。
+    """
+    if len(pts) == 0:
+        return pts, np.empty((0, 3))
+
+    labels = DBSCAN(eps=eps, min_samples=min_samples).fit_predict(pts)
+    n_total = len(pts)
+
+    keep_mask = np.zeros(n_total, dtype=bool)
+    unique_labels = [l for l in set(labels) if l != -1]  # -1 = DBSCAN 噪声点，直接丢弃
+    for l in unique_labels:
+        cluster_mask = labels == l
+        if cluster_mask.sum() / n_total >= min_cluster_frac:
+            keep_mask |= cluster_mask
+
+    print(f"[clean_ply] eps={eps:.5f} clusters={len(unique_labels)} "
+          f"kept={keep_mask.sum()}/{n_total} ({100*keep_mask.sum()/n_total:.1f}%)")
+
+    return pts[keep_mask], pts[~keep_mask]
