@@ -71,14 +71,14 @@ def main(data_dir: Path, splat_dir: Path) -> None:
 
     offset = hull_rescaled.mean(axis=0)
 
-    # if len(hull_pts):
+    if len(hull_pts):
         # add_point_cloud(server, hull_pts,
         #                 np.tile(np.uint8([50, 200, 50]),  (len(hull_pts),  1)),
         #                 name="/hull",  point_size=0.0002)
 
-        # add_point_cloud(server, hull_rescaled - offset,
-        #                 np.tile(np.uint8([50, 200, 50]), (len(hull_rescaled), 1)),
-        #                 name="/hull_rescaled", point_size=0.0002)
+        add_point_cloud(server, hull_rescaled - offset,
+                        np.tile(np.uint8([50, 200, 50]), (len(hull_rescaled), 1)),
+                        name="/hull_rescaled", point_size=0.00005)
 
     if len(splat_pts):
         # add_point_cloud(server, splat_pts - offset,
@@ -89,11 +89,13 @@ def main(data_dir: Path, splat_dir: Path) -> None:
         add_point_cloud(server, splat_clean - offset,
                         np.tile(np.uint8([50, 50, 200]), (len(splat_clean), 1)),
                         name="/splat_clean", point_size=0.0002)
+        print_stats("splat_clean (rescaled)", splat_clean)
+        print()
         
 
-    splat_pts_physical = unrescale(splat_pts, R_ns, t_ns, scale) if len(splat_pts) else np.empty((0, 3))
-
-    plot_reprojection(data_dir, splat_dir, cameras, hull_pts, splat_pts_physical)
+    splat_clean_phys = unrescale(splat_clean, R_ns, t_ns, scale) if len(splat_clean) else np.empty((0, 3))
+    
+    plot_reprojection(data_dir, splat_dir, cameras, hull_pts, splat_clean_phys)
     # characterize_sphere(splat_pts_physical, expected_radius=0.001)
     stop_viser(server)
 

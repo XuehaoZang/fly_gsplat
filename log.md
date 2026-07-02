@@ -82,3 +82,12 @@ test run ctrl 009 002
 
 12 white bg, no mask, 30k step
  ns-train splatfacto   --data ./data/ctrl_009_002   --vis tensorboard   --max-num-iterations 30000   --pipeline.model.background-color white   nerfstudio-data   --eval-mode all
+
+ 基本完成，有散点，需要后续清洗
+
+| | hull | splat (raw) | splat_clean |
+|---|---|---|---|
+| n | 1666 | 1289 | 967 |
+| extent X | 0.01019 | 0.02744 (2.69x) | 0.01121 (**1.10x**) |
+| extent Y | 0.01374 | 0.04140 (3.01x) | 0.01778 (**1.29x**) |
+| extent Z | 0.00882 | 0.00882 (3.29x) | 0.00849 (**0.96x**) |
