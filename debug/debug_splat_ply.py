@@ -9,29 +9,12 @@ Edit __main__: set data_dir and splat_dir.
 import json
 import sys
 import numpy as np
-import open3d as o3d
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils.camera import CameraConfig
-from utils.viz    import start_viser, add_camera_axes, add_point_cloud, stop_viser
-
-
-def load_ply(path: Path) -> np.ndarray:
-    pcd = o3d.io.read_point_cloud(str(path))
-    return np.asarray(pcd.points)
-
-
-def print_stats(label: str, pts: np.ndarray) -> None:
-    if len(pts) == 0:
-        print(f"[{label}] EMPTY")
-        return
-    print(f"[{label}]")
-    print(f"  n       = {len(pts)}")
-    print(f"  center  = {pts.mean(axis=0)}")
-    print(f"  min     = {pts.min(axis=0)}")
-    print(f"  max     = {pts.max(axis=0)}")
-    print(f"  extent  = {pts.max(axis=0) - pts.min(axis=0)}")
+from utils.viz    import start_viser, add_camera_axes, add_point_cloud, stop_viser, plot_reprojection
+from utils.ply    import export_splat, load_ply, print_stats, unrescale, characterize_sphere
 
 
 def load_cameras(json_path: Path) -> list:
@@ -46,13 +29,14 @@ def load_cameras(json_path: Path) -> list:
 
 
 def main(data_dir: Path, splat_dir: Path) -> None:
-    hull_path  = data_dir  / "init_points.ply"
+    hull_path  = data_dir  / "init_sphere.ply"
     splat_path = splat_dir / "splat.ply"
     json_path  = data_dir  / "transforms.json"
     transform_path = splat_dir / "dataparser_transforms.json"
 
     # ---------------------------------------------------------------- stats --
     print("=" * 60)
+    export_splat(splat_dir)
 
     hull_pts = load_ply(hull_path) if hull_path.exists() else np.empty((0, 3))
     # print_stats("hull  (physical coords)", hull_pts)
@@ -101,12 +85,15 @@ def main(data_dir: Path, splat_dir: Path) -> None:
                         np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
                         name="/splat", point_size=0.0002)
 
+    splat_pts_physical = unrescale(splat_pts, R_ns, t_ns, scale) if len(splat_pts) else np.empty((0, 3))
+
+    plot_reprojection(data_dir, splat_dir, cameras, hull_pts, splat_pts_physical)
+    characterize_sphere(splat_pts_physical, expected_radius=0.001)
     stop_viser(server)
 
 
 if __name__ == "__main__":
-    data_dir  = Path("./data/ctrl_009_002_sphere")
-    splat_dir = Path("./outputs/ctrl_009_002_sphere/splatfacto/2026-07-02_103728")
+    data_dir  = Path("./data/test_03_whitebg_grayfg_nomask")
+    splat_dir = Path("./outputs/test_03_whitebg_grayfg_nomask/splatfacto/2026-07-02_162920")
     
-
     main(data_dir, splat_dir)
