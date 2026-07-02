@@ -53,6 +53,8 @@ pip install nerfstudio
 python -c "import nerfstudio; print('nerfstudio import successful! \npath:', nerfstudio.__file__)"
 ```
 
+### New
+pip install torch==2.1.2+cu118 torchvision==0.16.2+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
 ---
 
 ## Environment Verification

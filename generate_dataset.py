@@ -104,4 +104,4 @@ if __name__ == "__main__":
     data_dir = r"./data/ctrl_009_002"
     # sparse_dir = r"X:\antenna\removed\002_26112024\Sparse\Expr_002_mov_009"
     sparse_dir = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
-    generate_dataset(data_dir, sparse_dir, target_frame=10, if_crop=True, crop_size=160)
+    generate_dataset(data_dir, sparse_dir, target_frame=10, if_crop=False, crop_size=160)

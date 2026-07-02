@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fly_gsplat"
+version = "0.1.0"
+
+[project.entry-points."nerfstudio.method_configs"]
+splatfacto-custom = "models.splatfacto_custom:SplatfactoCustomMethod"
+
+[tool.setuptools.packages.find]
+include = ["models*"]

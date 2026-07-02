@@ -119,6 +119,15 @@ class CameraConfig:
         K[1, 2] = h_img - K[1, 2]
         K[1, 1] = -K[1, 1]
 
+        # Force positive focal lengths; flip sign into R_w2c (mathematically
+        # equivalent: det(R_w2c) unchanged since both row 0 and row 1 flip)
+        if K[0, 0] < 0:
+            K[0, 0] = -K[0, 0]
+            R_w2c[0, :] = -R_w2c[0, :]
+        if K[1, 1] < 0:
+            K[1, 1] = -K[1, 1]
+            R_w2c[1, :] = -R_w2c[1, :]
+        
         w = int(ew.imageWidth[0]  if isinstance(ew.imageWidth,  np.ndarray) else 1280)
         h = int(ew.imageHeight[0] if isinstance(ew.imageHeight, np.ndarray) else 800)
         return cls(cam_idx=i + 1, K=K, R_w2c=R_w2c, X0=X0, w=w, h=h)

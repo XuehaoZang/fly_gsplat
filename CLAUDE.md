@@ -1,94 +1,37 @@
-# CLAUDE.md
+# fly_gsplat
+用 Nerfstudio (splatfacto) 从多相机实验室录像重建果蝇 3D 点云。数据来自 4 相机 + EasyWand MATLAB 标定。
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## 文件读取规则
+- 除非用户明确指定文件名或路径，否则不要主动读取任何文件
+- 不要探索或索引 data/、outputs/、results/、__pycache__/ 等目录
+- 不要读取 .gitignore 中列出的任何文件或目录
+- 回答问题时优先用已知项目结构推断，不要主动 grep 或 glob
 
-## Project Overview
+## 项目结构
+- utils/camera.py — CameraConfig 核心数据结构（OpenCV↔OpenGL 转换）
+- utils/calib.py — proj, backproj, triangulate
+- utils/dataset.py — generate_frame_dict（生成 transforms.json frame）
+- utils/image.py — binarize_mask, dilate_mask, crop_image
+- utils/viz.py — Viser 可视化工具
+- generate_dataset.py — 生成 images/ + transforms.json
+- generate_hull.py — 生成 visual hull init_points.ply
+- validate_calib.py — 重投影误差验证
+- validate_dataset.py — Viser 相机几何验证
+- debug_splat_ply.py — 对比 hull 和训练后 splat 的坐标系和形态
 
-This project generates 3D Gaussian Splatting (3DGS) datasets of fruit flies from multi-camera laboratory recordings. The pipeline converts raw EasyWand MATLAB calibration + sparse pixel data into Nerfstudio-compatible training data.
+## 技术栈
+- Python 3.10 + PyTorch 2.1.2 + CUDA 11.8
+- gsplat 1.4.0 + nerfstudio 1.1.5
+- WSL2 + conda (fly_gsplat) + VS Code + MATLAB (EasyWand)
 
-## Environment
+## 工作方式
+- 你是顾问，我做所有实现，不要直接生成完整文件
+- 代码改动只给 before/after 片段，不给整文件
+- 中文回复，一次一个小步骤，等我反馈再继续
+- 不要主动运行命令，除非我明确说"你来运行"
 
-**Conda environment:** `fly_gsplat` (Python 3.10 | CUDA 11.8 | PyTorch 2.0.1)
+## 相机坐标约定
+EasyWand DLT → OpenCV (R_w2c, X0) → OpenGL (c2w, Y up, Z backward) → transforms.json
 
-```bash
-conda activate fly_gsplat
-```
-
-Windows drive data is accessed via WSL mount:
-```bash
-sudo mount -t drvfs X: /mnt/x
-```
-
-## Running the Pipeline
-
-### Step 1: Generate dataset (images + transforms.json)
-```bash
-python generate_dataset.py
-# Edit __main__ block to set data_dir, sparse_dir, target_frame
-```
-
-### Step 2: Generate Visual Hull initialization point cloud
-```bash
-python generate_init_points.py
-# Edit __main__ block to set test_data_dir
-```
-
-### Step 3: Debug camera configuration (Viser visualization)
-```bash
-python debug_camera_config.py
-# Opens interactive 3D viewer at http://localhost:8080
-```
-
-### Step 4: Train with Nerfstudio
-```bash
-ns-train splatfacto --data ./data \
-  --pipeline.model.background-color black \
-  --pipeline.datamanager.masks-on-gpu True
-# Viser training viewer at http://localhost:7007
-```
-
-## Architecture
-
-### Data Flow
-```
-X:\experiment\Sparse\*.mat + calibration_easyWandData.mat
-        ↓ generate_dataset.py
-data/images/P{frame}CAM{1-4}.png + data/transforms.json
-        ↓ generate_init_points.py
-data/init_points.ply
-        ↓ ns-train splatfacto
-outputs/ (trained 3DGS model)
-```
-
-### Key Files
-
-- **`generate_dataset.py`** — Reads EasyWand `.mat` calibration, reconstructs per-frame images from sparse pixel index files (`Camera*_sparse.mat`), and outputs `transforms.json` in Nerfstudio `OPENCV` camera model format.
-- **`generate_init_points.py`** — Visual Hull reconstruction: samples random 3D points in a bounding box, projects them into each camera's binary mask, and keeps points that pass a vote threshold (default: ≥2 cameras). Outputs `init_points.ply`.
-- **`debug_camera_config.py`** — Loads `transforms.json`, generates per-camera mask frustum point clouds, and launches Viser for interactive 3D inspection. Used for verifying camera geometry before training.
-- **`utils.py`** — Shared utilities: `generate_frame_dict` (Nerfstudio frame format), `crop_image`, `binarize_mask`, `dilate_mask`, `compute_target_center` (least-squares ray intersection), `plot_camera_coordinates` / `plot_point_cloud_viser` (Viser wrappers that block until "Continue" is clicked in browser).
-
-### Camera Convention
-
-- **Input (EasyWand)**: world-to-camera rotation `R_w2c`, camera center `X0` (DLT translation vector)
-- **Output (Nerfstudio)**: camera-to-world 4×4 `transform_matrix` in OpenGL convention (−Z forward, Y up)
-- The code has multiple commented-out calibration approaches (DLT, RQ decomposition, Roni's `.mat`) reflecting active experimentation on the correct axis/sign conventions.
-
-### Data Layout
-```
-data/  (or data2/)
-├── images/           # Reconstructed grayscale PNGs (1280×800)
-├── masks/            # Binary masks (fly=white, background=black)
-├── debug/            # Centroid and mask verification images
-├── transforms.json   # Nerfstudio camera metadata
-├── init_points.ply   # Visual Hull initialization point cloud
-└── calibration_easyWandData.mat  # EasyWand MATLAB calibration
-```
-
-## Dependencies
-
-Key packages beyond requirements.txt: `h5py` (sparse `.mat` reading), `open3d` (PLY I/O), `viser` (3D visualization), `nerfstudio`, `gsplat==1.4.0`.
-
-Install gsplat with pre-built wheel:
-```bash
-pip install gsplat==1.4.0 --index-url https://docs.gsplat.studio/whl/pt20cu118
-```
+## 实验记录
+所有实验结果记录在对话里，不写入代码注释

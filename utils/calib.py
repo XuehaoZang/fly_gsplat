@@ -69,4 +69,11 @@ def rq_decompose_dlt(ew, i: int):
         K[1, 2] = h_img - K[1, 2]
         K[1, 1] = -K[1, 1]
 
+        # Force positive focal lengths; flip sign into R_w2c
+        if K[0, 0] < 0:
+            K[0, 0] = -K[0, 0]
+            R_w2c[0, :] = -R_w2c[0, :]
+        if K[1, 1] < 0:
+            K[1, 1] = -K[1, 1]
+            R_w2c[1, :] = -R_w2c[1, :]
         return K, R_w2c, X0
