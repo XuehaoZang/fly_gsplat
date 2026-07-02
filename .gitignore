@@ -1,7 +1,6 @@
 # Data and output
 data/
 outputs/
-debug/
 
 # Python
 __pycache__/
