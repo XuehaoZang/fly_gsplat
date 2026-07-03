@@ -21,14 +21,24 @@ class SplatfactoCheckpointModel(SplatfactoModel):
         trainer = training_callback_attributes.trainer
         if trainer is not None:
             ckpt_dir = trainer.base_dir / "debug_checkpoints"
+            final_step = trainer.config.max_num_iterations - 1
         else:
             ckpt_dir = Path(self.config.checkpoint_dir)
+            final_step = self.config.checkpoint_every
 
         cbs.append(
             TrainingCallback(
                 [TrainingCallbackLocation.AFTER_TRAIN_ITERATION],
                 self.dump_means,
                 update_every_num_iters=self.config.checkpoint_every,
+                args=[ckpt_dir],
+            )
+        )
+        cbs.append(
+            TrainingCallback(
+                [TrainingCallbackLocation.AFTER_TRAIN_ITERATION],
+                self.dump_means,
+                iters=[final_step],
                 args=[ckpt_dir],
             )
         )

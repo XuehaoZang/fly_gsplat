@@ -24,16 +24,13 @@ def plot_reprojection(data_dir: Path, splat_dir: Path, cameras: list,
     with open(data_dir / "transforms.json") as f:
         frames = json.load(f)["frames"]
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    axes = axes.flatten()
-
     for idx, (cam, frame) in enumerate(zip(cameras, frames)):
         img_path = data_dir / frame["file_path"]
         bg = cv2.imread(str(img_path), cv2.IMREAD_GRAYSCALE)
         if bg is None:
             bg = np.zeros((cam.h, cam.w))
 
-        ax = axes[idx]
+        fig, ax = plt.subplots(figsize=(8, 5))
         ax.imshow(bg, cmap='gray', vmin=0, vmax=255)
 
         us, vs = [], []
@@ -41,16 +38,13 @@ def plot_reprojection(data_dir: Path, splat_dir: Path, cameras: list,
             u, v, d = proj(cam.K, cam.R_w2c, cam.X0, X)
             if d > 0:
                 us.append(u); vs.append(v)
-        ax.scatter(us, vs, s=2, c='green', alpha=0.15, edgecolors='none')
-
-        ax.set_title(f"Cam{cam.cam_idx}")
+        ax.scatter(us, vs, s=2, c='lime', alpha=0.15, edgecolors='none')
         ax.axis('off')
 
-    plt.tight_layout()
-    out_path = splat_dir / "debug_reproj.png"
-    plt.savefig(str(out_path), dpi=200, bbox_inches='tight', facecolor='white')
-    plt.close(fig)
-    print(f"[Saved] {out_path}")
+        out_path = splat_dir / f"debug_reproj_cam{cam.cam_idx}.png"
+        plt.savefig(str(out_path), dpi=300, bbox_inches='tight', facecolor='white')
+        plt.close(fig)
+        print(f"[Saved] {out_path}")
 
 def start_viser(port: int = 8080) -> viser.ViserServer:
     """Start Viser server and add world origin axes. Returns server handle."""

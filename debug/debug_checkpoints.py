@@ -54,7 +54,10 @@ def debug_checkpoints(data_dir: str, splat_dir: str, checkpoint_dir: str) -> Non
 
         # 每个 checkpoint 存一张重投影图，文件名带 step 号方便逐帧翻看
         plot_reprojection(data_dir, out_dir, cameras, hull_pts, means_physical)
-        (out_dir / "debug_reproj.png").rename(out_dir / f"reproj_step{step:05d}.png")
+        for cam in cameras:
+            src = out_dir / f"debug_reproj_cam{cam.cam_idx}.png"
+            if src.exists():
+                src.rename(out_dir / f"reproj_step{step:05d}_cam{cam.cam_idx}.png")
 
     extents = np.array(extents)
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
