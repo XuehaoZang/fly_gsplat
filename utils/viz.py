@@ -19,7 +19,6 @@ cam_colors = {
         4: [255, 255, 30]
     }
 
-
 def plot_reprojection(data_dir: Path, splat_dir: Path, cameras: list,
                        hull_pts: np.ndarray, splat_pts_physical: np.ndarray) -> None:
     with open(data_dir / "transforms.json") as f:
@@ -35,20 +34,18 @@ def plot_reprojection(data_dir: Path, splat_dir: Path, cameras: list,
             bg = np.zeros((cam.h, cam.w))
 
         ax = axes[idx]
-        ax.imshow(bg, cmap='gray')
+        ax.imshow(bg, cmap='gray', vmin=0, vmax=255)
 
-        for pts, color, label in [(hull_pts, 'lime', 'hull'), (splat_pts_physical, 'magenta', 'splat')]:
-            us, vs = [], []
-            for X in pts:
-                u, v, d = proj(cam.K, cam.R_w2c, cam.X0, X)
-                if d > 0:
-                    us.append(u); vs.append(v)
-            ax.scatter(us, vs, s=1.5, c=color, alpha=0.5, label=label)
+        us, vs = [], []
+        for X in splat_pts_physical:
+            u, v, d = proj(cam.K, cam.R_w2c, cam.X0, X)
+            if d > 0:
+                us.append(u); vs.append(v)
+        ax.scatter(us, vs, s=2, c='green', alpha=0.15, edgecolors='none')
 
         ax.set_title(f"Cam{cam.cam_idx}")
         ax.axis('off')
 
-    axes[0].legend(loc='upper right', fontsize=8)
     plt.tight_layout()
     out_path = splat_dir / "debug_reproj.png"
     plt.savefig(str(out_path), dpi=200, bbox_inches='tight', facecolor='white')

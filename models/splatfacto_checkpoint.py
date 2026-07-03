@@ -10,27 +10,34 @@ from typing import Type, List
 @dataclass
 class SplatfactoCheckpointConfig(SplatfactoModelConfig):
     _target: Type = field(default_factory=lambda: SplatfactoCheckpointModel)
-    checkpoint_every: int = 500
+    checkpoint_every: int = 1000
     checkpoint_dir: str = "./debug_checkpoints"
 
 
 class SplatfactoCheckpointModel(SplatfactoModel):
     def get_training_callbacks(self, training_callback_attributes: TrainingCallbackAttributes) -> List[TrainingCallback]:
         cbs = super().get_training_callbacks(training_callback_attributes)
+
+        trainer = training_callback_attributes.trainer
+        if trainer is not None:
+            ckpt_dir = trainer.base_dir / "debug_checkpoints"
+        else:
+            ckpt_dir = Path(self.config.checkpoint_dir)
+
         cbs.append(
             TrainingCallback(
                 [TrainingCallbackLocation.AFTER_TRAIN_ITERATION],
                 self.dump_means,
                 update_every_num_iters=self.config.checkpoint_every,
+                args=[ckpt_dir],
             )
         )
         return cbs
 
-    def dump_means(self, step: int):
-        out_dir = Path(self.config.checkpoint_dir)
-        out_dir.mkdir(parents=True, exist_ok=True)
+    def dump_means(self, checkpoint_dir: Path, step: int):
+        checkpoint_dir.mkdir(parents=True, exist_ok=True)
         means = self.means.detach().cpu().numpy()
-        np.save(out_dir / f"step_{step:05d}_means.npy", means)
+        np.save(checkpoint_dir / f"step_{step:05d}_means.npy", means)
 
 from nerfstudio.engine.trainer import TrainerConfig
 from nerfstudio.plugins.types import MethodSpecification
@@ -45,7 +52,10 @@ splatfacto_checkpoint_method = MethodSpecification(
     config=TrainerConfig(
         method_name="splatfacto-checkpoint",
         pipeline=VanillaPipelineConfig(
-            datamanager=FullImageDatamanagerConfig(dataparser=NerfstudioDataParserConfig()),
+            datamanager=FullImageDatamanagerConfig(
+                dataparser=NerfstudioDataParserConfig(load_3D_points=True),
+                cache_images_type="uint8",
+            ),
             model=SplatfactoCheckpointConfig(),
         ),
         optimizers={
