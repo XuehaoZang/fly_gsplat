@@ -92,7 +92,7 @@ def generate_hull(data_dir: str, if_viser: bool = True) -> None:
         cam = CameraConfig.from_opengl(frame)
         cam.cam_idx = idx + 1
 
-        binary  = binarize_mask(im, threshold=1, dark_bg=False)
+        binary  = binarize_mask(im, threshold=1, dark_bg=False)     # TODO need to input as param
         dilated = dilate_mask(binary, kernel_size=3, iterations=2)
 
         u, v = mask_centroid(binary)

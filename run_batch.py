@@ -92,7 +92,7 @@ def main():
         print(f"\n{'='*20} Frame {f} {'='*20}")
         results.append(process_frame(f))
 
-    out_path = Path(f"batch_results_{datetime.now():%Y%m%d_%H%M%S}.json")
+    out_path = Path(f"./outputs/batch_results_{datetime.now():%Y%m%d_%H%M%S}.json")
     with open(out_path, "w") as fh:
         json.dump(results, fh, indent=2)
 

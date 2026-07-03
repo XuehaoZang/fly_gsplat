@@ -7,7 +7,7 @@ name = "fly_gsplat"
 version = "0.1.0"
 
 [project.entry-points."nerfstudio.method_configs"]
-splatfacto-custom = "models.splatfacto_custom:SplatfactoCustomMethod"
+splatfacto-checkpoint = "models.splatfacto_checkpoint:splatfacto_checkpoint_method"
 
 [tool.setuptools.packages.find]
 include = ["models*"]

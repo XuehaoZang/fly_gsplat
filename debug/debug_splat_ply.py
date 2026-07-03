@@ -101,7 +101,7 @@ def main(data_dir: Path, splat_dir: Path) -> None:
 
 
 if __name__ == "__main__":
-    data_dir  = Path("./data/ctrl_009_002")
-    splat_dir = Path("./outputs//ctrl_009_002/splatfacto/2026-07-02_170527")
+    data_dir  = Path("./data/ctrl_009_002_f10")
+    splat_dir = Path("./outputs//ctrl_009_002_f10/splatfacto/2026-07-03_102523")
     
     main(data_dir, splat_dir)

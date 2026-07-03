@@ -1,6 +1,7 @@
 # Data and output
 data/
 outputs/
+debug_checkpoints/
 
 # Python
 __pycache__/
