@@ -72,7 +72,7 @@ def visual_hull_vote(points: np.ndarray,
 
 
 # -------------------------------------------------------------------- main --
-def generate_hull(data_dir: str) -> None:
+def generate_hull(data_dir: str, if_viser: bool = True) -> None:
     base_dir  = Path(data_dir)
     json_path = base_dir / "transforms.json"
     ply_path  = base_dir / "init_points.ply"
@@ -92,7 +92,7 @@ def generate_hull(data_dir: str) -> None:
         cam = CameraConfig.from_opengl(frame)
         cam.cam_idx = idx + 1
 
-        binary  = binarize_mask(im, threshold=1)
+        binary  = binarize_mask(im, threshold=1, dark_bg=False)
         dilated = dilate_mask(binary, kernel_size=3, iterations=2)
 
         u, v = mask_centroid(binary)
@@ -141,13 +141,14 @@ def generate_hull(data_dir: str) -> None:
     print(f"Saved -> {ply_path}")
 
     # Viser: hull + camera axes
-    server = start_viser()
-    add_camera_axes(server, cameras)
-    add_point_cloud(server, final,
-                    np.tile(np.uint8([50, 150, 255]), (len(final), 1)),
-                    name="/hull")
-    stop_viser(server)
+    if if_viser:
+        server = start_viser()
+        add_camera_axes(server, cameras)
+        add_point_cloud(server, final,
+                        np.tile(np.uint8([50, 150, 255]), (len(final), 1)),
+                        name="/hull")
+        stop_viser(server)
 
 
 if __name__ == "__main__":
-    generate_hull("./data/ctrl_009_002")
+    generate_hull("./data/ctrl_009_002",if_viser=True)

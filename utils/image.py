@@ -41,19 +41,24 @@ def gray_to_rgba(gray_path: Path, rgba_path: Path) -> bool:
     cv2.imwrite(str(rgba_path), rgba)
     return True
 
-def binarize_mask(im: np.ndarray, threshold: int = 1) -> np.ndarray:
+def binarize_mask(im: np.ndarray, threshold: int = 1, dark_bg: bool = True) -> np.ndarray:
     """
     Convert input image to a binary mask, isolating target areas.
+    dark_bg=True  : background is dark, foreground is bright
+    dark_bg=False : background is bright (white), foreground is darker
     """
     # 1. Convert to grayscale if image is colored (H, W, 3)
     if len(im.shape) == 3:
         gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     else:
         gray = im
-        
-    # 2. Thresholding: pixels > threshold become 255 (white)
-    _, binary = cv2.threshold(gray, threshold, 255, cv2.THRESH_BINARY)
-    
+
+    # 2. Thresholding
+    if dark_bg:
+        _, binary = cv2.threshold(gray, threshold, 255, cv2.THRESH_BINARY)
+    else:
+        _, binary = cv2.threshold(gray, 255 - threshold, 255, cv2.THRESH_BINARY_INV)
+
     return binary
 
 def dilate_mask(im: np.ndarray, kernel_size: int = 3, iterations: int = 2) -> np.ndarray:

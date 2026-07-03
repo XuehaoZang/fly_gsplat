@@ -13,14 +13,15 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
                       if_crop: bool = False, 
                       crop_size: int = 160, 
                       white_bg: bool = False, 
-                      if_mask: bool = False) -> None:
+                      if_mask: bool = False,
+                      calib_dir: str = None) -> None:
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
     """
     # Path initialization and directory setup
     data_dir = Path(_data_dir)
     img_dir = data_dir / "images"
-    mat_path = data_dir / "calibration_easyWandData.mat"
+    mat_path = Path(calib_dir if calib_dir is not None else _data_dir) / "calibration_easyWandData.mat"
     json_path = data_dir / "transforms.json"
     
     # Path handling for server/local compatibility
