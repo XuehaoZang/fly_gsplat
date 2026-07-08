@@ -37,7 +37,7 @@ def load_cameras(json_path: Path) -> list:
 def process_frame(frame_idx: int) -> dict:
     """单帧完整流程，不抛异常中断整体批处理，失败原样记录到结果里。"""
     base_dir =  f"./data/{BASE_NAME}"
-    data_dir  = Path(f"./data/{BASE_NAME}_f{frame_idx}")
+    data_dir  = Path(f"./data/{BASE_NAME}/f{frame_idx:04d}")
     exp_name  = f"{BASE_NAME}/f{frame_idx:04d}"
 
     try:
@@ -105,7 +105,7 @@ def main():
         if r["status"] != "ok":
             continue
         f = r["frame"]
-        data_dir = f"./data/{BASE_NAME}_f{f}"
+        data_dir = f"./data/{BASE_NAME}/f{f:04d}"
         splat_dir = r["splat_dir"]
         try:
             debug_checkpoints(

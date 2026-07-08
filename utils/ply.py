@@ -18,6 +18,30 @@ def load_ply(path: Path) -> np.ndarray:
     pcd = o3d.io.read_point_cloud(str(path))
     return np.asarray(pcd.points)
 
+from plyfile import PlyData
+
+def load_ply_with_attrs(path: Path) -> dict:
+    """
+    读取 gaussian-splat ply 的 xyz + opacity + scale，并做激活函数还原
+    （splat.ply 里存的是训练用的原始参数：opacity 是 sigmoid 之前的 logit，
+    scale 是 log 之前的值，需要 sigmoid/exp 还原成真实物理量）。
+    缺失字段时优雅降级为 None，调用方需要检查。
+    """
+    ply = PlyData.read(str(path))
+    v = ply["vertex"]
+    xyz = np.stack([v["x"], v["y"], v["z"]], axis=-1)
+
+    opacity = None
+    if "opacity" in v.data.dtype.names:
+        opacity = 1.0 / (1.0 + np.exp(-v["opacity"]))  # sigmoid
+
+    scale = None
+    scale_names = [f"scale_{i}" for i in range(3)]
+    if all(n in v.data.dtype.names for n in scale_names):
+        scale_raw = np.stack([v[n] for n in scale_names], axis=-1)
+        scale = np.exp(scale_raw).mean(axis=-1)  # exp还原，三轴取平均作为标量尺度
+
+    return {"xyz": xyz, "opacity": opacity, "scale": scale}
 
 def print_stats(label: str, pts: np.ndarray) -> None:
     if len(pts) == 0:
