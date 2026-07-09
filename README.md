@@ -71,6 +71,8 @@ ns-train splatfacto \
 
 tensorboard --logdir outputs/ctrl_009_002
 # http://localhost:6006
+
+ns-viewer --load-config outputs/test_04_sweep_cull_alpha/04_stopsplit6k_reset3/splatfacto-checkpoint/2026-07-08_123232/config.yml
 ```
 
 ---

@@ -103,3 +103,24 @@ def clean_ply(pts: np.ndarray, eps: float, min_samples: int = 5,
           f"kept={keep_mask.sum()}/{n_total} ({100*keep_mask.sum()/n_total:.1f}%)")
 
     return pts[keep_mask], pts[~keep_mask]
+
+def analyze_scale_ratio(splat_path: Path) -> dict:
+    """统计每个高斯 max(scale)/min(scale) 的比值分布，衡量"尖刺程度"。
+    比值=1 是完美球形，比值越大说明这个高斯被拉得越细长（尖刺）。"""
+    ply = PlyData.read(str(splat_path))
+    v = ply["vertex"]
+    scale_names = [f"scale_{i}" for i in range(3)]
+    if not all(n in v.data.dtype.names for n in scale_names):
+        return {"error": "no scale fields found"}
+
+    scales = np.exp(np.stack([v[n] for n in scale_names], axis=-1))  # 还原log-scale
+    ratios = scales.max(axis=-1) / np.clip(scales.min(axis=-1), 1e-12, None)
+
+    return {
+        "n": len(ratios),
+        "median": float(np.median(ratios)),
+        "p90": float(np.percentile(ratios, 90)),
+        "p95": float(np.percentile(ratios, 95)),
+        "max": float(ratios.max()),
+        "frac_over_10": float((ratios > 10).mean()),  # 超过官方默认阈值的比例
+    }

@@ -36,7 +36,7 @@ def main(data_dir: Path, splat_dir: Path) -> None:
 
     # ---------------------------------------------------------------- stats --
     print("=" * 60)
-    export_splat(splat_dir)
+    # export_splat(splat_dir)
 
     hull_pts = load_ply(hull_path) if hull_path.exists() else np.empty((0, 3))
     # print_stats("hull  (physical coords)", hull_pts)
@@ -81,14 +81,14 @@ def main(data_dir: Path, splat_dir: Path) -> None:
                         name="/hull_rescaled", point_size=0.00005)
 
     if len(splat_pts):
-        # add_point_cloud(server, splat_pts - offset,
-        #                 np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
-        #                 name="/splat", point_size=0.0002)
+        add_point_cloud(server, splat_pts - offset,
+                        np.tile(np.uint8([200, 50, 200]), (len(splat_pts), 1)),
+                        name="/splat", point_size=0.0002)
         
         splat_clean, splat_removed = clean_ply(splat_pts, eps=0.0008, min_samples=8)
-        add_point_cloud(server, splat_clean - offset,
-                        np.tile(np.uint8([50, 50, 200]), (len(splat_clean), 1)),
-                        name="/splat_clean", point_size=0.0002)
+        # add_point_cloud(server, splat_clean - offset,
+        #                 np.tile(np.uint8([50, 50, 200]), (len(splat_clean), 1)),
+        #                 name="/splat_clean", point_size=0.0002)
         print_stats("splat_clean (rescaled)", splat_clean)
         print()
         
@@ -101,7 +101,7 @@ def main(data_dir: Path, splat_dir: Path) -> None:
 
 
 if __name__ == "__main__":
-    data_dir  = Path("./data/ctrl_009_002_f10")
-    splat_dir = Path("./outputs//ctrl_009_002_f10/splatfacto/2026-07-03_102523")
+    data_dir  = Path("./data/ctrl_009_002/f0010")
+    splat_dir = Path("./outputs//ctrl_009_002/f0010/splatfacto-checkpoint/2026-07-03_183541")
     
     main(data_dir, splat_dir)

@@ -78,6 +78,8 @@ def debug_checkpoints(data_dir: str, splat_dir: str, checkpoint_dir: str) -> Non
     print(f"[Saved] {checkpoint_dir / 'convergence_curves.png'}")
     print(f"[Saved] {len(ckpts)} reprojection images -> {out_dir}")
 
+    return {"steps": steps, "n_raw": n_raw, "extents": extents, "hull_extent": hull_extent}
+
 if __name__ == "__main__":
     splat_dir = Path("./outputs/ctrl_009_002_f10/splatfacto-checkpoint/2026-07-03_114927")
     debug_checkpoints(
