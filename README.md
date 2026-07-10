@@ -56,7 +56,7 @@ ns-train splatfacto \
 ```
 
 ```bash
- ns-train splatfacto-checkpoint   --data ./data/ctrl_009_002_test  --vis tensorboard --max-num-iterations 400 --pipeline.model.background-color white  --pipeline.model.save_stats True  --pipeline.model.stats_every 100   --pipeline.model.save_points True --pipeline.model.points_every 200   --pipeline.model.save_eval_images True --pipeline.model.eval_images_every 200
+ ns-train splatfacto-checkpoint   --data ./data/ctrl_009_002_test  --vis tensorboard --max-num-iterations 5000 --pipeline.model.background-color white  --pipeline.model.save_stats True  --pipeline.model.stats_every 1000   --pipeline.model.save_points True --pipeline.model.points_every 5000   --pipeline.model.save_eval_images True --pipeline.model.eval_images_every 1000
 
 tensorboard --logdir outputs/ctrl_009_002
 # http://localhost:6006

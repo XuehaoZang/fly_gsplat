@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python /tmp/claude-1000/-home-computer0-fly-project-fly-gsplat/b891b63a-a668-4bf3-949b-795eb88e0056/scratchpad/smoke_test.py)",
+      "Bash(python -c ' *)",
+      "Bash(python /tmp/claude-1000/-home-computer0-fly-project-fly-gsplat/b891b63a-a668-4bf3-949b-795eb88e0056/scratchpad/smoke_test_v3.py)",
+      "Bash(echo \"launched pid $!\")",
+      "Bash(kill -0 3113198)"
+    ]
+  }
+}

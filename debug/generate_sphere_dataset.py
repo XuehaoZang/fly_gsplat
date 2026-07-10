@@ -17,10 +17,14 @@ def generate_synthetic_dataset(
     radius: float = 0.001,
     n_points: int = 1000,
     color_mode: str = "GRAY",        # "GRAY", "RGB", "RGBA"
-    bg_color: tuple = (0, 0, 0),     # 背景颜色 (B, G, R) 或单通道灰度
-    fg_color: tuple = (255, 255, 255), # 球体颜色 (B, G, R) 或单通道灰度
+    bg_color: tuple | int = (0, 0, 0),     # 背景颜色 (B, G, R) 或单通道灰度
+    fg_color: tuple | int = (255, 255, 255), # 球体颜色 (B, G, R) 或单通道灰度（striped 模式下为条纹颜色1）
+    fg_color2: tuple | int = (0, 0, 0),     # striped 模式下条纹颜色2（与 fg_color 间隔）
     transparent_bg: bool = False,    # 是否透明背景
-    generate_mask: bool = False      # 是否生成 mask 文件
+    generate_mask: bool = False,     # 是否生成 mask 文件
+    texture_mode: str = "uniform",   # "uniform" 纯色填充（现有行为）/ "striped" 双色纬度条纹
+    n_stripes: int = 8,              # striped 模式条纹数
+    point_px_radius: int = 3         # striped 模式每个点画圆半径，需试渲染确认无缝隙
 ) -> None:
     
     src_path = Path(src_dir)
@@ -53,6 +57,10 @@ def generate_synthetic_dataset(
     ], axis=1)
     sphere_points = centroid + radius * unit_sphere
 
+    # 按纬度 phi 分 n_stripes 条黑白相间的带，phi ∈ [0, π]
+    stripe_idx = np.floor(phi / (np.pi / n_stripes)).astype(int)
+    is_white_stripe = (stripe_idx % 2 == 0)
+
     sphere_pcd = o3d.geometry.PointCloud()
     sphere_pcd.points = o3d.utility.Vector3dVector(sphere_points)
     sphere_pcd.colors = o3d.utility.Vector3dVector(np.tile([0.0, 1.0, 0.0], (n_points, 1)))
@@ -73,35 +81,47 @@ def generate_synthetic_dataset(
     for idx, frame in enumerate(src_transforms["frames"]):
         cam = CameraConfig.from_opengl(frame)
         
-        us, vs = [], []
-        for X in sphere_points:
+        us, vs, ds, white_flags = [], [], [], []
+        for X, is_white in zip(sphere_points, is_white_stripe):
             u, v, d = proj(cam.K, cam.R_w2c, cam.X0, X)
             if d > 0:
                 us.append(u)
                 vs.append(v)
+                ds.append(d)
+                white_flags.append(is_white)
         
         # 确定图像通道数和基础颜色
         if color_mode == "GRAY":
             img = np.full((cam.h, cam.w), bg_color[0] if isinstance(bg_color, tuple) else bg_color, dtype=np.uint8)
             draw_color = fg_color[0] if isinstance(fg_color, tuple) else fg_color
+            draw_color2 = fg_color2[0] if isinstance(fg_color2, tuple) else fg_color2
         elif color_mode == "RGB":
             img = np.full((cam.h, cam.w, 3), bg_color[:3], dtype=np.uint8)
             draw_color = fg_color[:3]
+            draw_color2 = fg_color2[:3]
         elif color_mode == "RGBA":
             img = np.full((cam.h, cam.w, 4), bg_color[:3] + (0 if transparent_bg else 255,), dtype=np.uint8)
             draw_color = fg_color[:3] + (255,)
+            draw_color2 = fg_color2[:3] + (255,)
 
         mask_img = np.zeros((cam.h, cam.w), dtype=np.uint8)
 
-        # 绘制投影凸包
-        if len(us) >= 3:
-            pts2d = np.stack([us, vs], axis=1).astype(np.float32).reshape(-1, 1, 2)
-            hull_2d = cv2.convexHull(pts2d)
-            
-            # 填充合成图像
-            cv2.fillConvexPoly(img, hull_2d.astype(np.int32), draw_color)
-            # 填充二值掩码 (供后续可能使用)
-            cv2.fillConvexPoly(mask_img, hull_2d.astype(np.int32), 255)
+        if texture_mode == "uniform":
+            if len(us) >= 3:
+                pts2d = np.stack([us, vs], axis=1).astype(np.float32).reshape(-1, 1, 2)
+                hull_2d = cv2.convexHull(pts2d)
+                cv2.fillConvexPoly(img, hull_2d.astype(np.int32), draw_color)
+                cv2.fillConvexPoly(mask_img, hull_2d.astype(np.int32), 255)
+        elif texture_mode == "striped":
+            # painter's algorithm：深度从远到近排序，近处的圆后画自然覆盖远处
+            order = np.argsort(ds)[::-1]
+            for k in order:
+                u_i, v_i = int(round(us[k])), int(round(vs[k]))
+                color = draw_color if white_flags[k] else draw_color2
+                cv2.circle(img, (u_i, v_i), point_px_radius, color, -1)
+                cv2.circle(mask_img, (u_i, v_i), point_px_radius, 255, -1)
+        else:
+            raise ValueError(f"unknown texture_mode: {texture_mode}")
         
         # 保存主图
         img_name = Path(frame["file_path"]).name
@@ -153,28 +173,13 @@ def generate_synthetic_dataset(
 
 if __name__ == "__main__":
     REPO = Path("/home/computer0/fly_project/fly_gsplat")
-    SRC_DIR = REPO / "data" / "ctrl_009_002"
-    
-    # 测试集 1: 灰度、黑底白球、无 Mask (最基础的 Baseline)
+    SRC_DIR = REPO / "data" / "ctrl_009_002_test"
+
+    # 测试集 6: 白色背景、球体灰/深灰双色条纹、无 Mask (验证 striped 模式遮挡是否正确、条纹是否无缝)
     generate_synthetic_dataset(
         src_dir=str(SRC_DIR),
-        dst_dir=str(REPO / "data" / "test_01_gray_nomask"),
+        dst_dir=str(REPO / "data" / "test_06_gray_striped"),
         color_mode="GRAY",
-        bg_color=0, fg_color=255, generate_mask=False
-    )
-
-    # 测试集 2: RGBA 透明背景、白色球、无 Mask
-    generate_synthetic_dataset(
-        src_dir=str(SRC_DIR),
-        dst_dir=str(REPO / "data" / "test_02_rgba_nomask"),
-        color_mode="RGBA", transparent_bg=True,
-        bg_color=(0,0,0), fg_color=(255,255,255), generate_mask=False
-    )
-
-    # 测试集 3: RGB 白底灰球、无 Mask (测试高亮背景的反向梯度影响)
-    generate_synthetic_dataset(
-        src_dir=str(SRC_DIR),
-        dst_dir=str(REPO / "data" / "test_03_whitebg_grayfg_nomask"),
-        color_mode="RGB",
-        bg_color=(255,255,255), fg_color=(128,128,128), generate_mask=False
+        bg_color=255, fg_color=180, fg_color2=80, generate_mask=False,
+        texture_mode="striped", n_stripes=8, point_px_radius=3
     )
