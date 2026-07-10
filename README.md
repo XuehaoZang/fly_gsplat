@@ -56,18 +56,7 @@ ns-train splatfacto \
 ```
 
 ```bash
-ns-train splatfacto \
-  --data ./data/ctrl_009_002 \
-  --vis viewer+tensorboard \
-  --max-num-iterations 30000 \
-  --pipeline.model.background-color black \
-  --pipeline.model.num-downscales 0 \
-  --pipeline.model.cull-alpha-thresh 0.005 \
-  --pipeline.model.reset-alpha-every 500 \
-  --pipeline.model.warmup-length 1000 \
-  --pipeline.model.sh-degree 0 \
-  nerfstudio-data \
-  --eval-mode all
+ ns-train splatfacto-checkpoint   --data ./data/ctrl_009_002_test  --vis tensorboard --max-num-iterations 400 --pipeline.model.background-color white  --pipeline.model.save_stats True  --pipeline.model.stats_every 100   --pipeline.model.save_points True --pipeline.model.points_every 200   --pipeline.model.save_eval_images True --pipeline.model.eval_images_every 200
 
 tensorboard --logdir outputs/ctrl_009_002
 # http://localhost:6006
