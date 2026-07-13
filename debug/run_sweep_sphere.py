@@ -401,9 +401,15 @@ def plot_marginal_effects(records: list):
                     data.append([match[0]["recovery_delta_pct"]])
             if not data:
                 continue
-            bp = ax.boxplot(data, positions=positions, widths=width * 0.9, patch_artist=True)
+            # Each box holds exactly one sample (no repeated seeds), so Q1==median==Q3 and
+            # the box patch collapses to zero height -- nothing visible gets drawn from its
+            # facecolor. What actually renders is the median line, which defaults to
+            # matplotlib's 'C1' (orange) regardless of scale_reg, silently hiding the "off"
+            # series. Explicitly color the median line (and box edge) to fix that.
+            bp = ax.boxplot(data, positions=positions, widths=width * 0.9, patch_artist=True,
+                             medianprops=dict(color=COLORS[sr], linewidth=2.5))
             for box in bp['boxes']:
-                box.set(facecolor=COLORS[sr], hatch=HATCHES[tx], alpha=0.6)
+                box.set(facecolor=COLORS[sr], edgecolor=COLORS[sr], hatch=HATCHES[tx], alpha=0.6)
         ax.set_xticks(range(len(x_categories)))
         ax.set_xticklabels(x_categories, rotation=20)
         ax.set_ylabel("recovery_delta_pct (%)")
