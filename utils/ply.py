@@ -3,6 +3,9 @@ from pathlib import Path
 import open3d as o3d
 import numpy as np
 from sklearn.cluster import DBSCAN
+from scipy.sparse import coo_matrix
+from scipy.sparse.csgraph import connected_components
+from scipy.spatial import cKDTree
 
 def export_splat(splat_dir: Path) -> None:
     config_path = splat_dir / "config.yml"
@@ -41,7 +44,14 @@ def load_ply_with_attrs(path: Path) -> dict:
         scale_raw = np.stack([v[n] for n in scale_names], axis=-1)
         scale = np.exp(scale_raw).mean(axis=-1)  # exp还原，三轴取平均作为标量尺度
 
-    return {"xyz": xyz, "opacity": opacity, "scale": scale}
+    rgb = None
+    SH_C0 = 0.28209479177387814
+    dc_names = [f"f_dc_{i}" for i in range(3)]
+    if all(n in v.data.dtype.names for n in dc_names):
+        dc = np.stack([v[n] for n in dc_names], axis=-1)
+        rgb = np.clip(0.5 + SH_C0 * dc, 0, 1)  # 球谐0阶系数还原成0~1 RGB
+
+    return {"xyz": xyz, "opacity": opacity, "scale": scale, "rgb": rgb}
 
 def print_stats(label: str, pts: np.ndarray) -> None:
     if len(pts) == 0:
@@ -124,3 +134,48 @@ def analyze_scale_ratio(splat_path: Path) -> dict:
         "max": float(ratios.max()),
         "frac_over_10": float((ratios > 10).mean()),  # 超过官方默认阈值的比例
     }
+
+def connected_component_sizes(xyz: np.ndarray, k: int = 10, dist_percentile: float = 75.0) -> np.ndarray:
+    """
+    构建 k-近邻图，只保留邻距不超过全局 dist_percentile 分位数的边，做连通分量分析，
+    返回每个点所在连通分量的大小(patch_size)。孤立的小分量是"离群噪点"的强信号，
+    且比逐点的形状特征(scale_ratio/linearity等)更能把噪点和贴着结构边缘的真实薄片/尖刺
+    区分开——后者形状上同样细长，但在空间上仍连着主体，因此连通分量大。
+    """
+    n = len(xyz)
+    tree = cKDTree(xyz)
+    dists, idxs = tree.query(xyz, k=k + 1)
+    dists, idxs = dists[:, 1:], idxs[:, 1:]  # 去掉自身(距离0)
+
+    threshold = np.percentile(dists, dist_percentile)
+    mask = dists <= threshold
+    rows = np.repeat(np.arange(n), k)[mask.ravel()]
+    cols = idxs.ravel()[mask.ravel()]
+    adj = coo_matrix((np.ones(len(rows)), (rows, cols)), shape=(n, n))
+    adj = adj.maximum(adj.T)  # 对称化(无向图)
+    _, labels = connected_components(adj, directed=False)
+    comp_sizes = np.bincount(labels)
+    return comp_sizes[labels]
+
+def local_pca_extent(xyz: np.ndarray, k: int = 10) -> np.ndarray:
+    """
+    每个点 k 近邻(含自身)在局部PCA前两主轴方向的延展(极差合成范数)。
+    连续片状/线状结构的延展明显大于孤立噪点，可作为connected_component_sizes之外
+    的补充判据。
+    """
+    n = len(xyz)
+    tree = cKDTree(xyz)
+    _, idxs = tree.query(xyz, k=k + 1)
+
+    extent = np.zeros(n)
+    for i in range(n):
+        nbr_pts = xyz[idxs[i]]  # 含自身
+        centered = nbr_pts - nbr_pts.mean(axis=0)
+        cov = np.cov(centered.T)
+        eigvals, eigvecs = np.linalg.eigh(cov)
+        order = np.argsort(eigvals)[::-1]
+        top2 = eigvecs[:, order[:2]]
+        proj = centered @ top2
+        rng = proj.max(axis=0) - proj.min(axis=0)
+        extent[i] = np.linalg.norm(rng)
+    return extent

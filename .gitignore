@@ -1,7 +1,7 @@
 # Data and output
 data/
 outputs/
-debug_checkpoints/
+postprocessing/cleaning/eda_outputs
 
 # Python
 __pycache__/

@@ -1,5 +1,5 @@
 """
-读取 outputs/{BASE_NAME}/f{N:04d}/splatfacto-checkpoint/{timestamp}/splat.ply
+读取 outputs/{BASE_NAME}/{GROUP_NAME}/f{N:04d}/splatfacto-checkpoint/{timestamp}/splat.ply
 （每帧取该帧目录下最新 timestamp），在 viser 里做逐帧播放/拖动查看。
 """
 import time
@@ -13,11 +13,14 @@ from utils.ply import load_ply, load_ply_with_attrs, unrescale
 from utils.viz import start_viser, add_point_cloud
 
 BASE_NAME   = "ctrl_009_002_8groups_100frames"
+GROUP_NAME  = "G2b_G9"
+DATA_NAME   = "ctrl_009_002"  
 FRAME_RANGE = range(0, 100)
 FPS         = 16  # 播放帧率（不必等于拍摄fps，这里是回放速度）
 DISPLAY_SCALE = 1000.0  # 米 -> 毫米，让点云在 viser 默认场景尺度下显示为"正常大小"
 
-COLOR_BY = "opacity"  # "opacity" | "scale" | None（不上色，用统一蓝色）
+COLOR_BY = "rgb"  # "opacity" | "scale" | "rgb" | None（不上色，用统一蓝色）
+RGB_BG   = np.array([255, 255, 255], dtype=np.float64)  # rgb 模式下，opacity 越低越接近该背景色（模拟透明度）
 
 def _to_colormap(values: np.ndarray) -> np.ndarray:
     """把标量数组归一化并映射成浅灰(低)->深灰(高)的RGB颜色，用于viser point cloud。"""
@@ -38,16 +41,22 @@ def load_splat_physical(splat_dir: Path) -> tuple:
     attrs = load_ply_with_attrs(splat_dir / "splat.ply")
     pts_physical = unrescale(attrs["xyz"], R_ns, t_ns, scale) * DISPLAY_SCALE
 
-    color_vals = attrs.get(COLOR_BY) if COLOR_BY else None
-    if color_vals is not None:
-        colors = _to_colormap(color_vals)
+    if COLOR_BY == "rgb":
+        rgb = attrs["rgb"]  # (N, 3) float, 0~1
+        opacity = attrs["opacity"][:, None]  # (N, 1) float, 0~1
+        blended = rgb * 255.0 * opacity + RGB_BG[None, :] * (1 - opacity)
+        colors = np.clip(blended, 0, 255).astype(np.uint8)
     else:
-        colors = np.tile(np.uint8([0, 150, 255]), (len(pts_physical), 1))
+        color_vals = attrs.get(COLOR_BY) if COLOR_BY else None
+        if color_vals is not None:
+            colors = _to_colormap(color_vals)
+        else:
+            colors = np.tile(np.uint8([0, 150, 255]), (len(pts_physical), 1))
 
     return pts_physical, colors
 
 def find_latest_splat_dir(frame_idx: int) -> Path | None:
-    frame_dir = Path("outputs") / BASE_NAME / f"f{frame_idx:04d}" / "splatfacto-checkpoint"
+    frame_dir = Path("outputs") / BASE_NAME / GROUP_NAME / f"f{frame_idx:04d}" / "splatfacto-checkpoint"
     if not frame_dir.exists():
         return None
     timestamps = sorted(frame_dir.iterdir())
@@ -57,7 +66,7 @@ def find_latest_splat_dir(frame_idx: int) -> Path | None:
     return splat_dir if (splat_dir / "splat.ply").exists() else None
 
 def get_scene_center(frame_idx: int) -> np.ndarray:
-    data_dir = Path("data") / BASE_NAME / f"f{frame_idx:04d}"
+    data_dir = Path("data") / DATA_NAME / f"f{frame_idx:04d}"
     hull_pts = load_ply(data_dir / "init_points.ply")
     return hull_pts.mean(axis=0) * DISPLAY_SCALE
 

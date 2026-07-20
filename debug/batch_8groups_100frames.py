@@ -57,7 +57,15 @@ GROUPS = {
                        "--pipeline.model.cull-screen-size", "0.25"] + _COMMON_DENSIFY,
     "G9_sh_degree_0": ["--pipeline.model.sh-degree", "0"] + _COMMON_DENSIFY,
     "G10_use_absgrad_false": ["--pipeline.model.use-absgrad", "False"] + _COMMON_DENSIFY,
+    "G2_G9": ["--pipeline.model.use-scale-regularization", "True",
+              "--pipeline.model.max-gauss-ratio", "1.0",
+              "--pipeline.model.sh-degree", "0"] + _COMMON_DENSIFY,
+    "G2b_G9": ["--pipeline.model.use-scale-regularization", "True",
+               "--pipeline.model.max-gauss-ratio", "3.0",
+               "--pipeline.model.sh-degree", "0"] + _COMMON_DENSIFY,
 }
+
+NEW_GROUPS = ["G2_G9", "G2b_G9"]  # 本次只跑这2组，其余8组复用已有结果不重跑
 
 
 def log_progress(line: str) -> None:
@@ -170,6 +178,47 @@ def run_group(group_name: str, extra_args: list, hull_cache: dict) -> list:
     log_progress(f"group={group_name} success={n_ok}/{len(FRAMES)} failed={len(FRAMES) - n_ok} "
                  f"wall_time={elapsed:.1f}s")
     return records
+
+
+def run_new_groups() -> None:
+    """只跑 NEW_GROUPS，合并进已有的 raw_records.json/summary.json，不动其余8组，图重画成10组版本。"""
+    log_progress(f"=== new groups start: {NEW_GROUPS} ===")
+
+    hull_cache = hull_eps_cache()  # 只读取已存在的 init_points.ply，不重新生成数据
+
+    raw_path = OUT_BASE_DIR / "raw_records.json"
+    with open(raw_path) as f:
+        all_records = json.load(f)
+
+    for group_name in NEW_GROUPS:
+        all_records[group_name] = run_group(group_name, GROUPS[group_name], hull_cache)
+        with open(raw_path, "w") as f:
+            json.dump(all_records, f, indent=2)
+
+    summary = summarize(all_records)
+    with open(OUT_BASE_DIR / "summary.json", "w") as f:
+        json.dump(summary, f, indent=2)
+    print(f"[Saved] {OUT_BASE_DIR / 'summary.json'}")
+
+    plot_bar_scale_ratio(summary, OUT_BASE_DIR)
+    plot_box_distributions(all_records, OUT_BASE_DIR)
+    plot_bbox_extent_timeseries(all_records, OUT_BASE_DIR)
+
+    log_progress("=== new groups done ===")
+
+
+def smoke_test_new_groups(frames=(0, 1, 2)) -> None:
+    """冒烟：只跑 NEW_GROUPS x 少量帧，验证命令能跑通，不写入 summary/raw_records。"""
+    for frame_idx in frames:
+        data_dir = DATA_BASE_DIR / f"f{frame_idx:04d}"
+        hull_pts = load_ply(data_dir / "init_points.ply")
+        hull_extent = hull_pts.max(0) - hull_pts.min(0)
+        nn = NearestNeighbors(n_neighbors=2).fit(hull_pts)
+        dists, _ = nn.kneighbors(hull_pts)
+        eps = 2.5 * float(np.median(dists[:, 1]))
+        for group_name in NEW_GROUPS:
+            result = run_group_frame(group_name, GROUPS[group_name], frame_idx, hull_extent, eps)
+            print(result)
 
 
 # ------------------------------------------------------------- aggregation --
@@ -291,4 +340,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "smoke":
+        smoke_test_new_groups()
+    elif len(sys.argv) > 1 and sys.argv[1] == "new_groups":
+        run_new_groups()
+    else:
+        main()
