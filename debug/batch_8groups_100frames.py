@@ -17,7 +17,8 @@ import subprocess
 import time
 from datetime import datetime
 from pathlib import Path
-
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.neighbors import NearestNeighbors

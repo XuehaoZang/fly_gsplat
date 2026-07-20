@@ -1,0 +1,5 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/computer0/fly_project/fly_gsplat/debug/batch_8groups_100frames.py", line 25, in <module>
+    from generate_dataset import generate_dataset
+ModuleNotFoundError: No module named 'generate_dataset'

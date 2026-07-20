@@ -12,12 +12,12 @@ from utils.camera import CameraConfig
 from utils.ply import load_ply, load_ply_with_attrs, unrescale
 from utils.viz import start_viser, add_point_cloud
 
-BASE_NAME   = "ctrl_009_002"
-FRAME_RANGE = range(0, 640)
+BASE_NAME   = "ctrl_009_002_8groups_100frames"
+FRAME_RANGE = range(0, 100)
 FPS         = 16  # 播放帧率（不必等于拍摄fps，这里是回放速度）
 DISPLAY_SCALE = 1000.0  # 米 -> 毫米，让点云在 viser 默认场景尺度下显示为"正常大小"
 
-COLOR_BY = "scale"  # "opacity" | "scale" | None（不上色，用统一蓝色）
+COLOR_BY = "opacity"  # "opacity" | "scale" | None（不上色，用统一蓝色）
 
 def _to_colormap(values: np.ndarray) -> np.ndarray:
     """把标量数组归一化并映射成浅灰(低)->深灰(高)的RGB颜色，用于viser point cloud。"""
