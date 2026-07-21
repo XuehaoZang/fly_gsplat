@@ -26,13 +26,13 @@ from matplotlib.colors import to_rgb
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
 from postprocessing.cleaning.viz_floater_check import find_features_csv
-from postprocessing.labeling.binary_split import (
+from postprocessing.labeling.binary_split_NO_USE.binary_split import (
     classify_body_wing_quantile, print_color_diagnostics,
     DEFAULT_PLANARITY_Q, DEFAULT_AXIS_DIST_Q,
 )
 from postprocessing.labeling.select_dev_frames import DEV_FRAMES, DATASET_DIR
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs"
 
 COLOR_BODY = to_rgb("#1f77b4")

@@ -44,11 +44,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
 from postprocessing.cleaning.floater_census_100frames import latest_checkpoint_dir  # noqa: E402
-from postprocessing.labeling.binary_split import (  # noqa: E402
+from postprocessing.labeling.binary_split_NO_USE.binary_split import (  # noqa: E402
     classify_body_wing_quantile, DEFAULT_AXIS_DIST_Q,
 )
 from postprocessing.labeling.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
