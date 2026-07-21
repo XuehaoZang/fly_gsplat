@@ -66,6 +66,9 @@ ns-viewer --load-config outputs/ctrl_009_002_8groups_100frames/G9_sh_degree_0/f0
 ns-viewer --load-config outputs/ctrl_009_002_8groups_100frames/G3_densify_50_1800/f0000/splatfacto-checkpoint/2026-07-13_220525/config.yml
 ```
 
+```bash
+/home/computer0/anaconda3/envs/fly_gsplat/bin/python gpu/schedule/schedule.py --run-name ctrl_009_002_ratio3_sh0_full
+```
 ---
 
 ## Data layout
