@@ -9,14 +9,18 @@ S4.
 Geometry reproduced from `reference/python_snippets.py` cell 3
 (`project_on_plane` / `calculate_phi`), reference-only, never imported:
 stroke-plane in-plane basis via plane projection, then
-`phi = atan2(sign_left*(le.y_sp), le.x_sp)`, `theta = 90 - arccos(n_sp.le)`.
+`phi = atan2(sign_left*(span.y_sp), span.x_sp)`, `theta = 90 - arccos(n_sp.span)`.
 Angles are returned as raw single-frame degrees -- no `unwrap` (that is a
 multi-frame concern the notebook applies across a whole trajectory; a lone
 frame has nothing to unwrap against).
 
-`estimate_leading_edge` is independently importable and side-symmetric;
-S4 (chord/eta) reuses it as the source of the span axis `le_dir` and the
-wing-plane normal `plane_normal`.
+**S3 revision:** `phi`/`theta` are computed from `estimate_span`'s wing PCA
+major axis (`spanHat` in MATLAB `calcAnglesRaw_Sam.m`,
+`reference/matlab_snippets.m` lines ~190-195), not the leading edge -- see
+`estimate_span` / `stroke_deviation`. `estimate_leading_edge` is unchanged
+and still independently importable and side-symmetric; S4 (chord/eta) reuses
+it as the source of the leading-edge axis `le_dir` (for chord LE->TE sign
+only) and the wing-plane normal `plane_normal`.
 """
 from __future__ import annotations
 
@@ -202,6 +206,62 @@ def estimate_leading_edge(
 
 
 # ---------------------------------------------------------------------------
+# Span estimation (wing PCA major axis -- MATLAB `spanHat`)
+# ---------------------------------------------------------------------------
+
+
+def estimate_span(
+    wing_xyz: np.ndarray,
+    body_frame: BodyFrame,
+    side: str,
+    weights: np.ndarray | None = None,
+    *,
+    plane_threshold: float | None = None,
+    rng: int | np.random.Generator | None = 0,
+) -> np.ndarray:
+    """Wing span direction (root -> tip), one wing, one frame.
+
+    This is MATLAB `calcAnglesRaw_Sam.m`'s `spanHat` (`reference/matlab_snippets.m`
+    lines ~190-195): the wing's own PCA major axis, **not** the leading edge.
+    `phi`/`theta` (§4) are computed from this vector (see `stroke_deviation`);
+    `estimate_leading_edge`'s `le_dir` remains the source of the chord LE->TE
+    sign in `chord.py` and is untouched by this function.
+
+    Fits the wing plane (RANSAC, the same construction `estimate_leading_edge`
+    uses for its own plane fit -- a density-derived threshold that is robust
+    to a modest fraction of far-flung outlier/contaminant points, unlike a
+    raw whole-cloud PCA), then takes the plane inliers' PCA major axis,
+    oriented outward via `dot(span_dir, wing_centroid - body_cm) >= 0` (same
+    convention as `le_dir`).
+
+    Deliberately independent of `estimate_leading_edge` -- no shared internal
+    state -- so this stays a separate, directly testable helper per the wing
+    span/leading-edge distinction this revision introduces.
+    """
+    _check_side(side)
+    wing_xyz = np.asarray(wing_xyz, dtype=float)
+    n = wing_xyz.shape[0]
+    w = np.ones(n) if weights is None else np.asarray(weights, dtype=float)
+
+    tree = cKDTree(wing_xyz)
+    nn_dist, _ = tree.query(wing_xyz, k=min(2, n))
+    scale = float(np.median(nn_dist[:, -1])) if n > 1 else 0.0
+    thresh = plane_threshold if plane_threshold is not None else 2.0 * scale
+
+    _, _, plane_mask = geo.fit_plane(wing_xyz, w, method="ransac", threshold=thresh, rng=rng)
+    idx_plane = np.nonzero(plane_mask)[0]
+    pts_plane = wing_xyz[idx_plane]
+    w_plane = w[idx_plane]
+
+    _, eigvecs_plane, _ = geo.weighted_pca(pts_plane, w_plane)
+    span_axis = eigvecs_plane[:, -1]
+
+    wing_centroid = wing_xyz.mean(axis=0)
+    out_ref = wing_centroid - np.asarray(body_frame.body_cm, dtype=float)
+    return geo.orient_to_reference(span_axis, out_ref)
+
+
+# ---------------------------------------------------------------------------
 # Stroke / deviation angles (phi, theta)
 # ---------------------------------------------------------------------------
 
@@ -211,13 +271,17 @@ class WingSweep:
     """One wing's stroke-plane angles, one frame (§4).
 
     `phi`/`theta` are degrees, raw (not unwrapped -- unwrapping needs a
-    trajectory across frames, not a single frame). `leading_edge` is the
-    `LeadingEdge` `phi`/`theta` were computed from.
+    trajectory across frames, not a single frame), computed from `span_dir`
+    (`estimate_span`'s wing-PCA major axis -- MATLAB `spanHat`), not the
+    leading edge. `leading_edge` is still the `LeadingEdge` fit (kept for
+    `chord.py`'s LE->TE sign, unaffected by this change); `span_dir` is the
+    vector `phi`/`theta` were actually computed from.
     """
 
     phi: float
     theta: float
     leading_edge: LeadingEdge
+    span_dir: np.ndarray
 
 
 def _phi_theta(
@@ -260,14 +324,21 @@ def stroke_deviation(
 ) -> WingSweep:
     """Stroke-plane azimuth (`phi`) and deviation (`theta`) for one wing, §4.
 
-    See `_phi_theta` for the angle formulas (reproduced from
-    `reference/python_snippets.py` cell 3 `calculate_phi`). `weights` and any
-    `**le_kwargs` (e.g. `n_bins`, `plane_threshold`) pass straight through to
-    `estimate_leading_edge`.
+    `phi`/`theta` are computed from `estimate_span`'s wing PCA major axis
+    (MATLAB `spanHat`, per `calcAnglesRaw_Sam.m`), not the leading edge -- see
+    `_phi_theta` for the angle formulas (reproduced from
+    `reference/python_snippets.py` cell 3 `calculate_phi`, with `le` replaced
+    by `span_dir`). `leading_edge` is still fit (via `estimate_leading_edge`)
+    and returned so `chord.py` can keep reusing it for the LE->TE chord sign,
+    which stays leading-edge-based and untouched by this change. `weights`
+    and any `**le_kwargs` (e.g. `n_bins`, `plane_threshold`) pass straight
+    through to `estimate_leading_edge` only -- `estimate_span` takes just
+    `weights`.
     """
     _check_side(side)
     le = estimate_leading_edge(wing_xyz, body_frame, side, weights=weights, **le_kwargs)
+    span_dir = estimate_span(wing_xyz, body_frame, side, weights=weights)
     phi, theta = _phi_theta(
-        le.le_dir, body_frame.x_body, body_frame.y_body, body_frame.n_sp, _SIGN_LEFT[side]
+        span_dir, body_frame.x_body, body_frame.y_body, body_frame.n_sp, _SIGN_LEFT[side]
     )
-    return WingSweep(phi=phi, theta=theta, leading_edge=le)
+    return WingSweep(phi=phi, theta=theta, leading_edge=le, span_dir=span_dir)

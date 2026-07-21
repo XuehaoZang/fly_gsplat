@@ -62,6 +62,13 @@ def _angle_between_deg(a: np.ndarray, b: np.ndarray) -> float:
 
 
 def test_clean_scenario_recovers_phi_theta_both_wings():
+    """phi/theta are now computed from `sweep.span_dir` (`estimate_span`'s
+    wing-PCA major axis, MATLAB `spanHat`), not `sweep.leading_edge.le_dir`
+    -- see wing_angles.py's S3-revision docstrings. Ground truth for both is
+    the same `wing_gt.span_dir` (mock.py's `WingGroundTruth.span_dir` is,
+    by construction, the vector §4/§5 call `le`/`span` -- see its docstring),
+    so both `span_dir` and `le_dir` are checked against it independently.
+    """
     df, gt = mock.scenario_clean(seed=0)
     frame = _true_body_frame(gt)
 
@@ -69,12 +76,17 @@ def test_clean_scenario_recovers_phi_theta_both_wings():
         wing_xyz = io_schema.get_part(df, side)
         sweep = wa.stroke_deviation(wing_xyz, frame, side)
 
-        # le_dir recovers the true span direction directly.
-        angle_err = _angle_between_deg(sweep.leading_edge.le_dir, wing_gt.span_dir)
-        assert angle_err < 2.0, (side, angle_err)
+        # span_dir (the phi/theta input) recovers the true span direction.
+        span_angle_err = _angle_between_deg(sweep.span_dir, wing_gt.span_dir)
+        assert span_angle_err < 2.0, (side, span_angle_err)
+        assert abs(np.linalg.norm(sweep.span_dir) - 1.0) < 1e-9
+
+        # le_dir (kept only for chord.py's LE->TE sign) also recovers it.
+        le_angle_err = _angle_between_deg(sweep.leading_edge.le_dir, wing_gt.span_dir)
+        assert le_angle_err < 2.0, (side, le_angle_err)
 
         # theta matches the true deviation exactly as stored (both are the
-        # same §4 formula applied to true vs. estimated `le_dir`).
+        # same §4 formula applied to true vs. estimated `span_dir`).
         assert abs(_angular_diff_deg(sweep.theta, wing_gt.deviation_deg)) < 2.0, (side, sweep.theta)
 
         # phi matches the value §4's formula gives for the TRUE span_dir
@@ -85,6 +97,75 @@ def test_clean_scenario_recovers_phi_theta_both_wings():
         )
         assert abs(_angular_diff_deg(true_theta, wing_gt.deviation_deg)) < 1e-9  # self-consistency
         assert abs(_angular_diff_deg(sweep.phi, true_phi)) < 2.0, (side, sweep.phi, true_phi)
+
+
+def test_estimate_span_oriented_outward_and_recovers_ground_truth():
+    df, gt = mock.scenario_clean(seed=1)
+    frame = _true_body_frame(gt)
+    for side, wing_gt in (("wing_L", gt.wing_L), ("wing_R", gt.wing_R)):
+        wing_xyz = io_schema.get_part(df, side)
+        span_dir = wa.estimate_span(wing_xyz, frame, side)
+
+        assert abs(np.linalg.norm(span_dir) - 1.0) < 1e-9
+        wing_centroid = wing_xyz.mean(axis=0)
+        out_ref = wing_centroid - frame.body_cm
+        assert np.dot(span_dir, out_ref) >= 0.0, (side, span_dir, out_ref)
+
+        angle_err = _angle_between_deg(span_dir, wing_gt.span_dir)
+        assert angle_err < 2.0, (side, angle_err)
+
+
+def test_estimate_span_robust_to_outliers():
+    """Mirrors `test_estimate_leading_edge_robust_to_outliers`: injecting
+    far-flung outlier points (e.g. an opposite-wing contaminant or stray
+    floater) must not meaningfully drag `estimate_span`'s RANSAC-plane-then-
+    PCA fit off the true span direction.
+    """
+    df, gt = mock.scenario_clean(seed=3)
+    frame = _true_body_frame(gt)
+    rng = np.random.default_rng(4)
+
+    for side, wing_gt in (("wing_L", gt.wing_L), ("wing_R", gt.wing_R)):
+        wing_xyz = io_schema.get_part(df, side)
+        n_clean = wing_xyz.shape[0]
+
+        extent = wing_xyz.max(axis=0) - wing_xyz.min(axis=0)
+        n_outliers = int(0.15 * n_clean)
+        lo, hi = wing_xyz.min(axis=0) - extent, wing_xyz.max(axis=0) + extent
+        outliers = rng.uniform(lo, hi, size=(n_outliers, 3))
+        contaminated = np.vstack([wing_xyz, outliers])
+
+        span_dir = wa.estimate_span(contaminated, frame, side, rng=0)
+
+        angle_err = _angle_between_deg(span_dir, wing_gt.span_dir)
+        assert angle_err < 3.0, (side, angle_err)
+
+        wing_centroid = contaminated.mean(axis=0)
+        out_ref = wing_centroid - frame.body_cm
+        assert np.dot(span_dir, out_ref) >= 0.0
+
+
+def test_span_and_leading_edge_are_close_but_distinct():
+    """`estimate_span` (whole-plane PCA major axis) and `estimate_leading_edge`
+    (RANSAC line fit to the straighter edge specifically) are genuinely
+    different estimators over the same wing point cloud -- different enough
+    that their outputs are not numerically identical, but both close to the
+    same true span direction (§4 revision: T4 now computes phi/theta from the
+    former, keeps the latter only for chord.py's LE->TE sign).
+    """
+    df, gt = mock.scenario_clean(seed=0)
+    frame = _true_body_frame(gt)
+    for side, wing_gt in (("wing_L", gt.wing_L), ("wing_R", gt.wing_R)):
+        wing_xyz = io_schema.get_part(df, side)
+        le = wa.estimate_leading_edge(wing_xyz, frame, side)
+        span_dir = wa.estimate_span(wing_xyz, frame, side)
+
+        angle_apart = _angle_between_deg(le.le_dir, span_dir)
+        assert 1e-3 < angle_apart < 5.0, (side, angle_apart)
+
+        # both still land close to the same ground-truth direction.
+        assert _angle_between_deg(le.le_dir, wing_gt.span_dir) < 2.0, side
+        assert _angle_between_deg(span_dir, wing_gt.span_dir) < 2.0, side
 
 
 def test_estimate_leading_edge_oriented_outward_both_sides():
@@ -254,7 +335,7 @@ def test_unknown_side_raises():
     df, gt = mock.scenario_clean(seed=0)
     frame = _true_body_frame(gt)
     wing_xyz = io_schema.get_part(df, "wing_L")
-    for fn in (wa.estimate_leading_edge, wa.stroke_deviation):
+    for fn in (wa.estimate_leading_edge, wa.estimate_span, wa.stroke_deviation):
         raised = False
         try:
             fn(wing_xyz, frame, "wing_bogus")

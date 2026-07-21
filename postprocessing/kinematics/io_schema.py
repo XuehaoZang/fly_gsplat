@@ -126,6 +126,8 @@ OUTPUT_COLUMNS: list[str] = [
     "phi_R", "theta_R", "eta_R",
     "sp_normal_x", "sp_normal_y", "sp_normal_z",
     "chord_conf_L", "chord_conf_R",
+    "span_L_x", "span_L_y", "span_L_z",
+    "span_R_x", "span_R_y", "span_R_z",
 ]
 """Per-frame output column order (§1: "one row per frame")."""
 
@@ -138,6 +140,8 @@ class OutputRow:
     the stroke-plane frame per §0 ("Angle output frame"). `sp_normal_*` is the
     unit stroke-plane normal `n_sp` (§2, step 4). `chord_conf_*` is the S4
     chord-fit confidence in [0, 1] (§5), NaN when not (yet) computed.
+    `span_*_x/y/z` is the unit wing span direction (`wing_angles.estimate_span`,
+    MATLAB `spanHat`) that `phi_*/theta_*` were computed from (§4 revision).
     """
 
     frame_id: int
@@ -155,6 +159,12 @@ class OutputRow:
     sp_normal_z: float
     chord_conf_L: float
     chord_conf_R: float
+    span_L_x: float
+    span_L_y: float
+    span_L_z: float
+    span_R_x: float
+    span_R_y: float
+    span_R_z: float
 
     def to_dict(self) -> dict:
         return {f.name: getattr(self, f.name) for f in fields(self)}
@@ -170,4 +180,6 @@ def empty_output_row(frame_id: int = -1) -> OutputRow:
         phi_R=nan, theta_R=nan, eta_R=nan,
         sp_normal_x=nan, sp_normal_y=nan, sp_normal_z=nan,
         chord_conf_L=nan, chord_conf_R=nan,
+        span_L_x=nan, span_L_y=nan, span_L_z=nan,
+        span_R_x=nan, span_R_y=nan, span_R_z=nan,
     )

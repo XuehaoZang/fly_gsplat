@@ -57,7 +57,8 @@ surface-normal proxy (verify semantics against T1 before trusting sign).
 
 **Output** — **one row per frame** (the only place T4 breaks from the per-point
 table shape). Row contains: body `yaw, pitch, roll`; per side `phi, theta, eta`;
-`stroke_plane_normal` (3); plus chord quality/confidence fields.
+`stroke_plane_normal` (3); chord quality/confidence fields; per side `span_dir`
+(3) — the wing PCA span vector `phi`/`theta` were computed from (§4).
 
 ---
 
@@ -93,16 +94,26 @@ single-frame construction. Interface left open to accept an external
 
 ## 4. Wing stroke & deviation (phi, theta)
 
-Stroke-plane frame, per notebook cell 3 `calculate_phi`:
+Stroke-plane frame, per notebook cell 3 `calculate_phi`, with the reference
+vector revised (see below) to match MATLAB `calcAnglesRaw_Sam.m` (`reference/matlab_snippets.m`
+lines ~190-195, `phiRdeg = atan2(rightSpanHat(2), rightSpanHat(1))`,
+`thetaRdeg = asin(rightSpanHat(3))`, i.e. driven by `spanHat`, not the leading
+edge):
 
-- Project `x_body`, `y_body`, and the leading-edge direction `le` onto the
-  stroke plane; `phi = atan2(sign_left · (le·ŷ_sp), le·x̂_sp)`, unwrapped.
-  `sign_left = −1` for wing_L, `+1` for wing_R.
-- `theta = 90 − arccos(n_sp · le)` (deg) — elevation of the wing (its span/LE)
+- Project `x_body`, `y_body`, and the wing **span** direction `span_dir` onto
+  the stroke plane; `phi = atan2(sign_left · (span_dir·ŷ_sp), span_dir·x̂_sp)`,
+  unwrapped. `sign_left = −1` for wing_L, `+1` for wing_R.
+- `theta = 90 − arccos(n_sp · span_dir)` (deg) — elevation of the wing span
   out of the stroke plane.
 
-`le` (leading-edge direction) is the span-like vector; in T4 it comes from a
-RANSAC line fit to the wing's leading edge, not a raw PCA axis.
+`span_dir` (`wing_angles.estimate_span`) is the wing's own PCA major axis
+(root → tip, oriented outward), fit from a RANSAC wing-plane inlier set — this
+is the authoritative MATLAB `spanHat` definition, **not** the leading edge.
+The leading edge (`estimate_leading_edge`, a RANSAC line fit to the wing's
+straight costal-vein edge) is a distinct quantity, kept solely as the source
+of `chord.py`'s LE→TE chord-sign disambiguation (§5) — it is no longer used
+for `phi`/`theta`. The two vectors are close for a well-formed wing but not
+identical; do not conflate them.
 
 ---
 
@@ -147,7 +158,8 @@ single most-distant pair, so it is far less sensitive to a few outliers.
 
 | Quantity | Old MATLAB (matlab_snippets.m) | Notebook Python (python_snippets.py) | **T4 (adopted)** |
 |---|---|---|---|
-| span / LE | wingCM→farthest voxel, or voxel PCA | RANSAC LE line | RANSAC LE line |
+| span (phi/theta input) | wingCM→farthest voxel, or voxel PCA (`spanHat`) | RANSAC LE line (`le`) | **wing PCA major axis** (`estimate_span`, matches MATLAB `spanHat`) |
+| leading edge (chord sign only) | n/a | n/a | RANSAC LE line (`estimate_leading_edge`, unchanged, §5 only) |
 | phi / theta ref frame | lab horizontal (body-frame via 45°) | stroke plane | **stroke plane** |
 | eta ref | lab vertical `ẑ` (`calcEta`) | stroke plane | **stroke plane**, sign via LE→TE |
 | chord extraction | most-distant voxel pair (`find_chords_quad`) — **baseline** | LE/TE bins + sign patch | **segmented + Gaussian-normal-weighted robust fit** |

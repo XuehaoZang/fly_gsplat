@@ -36,12 +36,15 @@ DEBUG_KEYS: tuple[str, ...] = (
     "x_body", "y_body", "z_body", "n_sp",
     "hinge_L", "hinge_R", "body_cm",
     "le_dir_L", "le_dir_R",
+    "span_L", "span_R",
     "chord_L", "chord_R",
     "per_bin_chords_L", "per_bin_chords_R",
 )
 """Per-frame debug-sidecar keys (task spec): S2 body frame + S3/S4a per-wing
 intermediates, for later viz/QA -- not part of the main output CSV schema
-(`io_schema.OUTPUT_COLUMNS`)."""
+(`io_schema.OUTPUT_COLUMNS`). `span_L`/`span_R` are `wing_angles.estimate_span`'s
+wing-PCA span vectors (the S3 revision's phi/theta input); `le_dir_L`/`le_dir_R`
+remain the leading-edge vectors `chord.py`'s LE->TE sign uses."""
 
 
 @dataclass
@@ -132,7 +135,9 @@ def _estimate_frame_impl(df: pd.DataFrame, frame_id: int, config: PipelineConfig
         try:
             sweep = wa.stroke_deviation(wing_xyz, frame, side)
             chord_result = ch.estimate_chord(wing_xyz, frame, side, leading_edge=sweep.leading_edge)
-            if not _all_finite(sweep.phi, sweep.theta, chord_result.eta, chord_result.chord_conf):
+            if not _all_finite(
+                sweep.phi, sweep.theta, chord_result.eta, chord_result.chord_conf, sweep.span_dir
+            ):
                 raise ValueError("non-finite result")
         except Exception as e:  # noqa: BLE001
             wing_statuses.append(f"{side}:{e}")
@@ -142,7 +147,11 @@ def _estimate_frame_impl(df: pd.DataFrame, frame_id: int, config: PipelineConfig
         row[f"theta_{suffix}"] = sweep.theta
         row[f"eta_{suffix}"] = chord_result.eta
         row[f"chord_conf_{suffix}"] = chord_result.chord_conf
+        row[f"span_{suffix}_x"], row[f"span_{suffix}_y"], row[f"span_{suffix}_z"] = (
+            float(sweep.span_dir[0]), float(sweep.span_dir[1]), float(sweep.span_dir[2])
+        )
         debug[f"le_dir_{suffix}"] = sweep.leading_edge.le_dir
+        debug[f"span_{suffix}"] = sweep.span_dir
         debug[f"chord_{suffix}"] = chord_result.chord
         debug[f"per_bin_chords_{suffix}"] = chord_result.per_bin_chords
 
