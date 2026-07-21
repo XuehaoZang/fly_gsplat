@@ -18,7 +18,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from floater_census_100frames import (  # noqa: E402
+from postprocessing.cleaning.floater_census_100frames import (  # noqa: E402
     K, DIST_PERCENTILE, MIN_PATCH_SIZE,
     latest_checkpoint_dir, load_or_compute_features, component_multiset,
 )

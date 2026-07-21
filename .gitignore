@@ -1,7 +1,6 @@
 # Data and output
 data/
 outputs/
-postprocessing/cleaning/eda_outputs
 
 # Python
 __pycache__/

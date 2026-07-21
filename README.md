@@ -7,7 +7,7 @@
 ## Environment
 
 ```bash
-conda activate fly_gsplat   # Python 3.10 | CUDA 11.8 | PyTorch 2.0.1
+conda activate fly_gsplat   # Python 3.10 | CUDA 11.8 | PyTorch 2.1.2
 sudo mount -t drvfs X: /mnt/x   # mount Windows data drive in WSL
 ```
 
@@ -61,7 +61,9 @@ ns-train splatfacto \
 tensorboard --logdir outputs/ctrl_009_002
 # http://localhost:6006
 
-ns-viewer --load-config outputs/test_04_sweep_cull_alpha/04_stopsplit6k_reset3/splatfacto-checkpoint/2026-07-08_123232/config.yml
+ns-viewer --load-config outputs/ctrl_009_002_8groups_100frames/G9_sh_degree_0/f0000/splatfacto-checkpoint/2026-07-14_073852/config.yml
+
+ns-viewer --load-config outputs/ctrl_009_002_8groups_100frames/G3_densify_50_1800/f0000/splatfacto-checkpoint/2026-07-13_220525/config.yml
 ```
 
 ---

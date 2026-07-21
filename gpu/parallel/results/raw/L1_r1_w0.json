@@ -1,0 +1,98 @@
+[
+  {
+    "frame": 0,
+    "data_prep_s": 0.5159546549984952,
+    "train_total_s": 71.69450134299404,
+    "postprocess_s": 11.506941405998077,
+    "e2e_s": 83.71739740399062,
+    "n_splat_points": 352
+  },
+  {
+    "frame": 1,
+    "data_prep_s": 0.4960479360015597,
+    "train_total_s": 69.43111158600368,
+    "postprocess_s": 12.183513843003311,
+    "e2e_s": 82.11067336500855,
+    "n_splat_points": 368
+  },
+  {
+    "frame": 2,
+    "data_prep_s": 0.5083131059946027,
+    "train_total_s": 70.38153251400217,
+    "postprocess_s": 11.992397042995435,
+    "e2e_s": 82.88224266299221,
+    "n_splat_points": 390
+  },
+  {
+    "frame": 3,
+    "data_prep_s": 0.5237888060073601,
+    "train_total_s": 74.06755096100096,
+    "postprocess_s": 11.845155596995028,
+    "e2e_s": 86.43649536400335,
+    "n_splat_points": 374
+  },
+  {
+    "frame": 4,
+    "data_prep_s": 0.5131965360051254,
+    "train_total_s": 66.89706250399468,
+    "postprocess_s": 11.949257512998884,
+    "e2e_s": 79.35951655299868,
+    "n_splat_points": 362
+  },
+  {
+    "frame": 5,
+    "data_prep_s": 0.49639647400181275,
+    "train_total_s": 71.85789291799301,
+    "postprocess_s": 11.490724425006192,
+    "e2e_s": 83.84501381700102,
+    "n_splat_points": 364
+  },
+  {
+    "frame": 6,
+    "data_prep_s": 0.5205927569913911,
+    "train_total_s": 75.1406629270059,
+    "postprocess_s": 11.202280590994633,
+    "e2e_s": 86.86353627499193,
+    "n_splat_points": 385
+  },
+  {
+    "frame": 7,
+    "data_prep_s": 0.5041139940003632,
+    "train_total_s": 70.45120185299311,
+    "postprocess_s": 12.12043382099364,
+    "e2e_s": 83.07574966798711,
+    "n_splat_points": 373
+  },
+  {
+    "frame": 8,
+    "data_prep_s": 0.5127578720130259,
+    "train_total_s": 74.57738296399475,
+    "postprocess_s": 11.695449641993036,
+    "e2e_s": 86.78559047800081,
+    "n_splat_points": 445
+  },
+  {
+    "frame": 9,
+    "data_prep_s": 0.5005569149943767,
+    "train_total_s": 70.68317290299456,
+    "postprocess_s": 11.495975976009504,
+    "e2e_s": 82.67970579399844,
+    "n_splat_points": 422
+  },
+  {
+    "frame": 10,
+    "data_prep_s": 0.46799753500090446,
+    "train_total_s": 74.76904109399766,
+    "postprocess_s": 12.13192306100973,
+    "e2e_s": 87.36896169000829,
+    "n_splat_points": 357
+  },
+  {
+    "frame": 11,
+    "data_prep_s": 0.49642612801108044,
+    "train_total_s": 71.1417752809939,
+    "postprocess_s": 11.658461476006778,
+    "e2e_s": 83.29666288501176,
+    "n_splat_points": 382
+  }
+]

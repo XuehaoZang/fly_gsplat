@@ -1,0 +1,73 @@
+{
+  "records": [
+    {
+      "cam": 1,
+      "body_px": 1455,
+      "wing_px": 866,
+      "unclassified_px": 579,
+      "bg_px": 1021100,
+      "body_source": "motion",
+      "fallback_reason": null,
+      "body_info": {
+        "n_valid_cm_frames": 201,
+        "window_size": 73,
+        "target_fg": 2860,
+        "body_px": 1620
+      },
+      "elapsed_sec": 25.78,
+      "overlay_path": "postprocessing/reference/seg2d/outputs/seg2d_debug_cam1_frame100.png"
+    },
+    {
+      "cam": 2,
+      "body_px": 655,
+      "wing_px": 445,
+      "unclassified_px": 468,
+      "bg_px": 1022432,
+      "body_source": "motion",
+      "fallback_reason": null,
+      "body_info": {
+        "n_valid_cm_frames": 56,
+        "window_size": 73,
+        "target_fg": 1562,
+        "body_px": 724
+      },
+      "elapsed_sec": 22.23,
+      "overlay_path": "postprocessing/reference/seg2d/outputs/seg2d_debug_cam2_frame100.png"
+    },
+    {
+      "cam": 3,
+      "body_px": 1330,
+      "wing_px": 1445,
+      "unclassified_px": 452,
+      "bg_px": 1020773,
+      "body_source": "motion",
+      "fallback_reason": null,
+      "body_info": {
+        "n_valid_cm_frames": 107,
+        "window_size": 73,
+        "target_fg": 3188,
+        "body_px": 1449
+      },
+      "elapsed_sec": 28.66,
+      "overlay_path": "postprocessing/reference/seg2d/outputs/seg2d_debug_cam3_frame100.png"
+    },
+    {
+      "cam": 4,
+      "body_px": 1160,
+      "wing_px": 1419,
+      "unclassified_px": 249,
+      "bg_px": 1021172,
+      "body_source": "motion",
+      "fallback_reason": null,
+      "body_info": {
+        "n_valid_cm_frames": 201,
+        "window_size": 73,
+        "target_fg": 2827,
+        "body_px": 1210
+      },
+      "elapsed_sec": 25.13,
+      "overlay_path": "postprocessing/reference/seg2d/outputs/seg2d_debug_cam4_frame100.png"
+    }
+  ],
+  "total_elapsed_sec": 102.15
+}

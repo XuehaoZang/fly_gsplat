@@ -81,6 +81,25 @@ def get_part(df: pd.DataFrame, label: str, apply_if_keep: bool = True) -> np.nda
     return df.loc[mask, ["x", "y", "z"]].to_numpy(dtype=float)
 
 
+def get_part_columns(
+    df: pd.DataFrame, label: str, columns: tuple[str, ...] | list[str], apply_if_keep: bool = True
+) -> np.ndarray:
+    """Return an `(N, len(columns))` float array for arbitrary `columns` at
+    `part_label == label` rows, with the exact same row selection/order as
+    `get_part` -- so e.g. `get_part(df, "wing_L")` and
+    `get_part_columns(df, "wing_L", ["orientation_x", "orientation_y",
+    "orientation_z"])` line up row-for-row. Used opportunistically by S4b's
+    Gaussian-normal path (`chord.py`) for `orientation_*`/`planarity`, which
+    `get_part` itself doesn't carry.
+    """
+    if label not in PART_LABELS:
+        raise ValueError(f"unknown part label {label!r}; expected one of {sorted(PART_LABELS)}")
+    mask = df["part_label"] == label
+    if apply_if_keep and "if_keep" in df.columns:
+        mask &= df["if_keep"].astype(bool)
+    return df.loc[mask, list(columns)].to_numpy(dtype=float)
+
+
 def body_xyz(df: pd.DataFrame, apply_if_keep: bool = True) -> np.ndarray:
     """`get_part(df, "body", ...)`."""
     return get_part(df, "body", apply_if_keep)

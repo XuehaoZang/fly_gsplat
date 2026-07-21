@@ -15,7 +15,8 @@ multi-frame concern the notebook applies across a whole trajectory; a lone
 frame has nothing to unwrap against).
 
 `estimate_leading_edge` is independently importable and side-symmetric;
-S4 (chord/eta) reuses it as the source of the span axis `le_dir`.
+S4 (chord/eta) reuses it as the source of the span axis `le_dir` and the
+wing-plane normal `plane_normal`.
 """
 from __future__ import annotations
 
@@ -53,12 +54,17 @@ class LeadingEdge:
     shape matching the `wing_xyz` passed to `estimate_leading_edge`: True for
     points used as leading-edge-line RANSAC inliers, False for everything
     else (trailing-edge points, interior points, RANSAC-rejected outliers).
+    `plane_normal` is the wing-plane unit normal from the *same* RANSAC plane
+    fit `le_dir` was derived from (sign unspecified, per `geo.fit_plane`) --
+    not consumed by phi/theta here, but exposed so S4 (`chord.py`) doesn't
+    need a second, possibly-divergent plane fit.
     """
 
     le_dir: np.ndarray
     tip: np.ndarray
     root: np.ndarray
     inlier_mask: np.ndarray
+    plane_normal: np.ndarray
 
 
 def estimate_leading_edge(
@@ -192,7 +198,7 @@ def estimate_leading_edge(
     root = inlier_points[np.argmin(t_final)]
     tip = inlier_points[np.argmax(t_final)]
 
-    return LeadingEdge(le_dir=le_dir, tip=tip, root=root, inlier_mask=inlier_mask)
+    return LeadingEdge(le_dir=le_dir, tip=tip, root=root, inlier_mask=inlier_mask, plane_normal=normal)
 
 
 # ---------------------------------------------------------------------------

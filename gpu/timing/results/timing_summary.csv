@@ -1,0 +1,7 @@
+stage,mean_s,std_s,share_of_e2e_pct
+1_generate_dataset,0.436,0.009,0.5
+2_generate_hull,0.071,0.007,0.1
+3_train_coldstart,12.747,0.268,15.8
+4_train_loop,55.756,4.528,69.2
+5_postprocess,11.614,0.245,14.4
+end_to_end,80.623,4.719,100.0

@@ -1,0 +1,127 @@
+[10:58:04]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/timing_g2_scratch/f0000/splatfacto-checkpoint/2026-07-21_105645/nerfstudio_models/step-000001999.ckpt
+[10:59:33]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/timing_g2_scratch/f0000/splatfacto-checkpoint/2026-07-21_105812/nerfstudio_models/step-000001999.ckpt
+[11:00:55]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/timing_g2_scratch/f0000/splatfacto-checkpoint/2026-07-21_105941/nerfstudio_models/step-000001999.ckpt
+[11:02:28]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/timing_g2_scratch/f0000/splatfacto-checkpoint/2026-07-21_110103/nerfstudio_models/step-000001999.ckpt
+[11:03:45]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/timing_g2_scratch/f0000/splatfacto-checkpoint/2026-07-21_110235/nerfstudio_models/step-000001999.ckpt
+
+==================== repeat 0 ====================
+[1/5] generate_dataset ...
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000
+  wall=0.449s cpu_busy=0.610s read=1.00MB (2.22 MB/s)
+[2/5] generate_hull ...
+4 cameras loaded
+Seed: [-0.0028045  -0.00018219 -0.00844214]  triangulation residual=0.124 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1776
+After outlier removal: 1695 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000/init_points.ply
+  wall=0.084s cpu_busy=0.390s (cpu_busy_frac=4.64)
+[3-4/5] ns-train (cold start + train loop) ...
+  total=71.135s coldstart=13.198s train_loop=57.937s gpu_util_mean=26.0% gpu_util_max=82.0%
+[5/5] postprocess (export + load + dbscan clean) ...
+[clean_ply] eps=0.00021 clusters=7 kept=297/407 (73.0%)
+  export=11.487s load_ply=0.005s dbscan=0.009s total=11.502s n_splat=407
+
+==================== repeat 1 ====================
+[1/5] generate_dataset ...
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000
+  wall=0.441s cpu_busy=0.600s read=1.00MB (2.27 MB/s)
+[2/5] generate_hull ...
+4 cameras loaded
+Seed: [-0.0028045  -0.00018219 -0.00844214]  triangulation residual=0.124 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1758
+After outlier removal: 1687 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000/init_points.ply
+  wall=0.068s cpu_busy=0.360s (cpu_busy_frac=5.29)
+[3-4/5] ns-train (cold start + train loop) ...
+  total=71.045s coldstart=12.793s train_loop=58.252s gpu_util_mean=26.6% gpu_util_max=87.0%
+[5/5] postprocess (export + load + dbscan clean) ...
+[clean_ply] eps=0.00021 clusters=7 kept=269/394 (68.3%)
+  export=11.476s load_ply=0.005s dbscan=0.008s total=11.489s n_splat=394
+
+==================== repeat 2 ====================
+[1/5] generate_dataset ...
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000
+  wall=0.435s cpu_busy=0.560s read=1.00MB (2.30 MB/s)
+[2/5] generate_hull ...
+4 cameras loaded
+Seed: [-0.0028045  -0.00018219 -0.00844214]  triangulation residual=0.124 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1807
+After outlier removal: 1734 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000/init_points.ply
+  wall=0.070s cpu_busy=0.360s (cpu_busy_frac=5.14)
+[3-4/5] ns-train (cold start + train loop) ...
+  total=65.298s coldstart=12.398s train_loop=52.900s gpu_util_mean=26.8% gpu_util_max=72.0%
+[5/5] postprocess (export + load + dbscan clean) ...
+[clean_ply] eps=0.00021 clusters=6 kept=273/389 (70.2%)
+  export=11.761s load_ply=0.005s dbscan=0.008s total=11.775s n_splat=389
+
+==================== repeat 3 ====================
+[1/5] generate_dataset ...
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000
+  wall=0.421s cpu_busy=0.600s read=1.00MB (2.37 MB/s)
+[2/5] generate_hull ...
+4 cameras loaded
+Seed: [-0.0028045  -0.00018219 -0.00844214]  triangulation residual=0.124 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1826
+After outlier removal: 1754 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000/init_points.ply
+  wall=0.064s cpu_busy=0.340s (cpu_busy_frac=5.33)
+[3-4/5] ns-train (cold start + train loop) ...
+  total=73.806s coldstart=12.569s train_loop=61.237s gpu_util_mean=25.8% gpu_util_max=89.0%
+[5/5] postprocess (export + load + dbscan clean) ...
+[clean_ply] eps=0.00021 clusters=5 kept=298/377 (79.0%)
+  export=11.988s load_ply=0.005s dbscan=0.008s total=12.000s n_splat=377
+
+==================== repeat 4 ====================
+[1/5] generate_dataset ...
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000
+  wall=0.436s cpu_busy=0.600s read=1.00MB (2.29 MB/s)
+[2/5] generate_hull ...
+4 cameras loaded
+Seed: [-0.0028045  -0.00018219 -0.00844214]  triangulation residual=0.124 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1751
+After outlier removal: 1686 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/timing_g2_scratch/f0000/init_points.ply
+  wall=0.067s cpu_busy=0.350s (cpu_busy_frac=5.22)
+[3-4/5] ns-train (cold start + train loop) ...
+  total=61.228s coldstart=12.774s train_loop=48.454s gpu_util_mean=26.5% gpu_util_max=86.0%
+[5/5] postprocess (export + load + dbscan clean) ...
+[clean_ply] eps=0.00021 clusters=8 kept=284/363 (78.2%)
+  export=11.296s load_ply=0.005s dbscan=0.003s total=11.303s n_splat=363
+
+Done: 5/5 repeats. Saved -> /home/computer0/fly_project/fly_gsplat/gpu/timing/results/timing_raw.json

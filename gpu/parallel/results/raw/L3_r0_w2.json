@@ -1,0 +1,34 @@
+[
+  {
+    "frame": 0,
+    "data_prep_s": 0.38947611600451637,
+    "train_total_s": 62.08713106799405,
+    "postprocess_s": 13.388353829010157,
+    "e2e_s": 75.86496101300872,
+    "n_splat_points": 379
+  },
+  {
+    "frame": 1,
+    "data_prep_s": 0.3089307460031705,
+    "train_total_s": 63.97837402600271,
+    "postprocess_s": 12.999048810001113,
+    "e2e_s": 77.286353582007,
+    "n_splat_points": 353
+  },
+  {
+    "frame": 2,
+    "data_prep_s": 0.23350114999630023,
+    "train_total_s": 64.41839094500756,
+    "postprocess_s": 12.846658513997681,
+    "e2e_s": 77.49855060900154,
+    "n_splat_points": 361
+  },
+  {
+    "frame": 3,
+    "data_prep_s": 0.3368695840035798,
+    "train_total_s": 63.8088413420046,
+    "postprocess_s": 12.654285115000675,
+    "e2e_s": 76.79999604100885,
+    "n_splat_points": 394
+  }
+]

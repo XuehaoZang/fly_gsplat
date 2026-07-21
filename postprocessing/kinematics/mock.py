@@ -183,6 +183,28 @@ _SIGN_LEFT = {"wing_L": -1.0, "wing_R": 1.0}
 """§4: sign_left = -1 for wing_L, +1 for wing_R."""
 
 
+def _linearity_planarity_sphericity(scale_phys: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Per-point `linearity/planarity/sphericity` from `(N,3)` `scale_phys`,
+    using the *exact* sorted-eigenvalue formula `utils/gaussian_features.py`
+    derives them with (S4b Step 0): `lam1 >= lam2 >= lam3` from sorting
+    `scale_phys`, then `linearity=(lam1-lam2)/lam1`,
+    `planarity=(lam2-lam3)/lam1`, `sphericity=lam3/lam1`. Computing these
+    straight from the same `scale_phys` array used for `scale_ratio` (rather
+    than a separately hand-picked constant) keeps the mock's `planarity`
+    numerically consistent with the anisotropy `orientation` is derived from
+    -- required for S4b's planarity-based trust weighting to mean what it
+    claims to mean.
+    """
+    scale_phys = np.asarray(scale_phys, dtype=float)
+    sorted_desc = np.sort(scale_phys, axis=1)[:, ::-1]
+    lam1, lam2, lam3 = sorted_desc[:, 0], sorted_desc[:, 1], sorted_desc[:, 2]
+    lam1_safe = np.maximum(lam1, 1e-12)
+    linearity = (lam1 - lam2) / lam1_safe
+    planarity = (lam2 - lam3) / lam1_safe
+    sphericity = lam3 / lam1_safe
+    return linearity, planarity, sphericity
+
+
 # ---------------------------------------------------------------------------
 # Default ground truth factory
 # ---------------------------------------------------------------------------
@@ -312,10 +334,16 @@ def make_body_points(gt: GroundTruth, n_points: int, rng: np.random.Generator) -
     cols["scale_phys_2"] = c * eig[:, 2] * 0.5
     scales = np.stack([cols["scale_phys_0"], cols["scale_phys_1"], cols["scale_phys_2"]], axis=1)
     cols["scale_ratio"] = scales.max(axis=1) / np.maximum(scales.min(axis=1), 1e-12)
-    l1, l2, l3 = 1.0, 0.15, 0.10
-    cols["linearity"] = np.full(n, (l1 - l2) / l1)
-    cols["planarity"] = np.full(n, (l2 - l3) / l1)
-    cols["sphericity"] = np.full(n, l3 / l1)
+    cols["linearity"], cols["planarity"], cols["sphericity"] = _linearity_planarity_sphericity(scales)
+    # S4b Step 0: `orientation` must be the world-frame direction of whichever
+    # local axis has the smallest `scale_phys` (utils/gaussian_features.py);
+    # here that's set analytically to the ellipsoid outward normal, which is
+    # only correct if axis 2 (the `c`-derived scale) is indeed always
+    # smallest -- assert it rather than silently drifting out of sync.
+    assert np.all(np.argmin(scales, axis=1) == 2), (
+        "make_body_points: scale_phys_2 must stay the smallest axis for "
+        "orientation=normal_world to match utils/gaussian_features.py semantics"
+    )
     cols["orientation_x"], cols["orientation_y"], cols["orientation_z"] = (
         normal_world[:, 0], normal_world[:, 1], normal_world[:, 2]
     )
@@ -383,10 +411,14 @@ def make_wing_points(
     cols["scale_phys_2"] = (WING_THICKNESS_M / 2) * eig[:, 2]
     scales = np.stack([cols["scale_phys_0"], cols["scale_phys_1"], cols["scale_phys_2"]], axis=1)
     cols["scale_ratio"] = scales.max(axis=1) / np.maximum(scales.min(axis=1), 1e-12)
-    l1, l2, l3 = 1.0, 0.9, 0.05
-    cols["linearity"] = np.full(n, (l1 - l2) / l1)
-    cols["planarity"] = np.full(n, (l2 - l3) / l1)
-    cols["sphericity"] = np.full(n, l3 / l1)
+    cols["linearity"], cols["planarity"], cols["sphericity"] = _linearity_planarity_sphericity(scales)
+    # S4b Step 0: same orientation<->min-scale-axis correspondence as
+    # `make_body_points` -- axis 2 (thickness) must stay smallest since
+    # `orientation` is set analytically to the sheet normal below.
+    assert np.all(np.argmin(scales, axis=1) == 2), (
+        "make_wing_points: scale_phys_2 must stay the smallest axis for "
+        "orientation=normal to match utils/gaussian_features.py semantics"
+    )
     cols["orientation_x"] = np.full(n, normal[0])
     cols["orientation_y"] = np.full(n, normal[1])
     cols["orientation_z"] = np.full(n, normal[2])
@@ -424,7 +456,11 @@ def scenario_clean(seed: int = 0) -> tuple[pd.DataFrame, GroundTruth]:
 
 
 def scenario_reversal_contaminated(
-    overlap: float = 0.9, contam_frac: float = 0.15, seed: int = 0
+    overlap: float = 0.9,
+    contam_frac: float = 0.15,
+    seed: int = 0,
+    eta_L_deg: float = 25.0,
+    eta_R_deg: float = 25.0,
 ) -> tuple[pd.DataFrame, GroundTruth]:
     """Wings brought close together (near stroke reversal) with `contam_frac`
     of wing_L's points mislabeled as wing_R — the key stress case for the S4
@@ -433,7 +469,20 @@ def scenario_reversal_contaminated(
     `overlap` in [0, 1]: 0 = `scenario_clean`-like separation, 1 = both wings'
     stroke azimuth driven to the same value and roots pulled together. xyz
     are left untouched by the mislabeling — only `part_label` is corrupted,
-    matching a T3 labeling error rather than a geometry change.
+    matching a T3 labeling error rather than a geometry change. `eta_L_deg`/
+    `eta_R_deg` (default: `default_ground_truth`'s own defaults, both 25 deg
+    — unchanged behavior for existing callers) let a caller drive the two
+    wings' chord pitch apart, e.g. mirrored signs to model the asynchronous
+    supination/pronation of a real near-reversal moment — the bigger the
+    eta gap, the more the two wings' plane *orientations* diverge even while
+    their point clouds spatially overlap, which is exactly the signal S4b's
+    `use_gaussian_normals` contaminant rejection relies on (§5 step 4).
+
+    Adds a `mock_contaminant` bool column (S4b bookkeeping, not part of
+    `io_schema.INPUT_COLUMNS`): True on exactly the rows relabeled here, so
+    tests can score a contaminant-rejection step's precision/recall against
+    known ground truth. Ignored by `io_schema.load_frame` (only mandatory
+    columns are checked) and survives a CSV round-trip like any other column.
     """
     overlap = float(np.clip(overlap, 0.0, 1.0))
     phi_mid = 90.0
@@ -443,6 +492,8 @@ def scenario_reversal_contaminated(
         phi_L_deg=phi_L,
         phi_R_deg=phi_R,
         root_lateral_scale=1.0 - 0.6 * overlap,
+        eta_L_deg=eta_L_deg,
+        eta_R_deg=eta_R_deg,
     )
     df, gt = make_frame(gt, seed=seed)
 
@@ -451,6 +502,38 @@ def scenario_reversal_contaminated(
     n_contam = int(round(contam_frac * len(wl_idx)))
     contam_idx = rng.choice(wl_idx, size=n_contam, replace=False) if n_contam > 0 else np.array([], dtype=int)
     df.loc[contam_idx, "part_label"] = "wing_R"
+    df["mock_contaminant"] = False
+    df.loc[contam_idx, "mock_contaminant"] = True
+    return df, gt
+
+
+def scenario_noisy_orientation(bad_frac: float = 0.3, seed: int = 0) -> tuple[pd.DataFrame, GroundTruth]:
+    """`scenario_clean` with `bad_frac` of each wing's points given a random
+    (unreliable) `orientation` and a low `planarity`, xyz/ground-truth left
+    untouched — stresses S4b's planarity-based soft-weighting in isolation
+    from any geometric change, unlike `scenario_noisy` (which perturbs xyz)
+    or `scenario_reversal_contaminated` (which corrupts `part_label`).
+
+    Adds a `mock_bad_orientation` bool column (S4b bookkeeping, same status
+    as `mock_contaminant` above), True on exactly the rows whose orientation
+    was replaced.
+    """
+    gt = default_ground_truth()
+    df, gt = make_frame(gt, seed=seed)
+    rng = np.random.default_rng(seed + 3)
+
+    df["mock_bad_orientation"] = False
+    for side in ("wing_L", "wing_R"):
+        idx = df.index[df["part_label"] == side].to_numpy()
+        n_bad = int(round(bad_frac * len(idx)))
+        if n_bad == 0:
+            continue
+        bad_idx = rng.choice(idx, size=n_bad, replace=False)
+        random_dirs = rng.normal(size=(len(bad_idx), 3))
+        random_dirs /= np.linalg.norm(random_dirs, axis=1, keepdims=True)
+        df.loc[bad_idx, ["orientation_x", "orientation_y", "orientation_z"]] = random_dirs
+        df.loc[bad_idx, "planarity"] = rng.uniform(0.0, 0.15, size=len(bad_idx))
+        df.loc[bad_idx, "mock_bad_orientation"] = True
     return df, gt
 
 

@@ -1,0 +1,24 @@
+[skip] L1_r0 already in /home/computer0/fly_project/fly_gsplat/gpu/parallel/results/scan_raw.json, not re-running
+[skip] L1_r1 already in /home/computer0/fly_project/fly_gsplat/gpu/parallel/results/scan_raw.json, not re-running
+[skip] L2_r0 already in /home/computer0/fly_project/fly_gsplat/gpu/parallel/results/scan_raw.json, not re-running
+[skip] L2_r1 already in /home/computer0/fly_project/fly_gsplat/gpu/parallel/results/scan_raw.json, not re-running
+
+==================== L3_r0 (concurrency=3) ====================
+  wall=310.5s ok=12 failed=0 throughput=139.1 f/h gpu_mean=52.7% gpu_max=93.0% cpu_mean=349% cpu_max=1975% mem_max=3860MiB
+
+==================== L3_r1 (concurrency=3) ====================
+  wall=311.3s ok=12 failed=0 throughput=138.8 f/h gpu_mean=52.9% gpu_max=92.0% cpu_mean=347% cpu_max=2011% mem_max=3988MiB
+
+==================== L4_r0 (concurrency=4) ====================
+  wall=250.3s ok=12 failed=0 throughput=172.6 f/h gpu_mean=59.8% gpu_max=100.0% cpu_mean=455% cpu_max=2074% mem_max=4975MiB
+
+==================== L4_r1 (concurrency=4) ====================
+  wall=247.9s ok=12 failed=0 throughput=174.3 f/h gpu_mean=60.2% gpu_max=99.0% cpu_mean=456% cpu_max=2103% mem_max=5103MiB
+
+==================== L6_r0 (concurrency=6) ====================
+  wall=192.9s ok=12 failed=0 throughput=223.9 f/h gpu_mean=62.8% gpu_max=100.0% cpu_mean=658% cpu_max=1893% mem_max=6471MiB
+
+==================== L6_r1 (concurrency=6) ====================
+  wall=194.6s ok=12 failed=0 throughput=222.0 f/h gpu_mean=62.5% gpu_max=100.0% cpu_mean=659% cpu_max=1986% mem_max=6821MiB
+
+Done. Saved -> /home/computer0/fly_project/fly_gsplat/gpu/parallel/results/scan_raw.json
