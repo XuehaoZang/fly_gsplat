@@ -12,10 +12,10 @@ from utils.camera import CameraConfig
 from utils.ply import load_ply, load_ply_with_attrs, unrescale
 from utils.viz import start_viser, add_point_cloud
 
-BASE_NAME   = "ctrl_009_002_8groups_100frames"
-GROUP_NAME  = "G2b_G9"
+BASE_NAME   = "ctrl_009_002_ratio3_sh0_full"
+GROUP_NAME  = "ratio3_sh0"
 DATA_NAME   = "ctrl_009_002"  
-FRAME_RANGE = range(0, 100)
+FRAME_RANGE = range(0, 640)
 FPS         = 16  # 播放帧率（不必等于拍摄fps，这里是回放速度）
 DISPLAY_SCALE = 1000.0  # 米 -> 毫米，让点云在 viser 默认场景尺度下显示为"正常大小"
 

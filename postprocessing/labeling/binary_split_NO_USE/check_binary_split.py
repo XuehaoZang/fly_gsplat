@@ -30,7 +30,7 @@ from postprocessing.labeling.binary_split_NO_USE.binary_split import (
     classify_body_wing_quantile, print_color_diagnostics,
     DEFAULT_PLANARITY_Q, DEFAULT_AXIS_DIST_Q,
 )
-from postprocessing.labeling.select_dev_frames import DEV_FRAMES, DATASET_DIR
+from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs"

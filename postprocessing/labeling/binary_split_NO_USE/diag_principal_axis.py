@@ -51,7 +51,7 @@ from postprocessing.cleaning.floater_census_100frames import latest_checkpoint_d
 from postprocessing.labeling.binary_split_NO_USE.binary_split import (  # noqa: E402
     classify_body_wing_quantile, DEFAULT_AXIS_DIST_Q,
 )
-from postprocessing.labeling.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
+from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
 
 OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs"
 

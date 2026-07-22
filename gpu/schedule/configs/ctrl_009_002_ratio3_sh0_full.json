@@ -1,0 +1,14 @@
+{
+  "name": "ctrl_009_002_ratio3_sh0_full",
+  "sparse_dir": "X:\\antenna\\control\\009_25052026\\Sparse\\Expr_009_mov_002",
+  "base_name": "ctrl_009_002",
+  "max_iters": 2000,
+  "param_sets": {
+    "ratio3_sh0": ["--pipeline.model.use-scale-regularization", "True",
+                   "--pipeline.model.max-gauss-ratio", "3.0",
+                   "--pipeline.model.sh-degree", "0",
+                   "--pipeline.model.warmup-length", "50",
+                   "--pipeline.model.stop-split-at", "1800"]
+  },
+  "frames": {"start": 0, "end": 640}
+}

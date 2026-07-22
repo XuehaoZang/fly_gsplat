@@ -135,13 +135,10 @@ def analyze_scale_ratio(splat_path: Path) -> dict:
         "frac_over_10": float((ratios > 10).mean()),  # 超过官方默认阈值的比例
     }
 
-def connected_component_sizes(xyz: np.ndarray, k: int = 10, dist_percentile: float = 75.0) -> np.ndarray:
-    """
-    构建 k-近邻图，只保留邻距不超过全局 dist_percentile 分位数的边，做连通分量分析，
-    返回每个点所在连通分量的大小(patch_size)。孤立的小分量是"离群噪点"的强信号，
-    且比逐点的形状特征(scale_ratio/linearity等)更能把噪点和贴着结构边缘的真实薄片/尖刺
-    区分开——后者形状上同样细长，但在空间上仍连着主体，因此连通分量大。
-    """
+def _knn_graph_component_labels(xyz: np.ndarray, k: int, dist_percentile: float) -> np.ndarray:
+    """构建 k-近邻图(只保留邻距不超过全局 dist_percentile 分位数的边)并做连通分量分析，
+    返回每个点所在连通分量的编号(0..n_components-1)。connected_component_sizes 和
+    connected_component_labels 共享这份图构建逻辑，避免重复实现。"""
     n = len(xyz)
     tree = cKDTree(xyz)
     dists, idxs = tree.query(xyz, k=k + 1)
@@ -154,8 +151,26 @@ def connected_component_sizes(xyz: np.ndarray, k: int = 10, dist_percentile: flo
     adj = coo_matrix((np.ones(len(rows)), (rows, cols)), shape=(n, n))
     adj = adj.maximum(adj.T)  # 对称化(无向图)
     _, labels = connected_components(adj, directed=False)
+    return labels
+
+
+def connected_component_sizes(xyz: np.ndarray, k: int = 10, dist_percentile: float = 75.0) -> np.ndarray:
+    """
+    构建 k-近邻图，只保留邻距不超过全局 dist_percentile 分位数的边，做连通分量分析，
+    返回每个点所在连通分量的大小(patch_size)。孤立的小分量是"离群噪点"的强信号，
+    且比逐点的形状特征(scale_ratio/linearity等)更能把噪点和贴着结构边缘的真实薄片/尖刺
+    区分开——后者形状上同样细长，但在空间上仍连着主体，因此连通分量大。
+    """
+    labels = _knn_graph_component_labels(xyz, k, dist_percentile)
     comp_sizes = np.bincount(labels)
     return comp_sizes[labels]
+
+
+def connected_component_labels(xyz: np.ndarray, k: int = 10, dist_percentile: float = 75.0) -> np.ndarray:
+    """同 connected_component_sizes 的连通分量分析，但返回每个点所在分量的编号
+    (0..n_components-1)而非分量大小，供需要知道"哪些点属于同一分量"(而不只是分量
+    多大)的调用方使用，例如按分量做碎块合并。"""
+    return _knn_graph_component_labels(xyz, k, dist_percentile)
 
 def local_pca_extent(xyz: np.ndarray, k: int = 10) -> np.ndarray:
     """

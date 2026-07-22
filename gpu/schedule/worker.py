@@ -86,10 +86,12 @@ def main():
 
         task = json.loads(claimed_path.read_text())
         param_set, frame_idx = task["param_set"], task["frame"]
+        use_checkpoint_model = task.get("use_checkpoint_model", False)
         started_at = datetime.now().isoformat(timespec="seconds")
         t0 = time.perf_counter()
         try:
-            result = common.run_task(args.sweep_name, param_set, frame_idx, task["extra_args"])
+            result = common.run_task(args.sweep_name, param_set, frame_idx, task["extra_args"],
+                                      task["base_name"], task["max_iters"], use_checkpoint_model)
             status = "ok"
             n_ok += 1
         except Exception as e:

@@ -72,10 +72,11 @@ def visual_hull_vote(points: np.ndarray,
 
 
 # -------------------------------------------------------------------- main --
-def generate_hull(data_dir: str, if_viser: bool = True) -> None:
+def generate_hull(data_dir: str, if_viser: bool = True,
+                   n_samples: int = 10_000, out_name: str = "init_points.ply") -> None:
     base_dir  = Path(data_dir)
     json_path = base_dir / "transforms.json"
-    ply_path  = base_dir / "init_points.ply"
+    ply_path  = base_dir / out_name
 
     with open(json_path) as f:
         frames = json.load(f)["frames"]
@@ -113,10 +114,9 @@ def generate_hull(data_dir: str, if_viser: bool = True) -> None:
     print(f"Seed: {seed}  triangulation residual={res*1000:.3f} mm")
 
     # sample points in 2mm sphere
-    N_SAMPLES = 10_000      # 10k points
     RADIUS    = 0.002       # metres
-    points    = sample_sphere(seed, RADIUS, N_SAMPLES)
-    print(f"Sampled {N_SAMPLES} points in {RADIUS*1000:.0f}mm sphere")
+    points    = sample_sphere(seed, RADIUS, n_samples)
+    print(f"Sampled {n_samples} points in {RADIUS*1000:.0f}mm sphere")
 
     # visual hull vote (threshold = all cameras)
     inside = visual_hull_vote(points, cameras, masks)

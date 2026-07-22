@@ -58,7 +58,7 @@ ns-train splatfacto \
 ```bash
  ns-train splatfacto-checkpoint   --data ./data/ctrl_009_002_test  --vis tensorboard --max-num-iterations 5000 --pipeline.model.background-color white  --pipeline.model.save_stats True  --pipeline.model.stats_every 1000   --pipeline.model.save_points True --pipeline.model.points_every 5000   --pipeline.model.save_eval_images True --pipeline.model.eval_images_every 1000
 
-tensorboard --logdir outputs/ctrl_009_002
+tensorboard --logdir outputs/ctrl_009_002_ratio3_sh0_full
 # http://localhost:6006
 
 ns-viewer --load-config outputs/ctrl_009_002_8groups_100frames/G9_sh_degree_0/f0000/splatfacto-checkpoint/2026-07-14_073852/config.yml

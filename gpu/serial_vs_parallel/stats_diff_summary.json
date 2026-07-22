@@ -1,0 +1,127 @@
+{
+  "n_serial_ok": 100,
+  "n_parallel_ok": 100,
+  "n_common_frames": 100,
+  "only_serial_frames": [],
+  "only_parallel_frames": [],
+  "metric_diff_stats": {
+    "n_gaussians": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.15,
+      "std_diff": 18.924256920682513,
+      "median_diff": 1.0,
+      "max_abs_diff": 43.0,
+      "mean_rel_diff_pct": 0.17902156781654138,
+      "max_abs_rel_diff_pct": 12.654320987654321
+    },
+    "scale_ratio_median": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.0050632405281066896,
+      "std_diff": 0.024488348230706936,
+      "median_diff": 0.003011345863342285,
+      "max_abs_diff": 0.06201791763305664,
+      "mean_rel_diff_pct": 0.21029851383147857,
+      "max_abs_rel_diff_pct": 2.49310261608911
+    },
+    "scale_ratio_p95": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.0011943720579147632,
+      "std_diff": 0.027850520205362155,
+      "median_diff": -0.00011032223701490373,
+      "max_abs_diff": 0.08882981538772627,
+      "mean_rel_diff_pct": 0.045814727136480715,
+      "max_abs_rel_diff_pct": 3.1012652801590863
+    },
+    "scale_ratio_frac_over_10": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 0,
+      "n_skipped_zero_or_nan": 100,
+      "mean_diff": 0.0,
+      "std_diff": 0.0,
+      "median_diff": 0.0,
+      "max_abs_diff": 0.0,
+      "mean_rel_diff_pct": NaN,
+      "max_abs_rel_diff_pct": NaN
+    },
+    "opacity_median": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.0014518776535987854,
+      "std_diff": 0.024741063072578423,
+      "median_diff": 0.0015817508101463318,
+      "max_abs_diff": 0.09244492650032043,
+      "mean_rel_diff_pct": 1.268926592119419,
+      "max_abs_rel_diff_pct": 35.4188275787417
+    },
+    "low_opacity_frac": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.0007407366521311256,
+      "std_diff": 0.01741566151286531,
+      "median_diff": 0.002311060286590734,
+      "max_abs_diff": 0.05540893333523546,
+      "mean_rel_diff_pct": 2.662284995488388,
+      "max_abs_rel_diff_pct": 61.103047895500715
+    },
+    "bbox_extent_max": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 5.361540243029594e-06,
+      "std_diff": 0.0008277096024482632,
+      "median_diff": -3.373250365257263e-06,
+      "max_abs_diff": 0.004891343414783478,
+      "mean_rel_diff_pct": 0.18321185609631357,
+      "max_abs_rel_diff_pct": 29.10762423296563
+    },
+    "extent_overshoot": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.01301143254146971,
+      "std_diff": 0.07230899028996146,
+      "median_diff": 0.0018630475081488629,
+      "max_abs_diff": 0.3334333708508703,
+      "mean_rel_diff_pct": 1.2991884031968577,
+      "max_abs_rel_diff_pct": 26.129299449319287
+    },
+    "dbscan_floater_frac": {
+      "n_common_frames": 100,
+      "n_diff_computed": 100,
+      "n_rel_diff_computed": 100,
+      "n_skipped_zero_or_nan": 0,
+      "mean_diff": 0.009842825296139245,
+      "std_diff": 0.03958719235524429,
+      "median_diff": 0.009225733146448672,
+      "max_abs_diff": 0.10772723832589118,
+      "mean_rel_diff_pct": 6.121822723203957,
+      "max_abs_rel_diff_pct": 53.61435584899272
+    }
+  },
+  "jitter": {
+    "serial": {
+      "bbox_extent_jitter": 0.0010425554226608448,
+      "n_gaussians_jitter": 21.271969443656022
+    },
+    "parallel": {
+      "bbox_extent_jitter": 0.0010584627383489454,
+      "n_gaussians_jitter": 21.18203253216399
+    }
+  }
+}
