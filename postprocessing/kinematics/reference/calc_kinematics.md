@@ -32,8 +32,13 @@ alongside it and are **reference only, never imported or run**:
 
 **Input** — one per-point CSV per frame (T1 features + T2 `if_keep` + T3
 `part_label`). Example path:
-`outputs/ctrl_009_002_8groups_100frames/G2b_scale_reg_ratio3/f0090/splatfacto-checkpoint/<ts>/gaussian_features_f0090.csv`
-(T2 output adds `if_keep`, suffix `_marked.csv`).
+`outputs/ctrl_009_002_8groups_100frames/G2b_scale_reg_ratio3/f0090/splatfacto-checkpoint/<ts>/gaussian_features_f0090.csv`.
+Each frame directory holds three CSVs, one per stage: T1's raw
+`gaussian_features_f0090.csv`; T2's `..._marked.csv` (adds `if_keep`); T3's
+`..._labeled.csv` (adds `part_label` + `confidence`), written as a **sibling**
+of `_marked.csv`, not an in-place amendment of it (see
+`postprocessing/labeling/labeling.py`). **T4 reads `_labeled.csv`** — it is
+the only file carrying `part_label`, the mandatory column T4 needs.
 
 Columns (per point / row):
 

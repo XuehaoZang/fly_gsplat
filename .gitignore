@@ -2,6 +2,7 @@
 data/
 outputs/
 postprocessing/labeling/eda_outputs
+postprocessing/kinematics/diagnostics_output
 
 # Python
 __pycache__/

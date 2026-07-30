@@ -14,18 +14,11 @@ body/wing_L/wing_R 三分标签，落盘为 _labeled.csv，打通到 T4 的端�
     python -m postprocessing.labeling.labeling
 """
 import argparse
-import json
 import sys
 from pathlib import Path
 
-import cv2
-import matplotlib
 import numpy as np
 import pandas as pd
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from matplotlib.colors import to_rgb
 from scipy.spatial import cKDTree
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -40,8 +33,8 @@ from postprocessing.labeling.kmeans_split import (  # noqa: E402
     seed_mask, stability_check, stability_check_with_init, standardize_v2,
 )
 from postprocessing.labeling.diag.select_dev_frames import DATASET_DIR, DEV_FRAMES  # noqa: E402
-from utils.calib import proj  # noqa: E402
-from utils.camera import CameraConfig  # noqa: E402
+from postprocessing.viz._colors import PART_COLORS  # noqa: E402
+from postprocessing.viz.reprojection_viewer import plot_reprojection_overlay  # noqa: E402
 from utils.ply import connected_component_labels  # noqa: E402
 
 RAW_DATA_DIR = REPO_ROOT / "data" / "ctrl_009_002"
@@ -58,11 +51,6 @@ UP = np.array([0.0, 0.0, 1.0])  # 实验室 up = +z (calc_kinematics.md §0)
 MIN_BODY_SEED = 5              # body种子(opacity>=0.98或R<0.2)点数<此值视为该帧种子退化
 WING_MERGE_MIN_FRAC = 0.05     # 两翼合并连通分量检查: 显著分量的最小点数占比
 WING_MERGE_MIN_ABS = 5         # 显著分量的最小绝对点数(过滤离群噪点分量)
-
-BODY_COLOR = to_rgb("#888888")
-WING_L_COLOR = to_rgb("#1f77b4")
-WING_R_COLOR = to_rgb("#d62728")
-PART_COLORS = {"body": BODY_COLOR, "wing_L": WING_L_COLOR, "wing_R": WING_R_COLOR}
 
 
 def compute_confidence(n_hardcut: int, ari_min: float) -> str:
@@ -291,57 +279,11 @@ def process_frame(frame: str) -> dict:
             "labeled_csv": labeled_csv, "df_out": df_out}
 
 
-def _project_points(cam: CameraConfig, xyz: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    us = np.empty(len(xyz))
-    vs = np.empty(len(xyz))
-    ds = np.empty(len(xyz))
-    for i, X in enumerate(xyz):
-        us[i], vs[i], ds[i] = proj(cam.K, cam.R_w2c, cam.X0, X)
-    return us, vs, ds
-
-
 def plot_labeled_reprojection(frame: str, df_out: pd.DataFrame, confidence: str, out_path: Path) -> None:
-    """body先画(灰)、wing_L/wing_R后画(两色)盖上，if_keep=False点用叉号标记，2x2四相机。"""
-    frame_data_dir = RAW_DATA_DIR / frame
-    with open(frame_data_dir / "transforms.json") as f:
-        cam_frames = json.load(f)["frames"]
-
-    xyz = df_out[["x", "y", "z"]].to_numpy()
-    part_label = df_out["part_label"].to_numpy()
-    is_dropped = ~df_out["if_keep"].astype(bool).to_numpy()
-
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    axes = axes.flatten()
-    for idx, cam_frame in enumerate(cam_frames[:4]):
-        ax = axes[idx]
-        cam = CameraConfig.from_opengl(cam_frame)
-        img_path = frame_data_dir / cam_frame["file_path"]
-        img = cv2.imread(str(img_path), cv2.IMREAD_GRAYSCALE)
-        if img is None:
-            ax.set_title(f"CAM {idx + 1}: missing image")
-            ax.axis("off")
-            continue
-
-        us, vs, ds = _project_points(cam, xyz)
-        valid = ds > 0
-        ax.imshow(img, cmap="gray")
-
-        for lab in ("body", "wing_L", "wing_R"):
-            mask = valid & (part_label == lab) & ~is_dropped
-            ax.scatter(us[mask], vs[mask], s=10, c=[PART_COLORS[lab]], marker="o", alpha=0.85)
-        for lab in ("body", "wing_L", "wing_R"):
-            mask = valid & (part_label == lab) & is_dropped
-            ax.scatter(us[mask], vs[mask], s=30, c=[PART_COLORS[lab]], marker="x", linewidths=1.2)
-
-        ax.set_title(f"CAM {idx + 1}: {img_path.name}")
-        ax.axis("off")
-
-    fig.suptitle(f"{frame}  [confidence={confidence}]  gray=body  blue=wing_L  red=wing_R  "
-                 "x-marker=if_keep=False (1-NN propagated)", fontsize=10)
-    fig.tight_layout()
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_path, dpi=150)
-    plt.close(fig)
+    """body先画(灰)、wing_L/wing_R后画(两色)盖上，if_keep=False点用叉号标记，2x2四相机。
+    薄封装，通用重投影/画图逻辑见 postprocessing/viz/reprojection_viewer.py::plot_reprojection_overlay。"""
+    plot_reprojection_overlay(frame, df_out, out_path, raw_data_dir=RAW_DATA_DIR,
+                               title_suffix=f"  [confidence={confidence}]")
 
 
 def run_batch(frames: list[str]) -> tuple[list[dict], list[dict]]:

@@ -7,7 +7,7 @@
 这轮全部走final-state：不加stats-every/save-points等checkpoint对齐flag，
 默认splatfacto-checkpoint(save_stats=True, stats_every=1000)配合final_step强制dump，
 免费拿到每帧最后一步(step=max_iters-1=1999)的stats.json。extent_overshoot/
-dbscan_floater_frac走run_batch.py的老路子：export_splat产出splat.ply后读取+反归一化。
+dbscan_floater_frac：export_splat产出splat.ply后读取+反归一化现算。
 
 通宵执行：外层按组循环，每组100帧跑完后往batch_progress.log追加一行状态再继续下一组，
 单帧失败不中断整体批次(try/except记录，继续下一帧)。
@@ -18,7 +18,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 import sys
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
@@ -27,7 +27,7 @@ from generate_dataset import generate_dataset
 from generate_hull import generate_hull
 from utils.ply import export_splat, load_ply, load_ply_with_attrs, unrescale, clean_ply
 
-REPO = Path(__file__).resolve().parent.parent
+REPO = Path(__file__).resolve().parent.parent.parent
 SPARSE_DIR = r"X:\antenna\control\009_25052026\Sparse\Expr_009_mov_002"
 BASE_NAME = "ctrl_009_002"
 SWEEP_NAME = "ctrl_009_002_8groups_100frames"

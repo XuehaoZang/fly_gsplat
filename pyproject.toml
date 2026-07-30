@@ -5,6 +5,32 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fly_gsplat"
 version = "0.1.0"
+requires-python = ">=3.10"
+# torch / nerfstudio / gsplat are CUDA-build-specific and installed manually,
+# see env_setup/env_setup.md -- not listed here.
+dependencies = [
+    "numpy<2.0.0",
+    "scipy",
+    "opencv-python",
+    "pillow",
+    "h5py",
+    "imageio",
+    "matplotlib",
+    "pandas",
+    "plyfile",
+    "psutil",
+    "scikit-image",
+    "scikit-learn",
+    "scikit-spatial",
+    "open3d",
+    "viser",
+    "tqdm",
+    "ninja",
+    "jaxtyping",
+    "rich",
+    "fpsample==0.2.0",
+    "setuptools==69.5.1",
+]
 
 [project.entry-points."nerfstudio.method_configs"]
 splatfacto-checkpoint = "models.splatfacto_checkpoint:splatfacto_checkpoint_method"

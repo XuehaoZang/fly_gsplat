@@ -74,13 +74,13 @@ def add_camera_axes(server: viser.ViserServer, cameras: List["CameraConfig"]) ->
 
 
 def add_point_cloud(server: viser.ViserServer, points: np.ndarray, colors: np.ndarray,
-                    name: str, point_size: float = 0.0001) -> None:
+                    name: str, point_size: float = 0.0001):
     """Add a point cloud layer. name uses path format e.g. '/beams/cam1'.
     Viser groups layers by prefix in the sidebar for individual toggle."""
     if len(points) == 0:
-        return
-    server.scene.add_point_cloud(name=name, points=points,
-                                  colors=colors, point_size=point_size)
+        return None
+    return server.scene.add_point_cloud(name=name, points=points,
+                                         colors=colors, point_size=point_size)
 
 
 def stop_viser(server: viser.ViserServer) -> None:

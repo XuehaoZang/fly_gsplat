@@ -312,13 +312,18 @@ def test_smoke_real_dataset():
 
     scratch_out = _tmp_dir("real_smoke")
     try:
-        config = pipeline.PipelineConfig(min_points=10, output_dir=scratch_out, write_debug=False)
+        config = pipeline.PipelineConfig(
+            min_points=10,
+            output_dir=scratch_out,
+            write_debug=False,
+            frame_glob="f*/splatfacto-checkpoint/*/*_labeled.csv",
+        )
         out_df = pipeline.run_dataset(real_root, config)
 
         print(f"\nreal dataset smoke test: root={real_root}")
         print(f"  frames found: {len(out_df)}")
         if len(out_df) == 0:
-            print("  SKIP  no *_marked.csv frames discovered")
+            print("  SKIP  no *_labeled.csv frames discovered")
             return
         print("  status breakdown:")
         for status, count in out_df["status"].value_counts().items():

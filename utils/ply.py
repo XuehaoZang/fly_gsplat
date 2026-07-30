@@ -6,6 +6,7 @@ from sklearn.cluster import DBSCAN
 from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 from scipy.spatial import cKDTree
+from scipy.spatial.transform import Rotation
 
 def export_splat(splat_dir: Path) -> None:
     config_path = splat_dir / "config.yml"
@@ -38,11 +39,19 @@ def load_ply_with_attrs(path: Path) -> dict:
     if "opacity" in v.data.dtype.names:
         opacity = 1.0 / (1.0 + np.exp(-v["opacity"]))  # sigmoid
 
+    scale_xyz = None
     scale = None
     scale_names = [f"scale_{i}" for i in range(3)]
     if all(n in v.data.dtype.names for n in scale_names):
         scale_raw = np.stack([v[n] for n in scale_names], axis=-1)
-        scale = np.exp(scale_raw).mean(axis=-1)  # exp还原，三轴取平均作为标量尺度
+        scale_xyz = np.exp(scale_raw)  # (N,3) 每轴真实半轴长度，exp还原
+        scale = scale_xyz.mean(axis=-1)  # 三轴取平均的标量尺度，供旧的colormap染色用
+
+    rot = None
+    rot_names = [f"rot_{i}" for i in range(4)]
+    if all(n in v.data.dtype.names for n in rot_names):
+        # gsplat/splatfacto 导出约定：rot_0..3 = (w, x, y, z)，未归一化
+        rot = np.stack([v[n] for n in rot_names], axis=-1)
 
     rgb = None
     SH_C0 = 0.28209479177387814
@@ -51,7 +60,8 @@ def load_ply_with_attrs(path: Path) -> dict:
         dc = np.stack([v[n] for n in dc_names], axis=-1)
         rgb = np.clip(0.5 + SH_C0 * dc, 0, 1)  # 球谐0阶系数还原成0~1 RGB
 
-    return {"xyz": xyz, "opacity": opacity, "scale": scale, "rgb": rgb}
+    return {"xyz": xyz, "opacity": opacity, "scale": scale, "scale_xyz": scale_xyz,
+            "rot": rot, "rgb": rgb}
 
 def print_stats(label: str, pts: np.ndarray) -> None:
     if len(pts) == 0:
@@ -67,6 +77,17 @@ def print_stats(label: str, pts: np.ndarray) -> None:
 def unrescale(pts: np.ndarray, R_ns: np.ndarray, t_ns: np.ndarray, scale: float) -> np.ndarray:
     """把 dataparser 归一化坐标变换回原始物理坐标（transforms.json 空间）。"""
     return (R_ns.T @ (pts.T / scale - t_ns[:, None])).T
+
+def unrescale_covariance(rot_wxyz: np.ndarray, scale_xyz: np.ndarray,
+                          R_ns: np.ndarray, scale: float) -> np.ndarray:
+    """把每个高斯的 (四元数朝向, 每轴scale) 还原成物理坐标系下的协方差矩阵 (N,3,3)。
+    用的是和 unrescale() 对位置做的同一个线性变换 A = R_ns.T/scale，
+    协方差按 Σ' = A @ Σ @ Aᵀ 变换（平移分量不影响协方差，故不需要 t_ns）。"""
+    quat_xyzw = rot_wxyz[:, [1, 2, 3, 0]]  # scipy 要求 (x,y,z,w)，ply里存的是(w,x,y,z)
+    R_local = Rotation.from_quat(quat_xyzw).as_matrix()  # (N,3,3)
+    cov_local = (R_local * (scale_xyz ** 2)[:, None, :]) @ np.transpose(R_local, (0, 2, 1))
+    A = R_ns.T / scale
+    return (A @ cov_local) @ A.T
 
 def characterize_sphere(pts: np.ndarray, expected_radius: float) -> None:
     center = pts.mean(axis=0)

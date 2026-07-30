@@ -67,6 +67,14 @@ class PipelineConfig:
     output_dir: str | Path | None = None
     """Where `run_dataset` writes its outputs. `None` (default) writes into
     `dataset_root` itself."""
+    frame_glob: str = "f*/splatfacto-checkpoint/*/*_marked.csv"
+    """Glob (relative to `dataset_root`) for per-frame input CSVs, matched by
+    `_discover_frame_files`. Default matches T2's `if_keep`-only output; the
+    real T3 labeling step (`postprocessing/labeling/labeling.py`) does not
+    label `_marked.csv` in place -- it reads it and writes a sibling
+    `*_labeled.csv` (adds `part_label`, `confidence`), leaving `_marked.csv`
+    untouched. Point this at `"f*/splatfacto-checkpoint/*/*_labeled.csv"` (or
+    any other real layout) to run against actual T3 output."""
 
 
 def _empty_debug() -> dict:
@@ -177,8 +185,10 @@ def estimate_frame(df: pd.DataFrame, frame_id: int, config: PipelineConfig | Non
 # ---------------------------------------------------------------------------
 
 
-def _discover_frame_files(dataset_root: Path) -> list[tuple[int, str, Path]]:
-    """Find `*_marked.csv` files under `dataset_root/f<NNNN>/splatfacto-checkpoint/<ts>/`.
+def _discover_frame_files(dataset_root: Path, frame_glob: str) -> list[tuple[int, str, Path]]:
+    """Find per-frame input CSVs under `dataset_root` matching `frame_glob`
+    (default `f<NNNN>/splatfacto-checkpoint/<ts>/*_marked.csv`, see
+    `PipelineConfig.frame_glob`).
 
     Returns `(frame_id, frame_id_str, csv_path)` triples sorted by
     `frame_id`. `frame_id_str` is the zero-padded directory name (e.g.
@@ -186,7 +196,7 @@ def _discover_frame_files(dataset_root: Path) -> list[tuple[int, str, Path]]:
     `frame_id` (int) reaches the output row/CSV.
     """
     out = []
-    for csv_path in dataset_root.glob("f*/splatfacto-checkpoint/*/*_marked.csv"):
+    for csv_path in dataset_root.glob(frame_glob):
         rel = csv_path.relative_to(dataset_root)
         m = _FRAME_DIR_RE.match(rel.parts[0])
         if not m:
@@ -214,7 +224,7 @@ def run_dataset(dataset_root: str | Path, config: PipelineConfig | None = None) 
 
     rows = []
     debug_by_frame = {}
-    for frame_id, _frame_id_str, csv_path in _discover_frame_files(dataset_root):
+    for frame_id, _frame_id_str, csv_path in _discover_frame_files(dataset_root, config.frame_glob):
         try:
             df = io_schema.load_frame(csv_path)
         except Exception as e:  # noqa: BLE001

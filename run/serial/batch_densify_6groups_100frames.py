@@ -24,7 +24,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 import sys
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
@@ -32,7 +32,7 @@ from sklearn.neighbors import NearestNeighbors
 from generate_hull import generate_hull
 from utils.ply import export_splat, load_ply, load_ply_with_attrs, unrescale, clean_ply
 
-REPO = Path(__file__).resolve().parent.parent
+REPO = Path(__file__).resolve().parent.parent.parent
 BASE_NAME = "ctrl_009_002"
 SWEEP_NAME = "ctrl_009_002_densify_6groups_100frames"
 BASELINE_SWEEP_NAME = "ctrl_009_002_8groups_100frames"

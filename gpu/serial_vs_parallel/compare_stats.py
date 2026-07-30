@@ -1,7 +1,7 @@
 """
 compare_stats.py
 G5第一层验证：对比新并行调度器(G4, gpu/schedule/)和旧串行脚本
-(debug/batch_8groups_100frames.py)在相同参数(ratio3_sh0 == G2b_G9)、
+(run/serial/batch_8groups_100frames.py)在相同参数(ratio3_sh0 == G2b_G9)、
 相同帧范围(f0000-f0099)下产出的训练指标是否一致。
 
 一次性分析脚本，只读 outputs/ 下已有的产出文件，不调用ns-train/generate_dataset/
@@ -80,7 +80,7 @@ def load_parallel() -> dict:
 # --------------------------------------------------------------- jitter --
 
 def jitter_score(frame_to_record: dict) -> dict:
-    """按frame排序后一阶差分的std，和debug/batch_8groups_100frames.py::jitter_score逻辑一致。"""
+    """按frame排序后一阶差分的std，和run/serial/batch_8groups_100frames.py::jitter_score逻辑一致。"""
     ok = sorted(frame_to_record.values(), key=lambda r: r["frame"])
     if len(ok) < 2:
         return {"bbox_extent_jitter": float("nan"), "n_gaussians_jitter": float("nan")}
