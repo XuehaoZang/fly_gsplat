@@ -86,7 +86,7 @@ def print_color_diagnostics(df: pd.DataFrame, is_wing: pd.Series) -> None:
 # ---------------------------------------------------------------------------
 
 def scan_thresholds(q_candidates: list[float] = (0.70, 0.75, 0.80, 0.82, 0.85, 0.90, 0.95)) -> None:
-    from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR
+    from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR
     from postprocessing.cleaning.viz_floater_check import find_features_csv
 
     data_root = DATASET_DIR

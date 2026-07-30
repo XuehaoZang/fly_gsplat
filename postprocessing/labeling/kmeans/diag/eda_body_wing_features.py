@@ -6,7 +6,7 @@ KMeans k=3) 在 DEV_FRAMES 上结果不稳定(部分帧疑似整条翼被并入b
 参考 postprocessing/cleaning/eda_features.py 的代码结构和输出风格(basic_stats/
 df_to_md/直方图画法/汇总md)，但这是全新的、针对body/wing判别的诊断脚本，跑的是
 G2b_G9 的 DEV_FRAMES(select_dev_frames.py)，不复用/修改它的floater分组逻辑，也不
-改动 kmeans_split.py / binary_split_NO_USE/binary_split.py。
+改动 kmeans_split.py / binary/binary_split.py。
 
 纯诊断脚本：不产出任何标签列(if_keep/cluster_id/body_wing等)，只读取
 kmeans_split.load_kept() 已有的 if_keep=True 点集。
@@ -25,11 +25,12 @@ kmeans_split.load_kept() 已有的 if_keep=True 点集。
    kNN距离计算逻辑)，两者接近说明可能是同一结构被硬切，明显更大说明是真正分开
    的结构。
 
-输出落在 postprocessing/labeling/eda_outputs/(文件名前缀 bw_ 以区分 kmeans_split.py
-自己的 kmeans_split_*.png)，汇总成 postprocessing/labeling/eda_outputs/Label_EDA.md。
+输出落在 postprocessing/labeling/kmeans/diag/eda_outputs/(文件名前缀 bw_ 以区分
+kmeans_split.py 自己的 kmeans_split_*.png，那份存在 postprocessing/labeling/
+kmeans/eda_outputs/)，汇总成 postprocessing/labeling/kmeans/diag/eda_outputs/Label_EDA.md。
 
 用法:
-    python -m postprocessing.labeling.diag.eda_body_wing_features
+    python -m postprocessing.labeling.kmeans.diag.eda_body_wing_features
 """
 import sys
 from itertools import combinations
@@ -46,15 +47,15 @@ from scipy.spatial import cKDTree
 from sklearn.metrics import adjusted_rand_score
 from sklearn.preprocessing import StandardScaler
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(REPO_ROOT))
 
-from postprocessing.labeling.kmeans_split import (  # noqa: E402
+from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
     FEATURES, MAIN_RANDOM_STATE, K, load_kept, run_kmeans, standardize,
 )
-from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
+from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
 
-OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs"
+OUT_DIR = Path(__file__).resolve().parent / "eda_outputs"
 
 CORR_COLS = ["planarity", "linearity", "sphericity", "scale_ratio", "opacity", "R", "G", "B"]
 RAW_DIST_COLS = ["opacity", "R", "G", "B", "planarity", "scale_ratio"]
@@ -303,7 +304,7 @@ def main() -> None:
     md_parts = [
         "# T3 body/wing 特征诊断 (DEV_FRAMES)\n",
         "纯诊断记录，不产出任何标签列，不改动 kmeans_split.py / "
-        "binary_split_NO_USE/binary_split.py。\n",
+        "binary/binary_split.py。\n",
         f"DEV_FRAMES = {DEV_FRAMES}\n",
     ]
     for frame in DEV_FRAMES:

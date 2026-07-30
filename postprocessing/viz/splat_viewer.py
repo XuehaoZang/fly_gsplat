@@ -1,32 +1,28 @@
 """
 统一的 viser 逐帧查看器 —— 合并原 debug/viz_splat_video.py 的"原始 splat.ply 多模式播放"
-(points/mesh/gaussians/hull，网页勾选切换) 和原 postprocessing/viz/pointcloud_viewer.py 的
-"处理后 T1/T2/T3 阶段csv对比"，用一个 Source 下拉在同一个 slider/Play 下切换：
+(points/mesh/gaussians/hull) 和原 postprocessing/viz/pointcloud_viewer.py 的
+"处理后 T1/T2/T3 阶段csv对比"，用同一组网页打钩(checkbox，互斥，同splat modes风格)
+在同一个 slider/Play 下切换渲染哪一层，不用下拉栏选模式：
 
-  Source = Splat       读 outputs/{sweep}/{group}/fXXXX/{method}/{ts}/splat.ply
+  splat 类(Points/Ellipsoids/Gaussians/Hull)  读 outputs/{sweep}/{group}/fXXXX/{method}/{ts}/splat.ply
                         (--config 同 gpu/schedule/schedule.py 的 sweep config schema)，
-                        display mode 见 run_viewer() 里 mode_checkboxes 的说明。坐标是
+                        具体见 run_viewer() 里 ALL_MODES 的说明。坐标是
                         dataparser_transforms 反变换回的物理坐标 * display_scale(默认
                         1000，物理单位转mm)，up方向用 "-z"(仅影响viewer轨道相机，不改数据)。
-  Source = Processed    读 data_root/fXXXX/.../gaussian_features_fXXXX{_labeled,_marked,}.csv，
-                        T1原始/T2清理(if_keep)/T3聚类(part_label)分层对比。坐标是
-                        calc_kinematics.md约定的实验室系，单位米，up="+z"。
+  processed 类(Raw/Cleaned/Labeled)    读 data_root/fXXXX/.../gaussian_features_fXXXX{_labeled,_marked,}.csv，
+                        T1原始/T2清理(if_keep)/T3聚类(part_label)一次只画一层。坐标是
+                        calc_kinematics.md约定的实验室系，单位米(渲染时同样*display_scale
+                        换算成mm，点大小同步换算，跟splat类点大小同一量级)，up="+z"。
 
 两份数据的坐标系/单位不同（splat是nerfstudio反归一化后*1000的mm，processed是标定
-实验室系的米），不做物理对齐叠加——切换Source只是换渲染哪一层+重置该Source自己的
-相机取景，不假设两者数值可比。只提供其中一份数据时不显示Source下拉，跟只用原来
-那一个脚本一样。
+实验室系的米），不做物理对齐叠加——切换到不同类别的mode只是换渲染哪一层+重置该类别
+自己的相机取景，不假设两者数值可比。所有checkbox始终显示；只提供其中一份数据时，
+另一类的checkbox仍在但置灰(disabled)不可勾选。
 
-用法:
-  # 只看训练splat(原debug/viz_splat_video.py用法):
-  python -m postprocessing.viz.splat_viewer --config gpu/schedule/configs/xxx.json
-
-  # 只看处理后csv(原pointcloud_viewer.py用法):
-  python -m postprocessing.viz.splat_viewer --data-root outputs/xxx/G2b_G9 --start 0 --end 5
-
-  # 两份一起看，同一个slider切帧+用Source下拉对比:
-  python -m postprocessing.viz.splat_viewer --config gpu/schedule/configs/xxx.json \\
-      --data-root outputs/xxx/G2b_G9
+用法(--config/--data-root 各自独立可选，只传一个时另一类的checkbox置灰，见上面说明):
+  python -m postprocessing.viz.splat_viewer \
+      --config gpu/schedule/configs/ctrl_009_002_ratio3_sh0_dense.json \
+      --data-root outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense --start 0 --end 639
 """
 import argparse
 import dataclasses
@@ -332,24 +328,31 @@ def load_processed_source(frames: list, data_root: Path):
     return stages
 
 
-def render_processed_layers(server: viser.ViserServer, data: dict, point_size: float,
-                             display_scale: float = 1.0) -> list:
-    """画T1(全部)/T2(kept/floaters)/T3(body/wing_L/wing_R, kept/dropped)分层点云，
-    返回所有创建的handle列表，供调用方在切帧/切source时统一clear。
+def render_processed_layer(server: viser.ViserServer, data: dict, layer: str, point_size: float,
+                            display_scale: float = 1.0) -> list:
+    """画T1(全部)/T2(kept/floaters)/T3(body/wing_L/wing_R, 只画kept)其中一层点云
+    (layer取"raw"/"cleaned"/"labeled"，跟splat类的display mode一样一次只画一层、互斥
+    切换)，返回创建的handle列表，供调用方在切帧/切mode时统一clear。"labeled"图层里
+    if_keep=False的点即使有part_label(T3对dropped点做的1-NN标签传播，仅用于floater
+    离哪个部位最近的诊断)也不画，避免看着像"floater被当成有效聚类结果"，跟
+    reprojection_viewer里dropped点直接不画的口径保持一致。
 
-    display_scale: 跟splat source的物理坐标->mm显示坐标是同一个参数，只影响这里点的
-    世界坐标(不改CSV本身单位)。CSV原始单位是米、整只果蝇bbox只有几mm(见
+    point_size 调用前应已经按 display_scale 换算过(跟splat类"points"模式同一量级)，
+    这里不再重复缩放；display_scale 只用来把CSV原始米制坐标转到跟splat类一致的
+    mm显示坐标(不改CSV本身单位)。CSV原始单位是米、整只果蝇bbox只有几mm(见
     calc_kinematics.md §0)——viser前端相机near clip固定在0.05世界单位(源码写死，
     python API不能改)，不做这个缩放的话相机稍微靠近一点果蝇就直接被near平面裁掉，
-    实测(headless chrome截图对比)确认了这个坑：不缩放时processed source切换过去后
-    画面完全是空的。"""
+    实测(headless chrome截图对比)确认了这个坑：不缩放时processed点云会完全裁没。"""
     xyz = data["xyz"] * display_scale
     colors_orig, kept = data["colors_orig"], data["kept"]
     handles = []
 
-    handles.append(add_point_cloud(server, xyz, colors_orig, name="/T1_raw/all", point_size=point_size))
+    if layer == "raw":
+        handles.append(add_point_cloud(server, xyz, colors_orig, name="/T1_raw/all", point_size=point_size))
 
-    if data["has_keep"]:
+    elif layer == "cleaned":
+        if not data["has_keep"]:
+            return []
         handles.append(add_point_cloud(server, xyz[kept], colors_orig[kept],
                                         name="/T2_cleaned/kept", point_size=point_size))
         n_drop = int((~kept).sum())
@@ -360,27 +363,38 @@ def render_processed_layers(server: viser.ViserServer, data: dict, point_size: f
                 point_size=point_size * 2.0, point_shape="diamond",
             ))
 
-    if data["has_label"]:
+    elif layer == "labeled":
+        if not data["has_label"]:
+            return []
         part_label = data["part_label"]
         for lab in ("body", "wing_L", "wing_R"):
             color_u8 = (np.array(PART_COLORS[lab]) * 255).astype(np.uint8)
-            lab_mask = part_label == lab
-            kept_mask = lab_mask & kept
-            drop_mask = lab_mask & ~kept
+            kept_mask = (part_label == lab) & kept
             if kept_mask.any():
                 handles.append(add_point_cloud(server, xyz[kept_mask], np.tile(color_u8, (int(kept_mask.sum()), 1)),
                                                 name=f"/T3_labeled/{lab}_kept", point_size=point_size))
-            if drop_mask.any():
-                handles.append(server.scene.add_point_cloud(
-                    name=f"/T3_labeled/{lab}_dropped", points=xyz[drop_mask],
-                    colors=np.tile(color_u8, (int(drop_mask.sum()), 1)),
-                    point_size=point_size * 2.0, point_shape="diamond",
-                ))
 
     return [h for h in handles if h is not None]
 
 
 # ================================================================ Unified UI ==
+
+# 所有可勾选的display mode，(key, 网页上的label, 所属类别)。同一类别内互斥切换（勾一个
+# 自动取消其它，跟原来splat modes的行为一样）；checkbox始终全部创建，对应类别的数据
+# source未提供时该checkbox置灰(disabled)不可勾选，但仍显示在网页上。切换到不同类别
+# 会重置up方向和相机取景(见 apply_camera_for_source)。
+ALL_MODES = [
+    ("points",    "Points",      "splat"),
+    ("mesh",      "Ellipsoids",  "splat"),
+    ("gaussians", "Gaussians",   "splat"),
+    ("hull",      "Hull",        "splat"),
+    ("raw",       "Raw (T1)",      "processed"),
+    ("cleaned",   "Cleaned (T2)",  "processed"),
+    ("labeled",   "Labeled (T3)",  "processed"),
+]
+MODE_CATEGORY = {key: cat for key, _, cat in ALL_MODES}
+SPLAT_POINT_SIZE = 0.03  # points/hull两个splat类display mode共用的点大小
+
 
 def run_viewer(
     splat_clouds: dict = None,
@@ -392,28 +406,33 @@ def run_viewer(
     display_scale: float = 1000.0,
     fps: int = 4,
     port: int = 8080,
-    default_mode: str = "mesh",
-    default_source: Optional[str] = None,
+    default_mode: Optional[str] = None,
     ellipsoid_sigma: float = 1.0,
     hull_color: np.ndarray = HULL_COLOR,
-    point_size: float = 0.00008,
+    point_size: float = 0.00003,
 ) -> None:
-    """在 viser 里做逐帧查看，Source 下拉在"splat"(原始splat.ply多模式播放)和
-    "processed"(T1/T2/T3阶段csv对比)之间切换；只传其中一份数据时不显示下拉，
-    行为等价于只用原来那一个脚本。
+    """在 viser 里做逐帧查看，splat("原始splat.ply多模式播放")和 processed("T1/T2/T3阶段
+    csv对比")这两类display mode合并成同一组网页打钩(checkbox，互斥，不用下拉栏)。只传
+    其中一类数据时，另一类的checkbox不会被创建，行为等价于只用原来那一个脚本。
 
     splat_clouds/hull_path_for/splat_scene_center/find_splat_dir_for : splat source，
         语义同原 debug/viz_splat_video.py::run_splat_video_viewer。
     processed_frames  : frame_idx(int) -> load_frame_stages() 结果，processed source。
     processed_cameras : 可选，画一次相机坐标轴(实验室系，取自任意一帧的transforms.json)。
 
-    Display mode(仅Source=splat时生效，网页GUI里打钩切换，互斥):
+    Display mode(网页GUI里打钩切换，同一类别内互斥，见 ALL_MODES):
       points     — 每个高斯只画质心一个点，可实时切换 Color by（rgb/opacity/scale/none）
       mesh       — 还原每个高斯真实的旋转+scale，合并成一个mesh画成椭球（颜色固定用rgb+opacity blend）
       gaussians  — viser 原生高斯渲染器，真正的柔和alpha splat效果，但只能单帧静态渲染
                    （挂载后无法刷新，是viser 0.2.7的bug，见 add_gaussians_native），
                    勾选后需要点击 "Render" 按钮才会画出当前帧
       hull       — 对应帧 init_points.ply 的 visual hull 点云（固定绿色）
+      raw        — T1原始点云(全部)
+      cleaned    — T2清理结果(kept实心 / floaters菱形)
+      labeled    — T3聚类结果(body/wing_L/wing_R三色，只画if_keep=True的点；
+                   dropped点即使有part_label也不画，同reprojection_viewer的口径)
+
+    default_mode 不传时按数据可用性自动选：splat可用选"mesh"，否则选"labeled"。
     """
     splat_clouds = splat_clouds or {}
     processed_frames = processed_frames or {}
@@ -427,7 +446,19 @@ def run_viewer(
     print(f"Loaded {len(valid_frames)} frame(s) total "
           f"({len(splat_clouds)} splat, {len(processed_frames)} processed).")
 
-    source = default_source or ("splat" if have_splat else "processed")
+    source_available = {"splat": have_splat, "processed": have_processed}
+    available_modes = [(k, label, cat) for k, label, cat in ALL_MODES if source_available[cat]]
+    available_keys = {k for k, _, _ in available_modes}
+    if default_mode not in available_keys:
+        default_mode = "mesh" if have_splat else "labeled"
+        if default_mode not in available_keys:
+            default_mode = next(iter(available_keys))
+
+    # processed source的CSV点大小(米)按跟xyz同一个display_scale换算到mm量级，
+    # 才跟splat类SPLAT_POINT_SIZE同一数量级——否则坐标放大了1000倍、点大小却没跟着放大，
+    # 点会小到几乎看不见(切到processed类display mode后画面几乎是空的，只有非常仔细才能
+    # 看到几个像素的小点)。
+    processed_point_size = point_size * display_scale
 
     hull_cache = {}
 
@@ -440,8 +471,10 @@ def run_viewer(
                                       if hull_path is not None else None)
         return hull_cache[frame_idx]
 
+    category_state = {"category": MODE_CATEGORY[default_mode]}
+
     server = start_viser(port=port)
-    server.scene.set_up_direction("-z" if source == "splat" else "+z")
+    server.scene.set_up_direction("+z")
 
     # processed source 的CSV是实验室系下的真实物理坐标(米，整只果蝇bbox只有几mm，见
     # calc_kinematics.md §0)。viser前端相机near clip固定在0.05世界单位(写死在js bundle里，
@@ -465,10 +498,10 @@ def run_viewer(
     def apply_camera_for_splat(client):
         if splat_scene_center is None:
             return
-        cam_offset = np.array([0.0, -15.0, 10.0])
+        cam_offset = np.array([0.0, -15.0, -10.0])
         client.camera.position = splat_scene_center + cam_offset
         client.camera.look_at = splat_scene_center
-        client.camera.up_direction = (0.0, 0.0, -1.0)
+        client.camera.up_direction = (0.0, 0.0, 1.0)
 
     def apply_camera_for_processed(client):
         if processed_scene_center is None:
@@ -488,7 +521,7 @@ def run_viewer(
     @server.on_client_connect
     def _(client):
         connected_clients.append(client)
-        apply_camera_for_source(client, source)
+        apply_camera_for_source(client, category_state["category"])
 
     @server.on_client_disconnect
     def _(client):
@@ -500,23 +533,18 @@ def run_viewer(
     )
     play_checkbox = server.gui.add_checkbox("Play", initial_value=False)
 
-    source_dropdown = None
-    if have_splat and have_processed:
-        source_dropdown = server.gui.add_dropdown("Source", options=["splat", "processed"], initial_value=source)
-
-    # Display mode(仅Source=splat时用): 网页上用打钩选择，互斥（勾一个自动取消其它），
-    # 选中即立刻切换渲染，避免旧模式的图层叠加残留。
+    # Display mode: 网页上用打钩选择，同一类别内互斥（勾一个自动取消同类别的其它），
+    # 选中即立刻切换渲染，避免旧模式的图层叠加残留。跨类别切换（splat<->processed）
+    # 靠 mode 本身所属的 category 触发，不再需要单独的 Source 下拉。
     mode_checkboxes = {
-        "points":    server.gui.add_checkbox("Points", initial_value=(default_mode == "points")),
-        "mesh":      server.gui.add_checkbox("Ellipsoids", initial_value=(default_mode == "mesh")),
-        "gaussians": server.gui.add_checkbox("Gaussians", initial_value=(default_mode == "gaussians")),
-        "hull":      server.gui.add_checkbox("Hull", initial_value=(default_mode == "hull")),
+        key: server.gui.add_checkbox(label, initial_value=(key == default_mode),
+                                      disabled=not source_available[cat])
+        for key, label, cat in ALL_MODES
     }
     color_by_dropdown = server.gui.add_dropdown("Color by", options=["rgb", "opacity", "scale", "none"], initial_value="rgb")
     native_button = server.gui.add_button("Render")
 
     mode_state = {"mode": default_mode}
-    source_state = {"source": source, "updating": False}
     current_layers = []
     native_state = {"counter": 0}
 
@@ -526,11 +554,9 @@ def run_viewer(
         current_layers.clear()
 
     def update_controls_visibility():
-        is_splat = source_state["source"] == "splat"
-        for cb in mode_checkboxes.values():
-            cb.visible = is_splat
-        color_by_dropdown.visible = is_splat and (mode_state["mode"] == "points")
-        native_button.visible = is_splat and (mode_state["mode"] == "gaussians")
+        mode = mode_state["mode"]
+        color_by_dropdown.visible = (mode == "points")
+        native_button.visible = (mode == "gaussians")
 
     def render_splat_frame(idx: int):
         mode = mode_state["mode"]
@@ -542,7 +568,7 @@ def run_viewer(
             hull = get_hull_frame(f)
             if hull is None:
                 return
-            h = add_point_cloud(server, hull["xyz"], hull["colors"], name="/anim/splat", point_size=0.00005)
+            h = add_point_cloud(server, hull["xyz"], hull["colors"], name="/anim/splat", point_size=SPLAT_POINT_SIZE)
             if h is not None:
                 current_layers.append(h)
             return
@@ -556,7 +582,7 @@ def run_viewer(
                                          name="/anim/splat", n_sigma=ellipsoid_sigma)
         elif mode == "points":
             colors = compute_point_colors(data, color_by_dropdown.value)
-            h = add_point_cloud(server, data["xyz"], colors, name="/anim/splat", point_size=0.03)
+            h = add_point_cloud(server, data["xyz"], colors, name="/anim/splat", point_size=SPLAT_POINT_SIZE)
         else:
             h = None
         if h is not None:
@@ -567,61 +593,54 @@ def run_viewer(
         data = processed_frames.get(f)
         if data is None:
             return
-        current_layers.extend(render_processed_layers(server, data, point_size, display_scale))
+        layer = mode_state["mode"]
+        current_layers.extend(render_processed_layer(server, data, layer, processed_point_size, display_scale))
 
     def render_current():
         clear_layers()
-        if source_state["source"] == "splat":
+        mode = mode_state["mode"]
+        if mode is None:
+            return
+        if MODE_CATEGORY[mode] == "splat":
             render_splat_frame(slider.value)
         else:
             render_processed_frame(slider.value)
 
-    def set_source(new_source: str):
-        source_state["source"] = new_source
-        server.scene.set_up_direction("-z" if new_source == "splat" else "+z")
-        for c in connected_clients:
-            apply_camera_for_source(c, new_source)
-        update_controls_visibility()
-        render_current()
-
-    if source_dropdown is not None:
-        @source_dropdown.on_update
+    def make_mode_callback(key: str):
         def _(_):
-            if source_state["updating"]:
-                return
-            set_source(source_dropdown.value)
-
-    def make_mode_callback(name: str):
-        def _(_):
-            if source_state["source"] != "splat":
-                return
-            if mode_checkboxes[name].value:
-                for other, cb in mode_checkboxes.items():
-                    if other != name:
+            if mode_checkboxes[key].value:
+                for other_key, cb in mode_checkboxes.items():
+                    if other_key != key:
                         cb.value = False
-                mode_state["mode"] = name
+                prev_category = category_state["category"]
+                new_category = MODE_CATEGORY[key]
+                mode_state["mode"] = key
+                category_state["category"] = new_category
+                if new_category != prev_category:
+                    for c in connected_clients:
+                        apply_camera_for_source(c, new_category)
                 update_controls_visibility()
                 render_current()
-            elif mode_state["mode"] == name:
+            elif mode_state["mode"] == key:
                 # 取消了当前唯一勾选的模式：不再画任何图层
                 mode_state["mode"] = None
                 update_controls_visibility()
                 clear_layers()
         return _
 
-    for name, cb in mode_checkboxes.items():
-        cb.on_update(make_mode_callback(name))
+    for key, cb in mode_checkboxes.items():
+        cb.on_update(make_mode_callback(key))
 
     @color_by_dropdown.on_update
     def _(_):
-        if source_state["source"] == "splat" and mode_state["mode"] == "points":
+        if mode_state["mode"] == "points":
             render_current()
 
     update_controls_visibility()
 
     @native_button.on_click
     def _(_):
-        if source_state["source"] != "splat" or mode_state["mode"] != "gaussians" or find_splat_dir_for is None:
+        if mode_state["mode"] != "gaussians" or find_splat_dir_for is None:
             return
         f = valid_frames[slider.value]
         splat_dir = find_splat_dir_for(f)
@@ -645,8 +664,7 @@ def run_viewer(
     render_current()
 
     print(f"Viser running — drag slider or check 'Play' to animate over {len(valid_frames)} frames.")
-    if source_dropdown is not None:
-        print("用 Source 下拉在 splat(原始splat.ply)/processed(T1/T2/T3阶段csv)之间切换。")
+    print(f"用网页上的勾选框在 display mode 间切换: {[label for _, label, _ in available_modes]}")
     try:
         while True:
             if play_checkbox.value:
@@ -678,13 +696,13 @@ def main() -> None:
     parser.add_argument("--frame", type=str, default=None, help="processed source单帧模式，如 f0061 或 61")
     parser.add_argument("--start", type=int, default=None, help="processed source多帧模式起始帧号(含)")
     parser.add_argument("--end", type=int, default=None, help="processed source多帧模式结束帧号(含)")
-    parser.add_argument("--no-cameras", action="store_true", help="processed source: 不画相机坐标轴")
-    parser.add_argument("--point-size", type=float, default=0.00008, help="processed source点大小(米)")
+    parser.add_argument("--camera", action="store_true", help="processed source: 画相机坐标轴(默认不画)")
+    parser.add_argument("--point-size", type=float, default=0.00003, help="processed source点大小(米，按display_scale换算后约等于splat类点大小)")
 
     parser.add_argument("--fps", type=int, default=8, help="播放帧率(回放速度，不必等于拍摄fps)")
     parser.add_argument("--port", type=int, default=8080)
-    parser.add_argument("--mode", choices=["points", "mesh", "gaussians", "hull"], default="mesh",
-                         help="splat source初始display mode")
+    parser.add_argument("--mode", choices=[k for k, _, _ in ALL_MODES], default=None,
+                         help="初始display mode，不传时splat可用选mesh、否则选labeled")
     args = parser.parse_args()
 
     if not args.config and not args.data_root:
@@ -710,7 +728,7 @@ def main() -> None:
             return
         print(f"[processed] Loading {len(frames)} frame(s) from {data_root} ...")
         processed_frames = load_processed_source(frames, data_root)
-        if processed_frames and not args.no_cameras:
+        if processed_frames and args.camera:
             try:
                 any_frame = f"f{next(iter(processed_frames)):04d}"
                 processed_cameras = load_frame_cameras(any_frame, raw_data_dir)

@@ -1,7 +1,8 @@
 # Data and output
 data/
 outputs/
-postprocessing/labeling/eda_outputs
+postprocessing/labeling/**/eda_outputs/
+postprocessing/labeling/kmeans/k_means_results/
 postprocessing/kinematics/diagnostics_output
 
 # Python

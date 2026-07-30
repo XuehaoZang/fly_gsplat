@@ -116,7 +116,48 @@ ns-train splatfacto \
 ```
 Swap `splatfacto` → `splatfacto-checkpoint` (+ `--pipeline.model.save_stats True --pipeline.model.stats_every 1000` etc.) for the debug-dump variant.
 
-### Viewing results
+Trained `splat.ply` feeds straight into **[Postprocessing & Visualization](#postprocessing--visualization)** below (cleaning → labeling → kinematics → viewers).
+
+---
+
+## Postprocessing & Visualization
+
+Per-frame raw `splat.ply` → **T2 cleaning** → **T3 labeling** → **T4 kinematics** → viewers. One-shot orchestrator, auto-resumes from whatever stage is already done:
+
+```bash
+python -m postprocessing.calc_kinematics [dataset_root]
+# defaults to DEFAULT_DATASET_ROOT set in the file; no other CLI args supported
+```
+- Already has `kinematics/kinematics_{dataset}.csv` → skip straight to plots/viewer.
+- Already has T3 output (`_labeled.csv`) but no kinematics csv → skip T1–T3, run T4 + viewers.
+- Only raw per-frame `splat.ply` → run T1 → T2 → T3 → T4 + viewers.
+
+Output lands in `{dataset_root's parent}/kinematics/`: `kinematics_{name}.csv` + debug `.pkl`, `body_angles.png` (yaw/pitch/roll) + `wing_angles.png` (phi/theta/eta, L/R), a `reprojection/` overlay dir (≤5 frames, evenly sampled), then it launches the Viser splat/point viewer (Ctrl+C to exit).
+
+### T1 — Gaussian features
+`utils/gaussian_features.py::compute_gaussian_features` computes a per-point feature table from each frame's `splat.ply` → `gaussian_features_f{NNNN}.csv`. Frames that already have the csv are skipped.
+
+### T2 — Cleaning: `postprocessing/cleaning/mark_floaters.py`
+Flags isolated floater points, adds an `if_keep` column (no rows/columns removed). Criterion: k-NN connected-component size (k=10, dist_percentile=75) ≤ `min_patch_size`=10 → floater. Locked/validated, not CLI-tunable.
+```bash
+python -m postprocessing.cleaning.mark_floaters --data-root outputs/<sweep>/<group> --start 0 --end 99
+python -m postprocessing.cleaning.mark_floaters --csv path/to/gaussian_features_f0000.csv   # single-frame mode
+```
+
+### T3 — Labeling: `postprocessing/labeling/`
+Splits kept points into `body` / `wing_L` / `wing_R`, writes `_labeled.csv` (adds `part_label`, `confidence`). Two implementations — `calc_kinematics.py` uses **motion** (current default):
+- `labeling/motion/label.py` — cross-frame motion-accumulated density split (T3 v0, current default).
+- `labeling/kmeans/kmeans_split.py` (+ `labeling/labeling.py`) — single-frame k-means (v2, aux_weight=1×, finalized); kept for comparison.
+
+```bash
+python -m postprocessing.labeling.motion.label --start 0 --end 99 --data-root outputs/<sweep>/<group>
+python -m postprocessing.labeling.labeling --start 0 --end 99          # k-means variant
+```
+
+### T4 — Kinematics: `postprocessing/kinematics/pipeline.py`
+Per-frame `_labeled.csv` → body frame (yaw/pitch/roll) + per-wing angles (phi/theta/eta, L/R) → `kinematics_{name}.csv` + debug `.pkl` (`PipelineConfig` controls `frame_glob`, `min_points`, etc.). A failing frame never aborts the batch — it's recorded in the `status` column instead. Normally invoked via `calc_kinematics.py`, not run standalone.
+
+### Visualization
 - **Point cloud (hull, pre-training)**: `generate_hull.py` opens Viser at `http://localhost:8080` by default; or `python debug/debug_splat_ply.py` to compare hull `init_points.ply` vs a trained `splat.ply` side by side with coordinate-space diagnostics (edit `__main__` to set `data_dir`/`splat_dir`).
 - **Trained model (live viewer)**:
   ```bash
@@ -126,17 +167,15 @@ Swap `splatfacto` → `splatfacto-checkpoint` (+ `--pipeline.model.save_stats Tr
   ```
 - **Frame-by-frame splat / processed-csv viewer** — `postprocessing/viz/splat_viewer.py` (unified replacement for the old `debug/viz_splat_video.py` + `pointcloud_viewer.py`; run as a module, not a script):
   ```bash
-  # Splat source: play back trained splat.ply across frames of a sweep config
-  python -m postprocessing.viz.splat_viewer --config gpu/schedule/configs/ctrl_009_002_ratio3_sh0_dense.json
-
-  # Processed source: T1/T2/T3 stage csv comparison (if_keep / part_label overlays)
-  python -m postprocessing.viz.splat_viewer --data-root outputs/{name}/{group} --start 0 --end 5
-
-  # Both at once: same frame slider, switch layer via the "Source" dropdown in the browser
-  python -m postprocessing.viz.splat_viewer --config gpu/schedule/configs/ctrl_009_002_ratio3_sh0_dense.json \
-      --data-root outputs/{name}/{group}
+  python -m postprocessing.viz.splat_viewer \
+      --config gpu/schedule/configs/ctrl_009_002_ratio3_sh0_dense.json \
+      --data-root outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense --start 0 --end 5
   ```
-  Opens Viser at `http://localhost:8080` (`--port` to change). Splat source display mode (`points`/`mesh`/`gaussians`/`hull`) is toggled via checkboxes in the browser, defaulting to `mesh`; use `--group`/`--method`/`--frame-start`/`--frame-end` to narrow the sweep, and `--frame` or `--start`/`--end` to pick processed-csv frames.
+  Opens Viser at `http://localhost:8080` (`--port` to change). All 7 display-mode checkboxes (`points`/`mesh`/`gaussians`/`hull` for splat, `raw`/`cleaned`/`labeled` for processed csv) are always shown in the browser; `--config` and `--data-root` are each independently optional — passing only one greys out the other category's checkboxes instead of hiding them. Use `--group`/`--method`/`--frame-start`/`--frame-end` to narrow the sweep, and `--frame` or `--start`/`--end` to pick processed-csv frames.
+- **Reprojection overlay**: `postprocessing/viz/reprojection_viewer.py` projects labeled points back onto the 4 raw camera images; `calc_kinematics.py` calls this automatically for evenly-sampled frames, or run it standalone:
+  ```bash
+  python -m postprocessing.viz.reprojection_viewer --frame f0061 --data-root outputs/<sweep>/<group>
+  ```
 
 ---
 

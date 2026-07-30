@@ -22,7 +22,7 @@ aux_weight=1x(w1)配置下，是否真的像之前6帧目测印象那样全面�
 min_ari偏低)，额外出一张图核实，并在打印里注明。
 
 用法:
-    python -m postprocessing.labeling.diag.verify_w1_config
+    python -m postprocessing.labeling.kmeans.diag.verify_w1_config
 """
 import sys
 from itertools import combinations
@@ -32,15 +32,15 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import adjusted_rand_score
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(REPO_ROOT))
 
-from postprocessing.labeling.kmeans_split import (  # noqa: E402
+from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
     OUT_DIR, STABILITY_SEEDS, MAIN_RANDOM_STATE, cross_vs_intra_table, load_kept,
     plot_kmeans_clusters, run_kmeans, run_kmeans_v2, seed_mask, standardize,
     standardize_v2,
 )
-from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
+from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
 
 AUX_WEIGHT_W1 = 1
 FEATURES_V2_LABEL = ["x", "y", "z", "opacity", "R"]

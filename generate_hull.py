@@ -73,7 +73,7 @@ def visual_hull_vote(points: np.ndarray,
 
 # -------------------------------------------------------------------- main --
 def generate_hull(data_dir: str, if_viser: bool = True,
-                   n_samples: int = 10_000, out_name: str = "init_points.ply") -> None:
+                   n_samples: int = 10_000, out_name: str = "init_points.ply") -> dict:
     base_dir  = Path(data_dir)
     json_path = base_dir / "transforms.json"
     ply_path  = base_dir / out_name
@@ -125,7 +125,8 @@ def generate_hull(data_dir: str, if_viser: bool = True,
 
     if len(final) == 0:
         print("[Error] No points survived — check masks or increase sphere radius")
-        return
+        return {"seed": seed, "residual_m": res, "cameras": cameras, "masks": masks,
+                "points": np.empty((0, 3)), "n_survived": 0}
 
     # statistical outlier removal
     pcd = o3d.geometry.PointCloud()
@@ -148,6 +149,9 @@ def generate_hull(data_dir: str, if_viser: bool = True,
                         np.tile(np.uint8([50, 150, 255]), (len(final), 1)),
                         name="/hull")
         stop_viser(server)
+
+    return {"seed": seed, "residual_m": res, "cameras": cameras, "masks": masks,
+            "points": final, "n_survived": len(final)}
 
 
 if __name__ == "__main__":

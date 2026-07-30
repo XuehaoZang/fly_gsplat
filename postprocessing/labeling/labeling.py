@@ -8,7 +8,7 @@ body/wing_L/wing_R 三分标签，落盘为 _labeled.csv，打通到 T4 的端�
 3. body PCA 定 x_body, right_axis = x_body x up，两翼质心投影定 wing_L/wing_R；
    if_keep=False 的点用 1-NN 从已标点传播 part_label。
 4. 存 _labeled.csv (不改动 _marked.csv)，新增 confidence 列。
-5. 重投影可视化(body灰、wing_L/wing_R两色、if_keep=False叉号标记)，2x2四相机。
+5. 重投影可视化(body灰、wing_L/wing_R两色，if_keep=False的点即使有传播label也不画)，2x2四相机。
 
 用法:
     python -m postprocessing.labeling.labeling
@@ -27,12 +27,12 @@ sys.path.insert(0, str(REPO_ROOT))
 from postprocessing.cleaning.viz_floater_check import load_marked  # noqa: E402
 from postprocessing.kinematics.geometry import orient_to_reference, weighted_pca  # noqa: E402
 from postprocessing.kinematics.io_schema import PART_LABELS  # noqa: E402
-from postprocessing.labeling.kmeans_split import (  # noqa: E402
+from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
     K, MAIN_RANDOM_STATE, build_seed_init, cluster_sizes, cross_vs_intra_table,
     label_by_rule_a, n_hardcut_pairs, run_kmeans, run_kmeans_v2, secondary_axis,
     seed_mask, stability_check, stability_check_with_init, standardize_v2,
 )
-from postprocessing.labeling.diag.select_dev_frames import DATASET_DIR, DEV_FRAMES  # noqa: E402
+from postprocessing.labeling.kmeans.diag.select_dev_frames import DATASET_DIR, DEV_FRAMES  # noqa: E402
 from postprocessing.viz._colors import PART_COLORS  # noqa: E402
 from postprocessing.viz.reprojection_viewer import plot_reprojection_overlay  # noqa: E402
 from utils.ply import connected_component_labels  # noqa: E402
@@ -194,8 +194,8 @@ def finalize_part_labels(df_full: pd.DataFrame, kept_mask: np.ndarray, semantic_
     return part_label_full, {"wing_A": lr_map["wing_A"], "wing_B": lr_map["wing_B"]}
 
 
-def process_frame(frame: str) -> dict:
-    df_full, marked_csv = load_marked(frame, data_root=DATASET_DIR)
+def process_frame(frame: str, data_root: Path = DATASET_DIR) -> dict:
+    df_full, marked_csv = load_marked(frame, data_root=data_root)
     kept_mask = df_full["if_keep"].astype(bool).to_numpy()
     df_kept = df_full[kept_mask].reset_index(drop=True)
     n_total, n_kept = len(df_full), len(df_kept)
@@ -280,20 +280,20 @@ def process_frame(frame: str) -> dict:
 
 
 def plot_labeled_reprojection(frame: str, df_out: pd.DataFrame, confidence: str, out_path: Path) -> None:
-    """body先画(灰)、wing_L/wing_R后画(两色)盖上，if_keep=False点用叉号标记，2x2四相机。
+    """body先画(灰)、wing_L/wing_R后画(两色)盖上，if_keep=False点不画，2x2四相机。
     薄封装，通用重投影/画图逻辑见 postprocessing/viz/reprojection_viewer.py::plot_reprojection_overlay。"""
     plot_reprojection_overlay(frame, df_out, out_path, raw_data_dir=RAW_DATA_DIR,
                                title_suffix=f"  [confidence={confidence}]")
 
 
-def run_batch(frames: list[str]) -> tuple[list[dict], list[dict]]:
+def run_batch(frames: list[str], data_root: Path = DATASET_DIR) -> tuple[list[dict], list[dict]]:
     """逐帧处理，单帧异常catch住、跳过、记录帧号，不中断整个批处理(同
     postprocessing/cleaning/mark_floaters.py run_batch的约定)。"""
     results = []
     failures = []
     for frame in frames:
         try:
-            r = process_frame(frame)
+            r = process_frame(frame, data_root=data_root)
             reproj_path = LABEL_REPROJ_DIR / f"labeled_reproj_{frame}.png"
             plot_labeled_reprojection(frame, r["df_out"], r["confidence"], reproj_path)
             print(f"  reprojection plot -> {reproj_path}")
@@ -332,11 +332,14 @@ def main() -> None:
     parser.add_argument("--end", type=int, default=99, help="批处理结束帧号(含)")
     parser.add_argument("--dev", action="store_true",
                          help="只跑select_dev_frames.DEV_FRAMES(6帧)，忽略--start/--end")
+    parser.add_argument("--data-root", type=str, default=str(DATASET_DIR),
+                         help="数据集根目录，默认select_dev_frames.DATASET_DIR(G2b_G9)")
     args = parser.parse_args()
 
+    data_root = Path(args.data_root)
     frames = DEV_FRAMES if args.dev else [f"f{i:04d}" for i in range(args.start, args.end + 1)]
 
-    results, failures = run_batch(frames)
+    results, failures = run_batch(frames, data_root=data_root)
 
     summary_df = build_summary_df(results, failures)
     SUMMARY_CSV.parent.mkdir(parents=True, exist_ok=True)

@@ -37,12 +37,34 @@ DEFAULT_OUT_DIR = REPO_ROOT / "postprocessing" / "viz" / "eda_outputs" / "reproj
 
 PART_DRAW_ORDER = ("body", "wing_L", "wing_R")  # body先画(背景，点数多)，两翼后画(前景)盖上
 
+CROP_PAD_FRAC = 0.6
+"""自动裁剪视野的padding，占点云bbox宽/高的比例，见_crop_to_points。"""
+CROP_MIN_PAD_PX = 40
+"""bbox很小(比如只有几个点挤在一起)时的最小padding(像素)，避免裁剪框比散点marker还小。"""
+
+
+def _crop_to_points(ax, us: np.ndarray, vs: np.ndarray, img_shape: tuple[int, int],
+                     pad_frac: float = CROP_PAD_FRAC, min_pad_px: float = CROP_MIN_PAD_PX) -> None:
+    """把视野裁剪到散点bbox(留padding)附近，而不是整张原图—— 果蝇在整帧里往往只占
+    很小一块(如1280x800里~80x80px)，四相机原图默认铺满画布时，密集的半透明散点会
+    互相叠加到接近不透明，把底下的果蝇轮廓完全盖住(看着像没画背景图)。只改视野范围
+    (xlim/ylim)，不改imshow的数据本身，所以不影响散点位置/颜色/alpha或图片分辨率。"""
+    h, w = img_shape
+    x0, x1 = float(us.min()), float(us.max())
+    y0, y1 = float(vs.min()), float(vs.max())
+    pad_x = max((x1 - x0) * pad_frac, min_pad_px)
+    pad_y = max((y1 - y0) * pad_frac, min_pad_px)
+    ax.set_xlim(max(0.0, x0 - pad_x), min(float(w), x1 + pad_x))
+    ax.set_ylim(min(float(h), y1 + pad_y), max(0.0, y0 - pad_y))  # 图像坐标y向下，反转ylim
+
 
 def plot_reprojection_overlay(frame: str, df: pd.DataFrame, out_path: Path,
                                raw_data_dir: Path = RAW_DATA_DIR, title_suffix: str = "") -> None:
-    """2x2四相机重投影叠加图。有part_label列时按PART_DRAW_ORDER分层画(body先画、
-    wing_L/wing_R后画盖上)；没有part_label列(T1/T2阶段)则退化成单色全点模式。有
-    if_keep列时if_keep=False的点用同色x叉号标出，跟圆点区分；没有则全部画圆点。"""
+    """2x2四相机重投影叠加图。背景相机原图不透明画在最底层，散点(alpha=0.3)叠加在上面，
+    视野自动裁剪到该相机散点bbox附近(见_crop_to_points，没有有效点则退回整张原图)。
+    有part_label列时按PART_DRAW_ORDER分层画(body先画、wing_L/wing_R后画盖上)；没有
+    part_label列(T1/T2阶段)则退化成单色全点模式。有if_keep列时if_keep=False的点直接
+    不画（从散点里排除，不是画出来再标记）；没有该列则全部点都画。"""
     frame_data_dir = raw_data_dir / frame
     with open(frame_data_dir / "transforms.json") as f:
         cam_frames = json.load(f)["frames"]
@@ -68,27 +90,24 @@ def plot_reprojection_overlay(frame: str, df: pd.DataFrame, out_path: Path,
 
         uv, depth = project_points(xyz, cam)
         us, vs = uv[:, 0], uv[:, 1]
-        valid = depth > 0
+        valid = (depth > 0) & ~is_dropped
         ax.imshow(img, cmap="gray")
 
         if has_label:
             for lab in PART_DRAW_ORDER:
-                mask = valid & (part_label == lab) & ~is_dropped
-                ax.scatter(us[mask], vs[mask], s=10, c=[PART_COLORS[lab]], marker="o", alpha=0.85)
-            for lab in PART_DRAW_ORDER:
-                mask = valid & (part_label == lab) & is_dropped
-                ax.scatter(us[mask], vs[mask], s=30, c=[PART_COLORS[lab]], marker="x", linewidths=1.2)
+                mask = valid & (part_label == lab)
+                ax.scatter(us[mask], vs[mask], s=10, c=[PART_COLORS[lab]], marker="o", alpha=0.3)
         else:
-            mask = valid & ~is_dropped
-            ax.scatter(us[mask], vs[mask], s=10, c=[SINGLE_COLOR], marker="o", alpha=0.85)
-            mask = valid & is_dropped
-            ax.scatter(us[mask], vs[mask], s=30, c=[SINGLE_COLOR], marker="x", linewidths=1.2)
+            ax.scatter(us[valid], vs[valid], s=10, c=[SINGLE_COLOR], marker="o", alpha=0.3)
+
+        if valid.any():
+            _crop_to_points(ax, us[valid], vs[valid], img.shape)
 
         ax.set_title(f"CAM {cam.cam_idx}: {img_path.name}")
         ax.axis("off")
 
     color_note = "  gray=body  blue=wing_L  red=wing_R" if has_label else "  (no part_label, single color)"
-    drop_note = "  x-marker=if_keep=False" if has_keep else ""
+    drop_note = "  if_keep=False points hidden" if has_keep else ""
     fig.suptitle(f"{frame}{title_suffix}{color_note}{drop_note}", fontsize=10)
     fig.tight_layout()
     out_path.parent.mkdir(parents=True, exist_ok=True)

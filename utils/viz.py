@@ -55,7 +55,7 @@ def start_viser(port: int = 8080) -> viser.ViserServer:
 
 
 def add_camera_axes(server: viser.ViserServer, cameras: List["CameraConfig"]) -> None:
-    """Add a coordinate frame and label for each camera (OpenGL convention)."""
+    """Add a coordinate frame for each camera (OpenGL convention)."""
     for cam in cameras:
         M        = cam.transform_opengl
         pos      = M[:3, 3]
@@ -66,10 +66,6 @@ def add_camera_axes(server: viser.ViserServer, cameras: List["CameraConfig"]) ->
             f"/World/Cam_{cam.cam_idx}",
             position=pos, wxyz=quat_wxyz,
             axes_length=0.05, axes_radius=0.001
-        )
-        server.scene.add_label(
-            f"/World/Cam_{cam.cam_idx}_label",
-            text=f"Cam {cam.cam_idx}", position=pos
         )
 
 

@@ -3,9 +3,8 @@ import json
 import numpy as np
 import scipy.io as sio
 import cv2
-import h5py
 from utils.camera import CameraConfig
-from utils.dataset import generate_frame_dict
+from utils.dataset import generate_frame_dict, reconstruct_frame_image
 from utils.image import binarize_mask, crop_image, gray_to_rgba
 from utils.calib import mask_centroid
 
@@ -47,23 +46,7 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
         sparse_file = sparse_files[i]
 
         # Reconstruct image from sparse pixel data
-        with h5py.File(sparse_file, 'r') as sp:
-            refs = sp['/frames/indIm'][0]
-            indIm = sp[refs[target_frame]][:]
-            if indIm.shape[0] == 3:
-                indIm = indIm.T  
-            
-            frame_size = (h_full, w_full)
-            im = np.full(frame_size, 255, dtype=np.uint8) if white_bg else np.zeros(frame_size, dtype=np.uint8)
-
-            if indIm.size > 0:
-                rows = indIm[:, 0].astype(int) - 1
-                cols = indIm[:, 1].astype(int) - 1
-                vals = indIm[:, 2].astype(float)
-                
-                # Boundary check and pixel assignment
-                valid = (rows >= 0) & (rows < frame_size[0]) & (cols >= 0) & (cols < frame_size[1])
-                im[rows[valid], cols[valid]] = vals[valid].astype(np.uint8)
+        im = reconstruct_frame_image(sparse_file, target_frame, w_full, h_full, white_bg=white_bg)
 
         # calibration: RQ decomposition of EasyWand DLT coefs
         cam = CameraConfig.easywand_dlt(ew_data, i)

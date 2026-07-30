@@ -18,7 +18,7 @@ T3诊断: 检验"dist_to_principal_axis假设反了"的疑虑。
    标签分组(仅供参考，is_wing本身可能不准，不作为下面核心判断的依据)，对比body
    候选组/wing候选组各自的空间延展(bbox对角线、平均质心距离)。
 3. 核心证据: 不做二值化，把dist_to_principal_axis当连续值，用colormap画在3D散点图
-   上(前视+俯视，画法参考check_binary_split.py的风格)，图存到eda_outputs/，肉眼
+   上(前视+俯视，画法参考check_binary_split.py的风格)，图存到本目录eda_outputs/，肉眼
    判断颜色深(离轴远)的点落在"两翼"还是"body团块"上。
 4. 量化代理指标(不依赖is_wing标签，避免跟判据本身循环论证): 取
    dist_to_principal_axis最高的一批点("远点"，分位数复用binary_split里实际生效的
@@ -28,10 +28,10 @@ T3诊断: 检验"dist_to_principal_axis假设反了"的疑虑。
    贴两端则反驳该假设(远点是沿轴延伸到两端的翼尖，符合原设计)。6帧打印汇总结论。
 
 核心证据是图，其余(is_wing组延展对比、eigval占比)只是辅助支撑，最终判断以肉眼看
-eda_outputs/axis_diag_*.png为准。
+本目录eda_outputs/axis_diag_*.png为准。
 
 用法:
-    python -m postprocessing.labeling.diag_principal_axis
+    python -m postprocessing.labeling.binary.diag.diag_principal_axis
 """
 import sys
 from pathlib import Path
@@ -44,16 +44,16 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(REPO_ROOT))
 
 from postprocessing.cleaning.floater_census_100frames import latest_checkpoint_dir  # noqa: E402
-from postprocessing.labeling.binary_split_NO_USE.binary_split import (  # noqa: E402
+from postprocessing.labeling.binary.binary_split import (  # noqa: E402
     classify_body_wing_quantile, DEFAULT_AXIS_DIST_Q,
 )
-from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
+from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
 
-OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs"
+OUT_DIR = Path(__file__).resolve().parent / "eda_outputs"
 
 FAR_Q = DEFAULT_AXIS_DIST_Q  # "远点"分位数，借用binary_split里实际生效的量级作参照
 

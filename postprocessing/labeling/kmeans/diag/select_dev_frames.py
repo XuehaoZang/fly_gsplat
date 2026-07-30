@@ -28,7 +28,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-REPO = Path(__file__).resolve().parent.parent.parent
+REPO = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(REPO))
 
 from postprocessing.cleaning.calibrate_G2b_G9_threshold import (  # noqa: E402

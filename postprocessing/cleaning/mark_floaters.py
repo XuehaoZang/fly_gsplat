@@ -40,8 +40,11 @@ def mark_floaters(df: pd.DataFrame, min_patch_size: int = MIN_PATCH_SIZE,
 # ---------------------------------------------------------------------------
 
 def latest_checkpoint_dir(frame_dir: Path) -> Path:
-    ckpt_root = frame_dir / "splatfacto-checkpoint"
-    return sorted(ckpt_root.iterdir())[-1]
+    for dirname in ("splatfacto-checkpoint", "splatfacto"):
+        ckpt_root = frame_dir / dirname
+        if ckpt_root.is_dir():
+            return sorted(ckpt_root.iterdir())[-1]
+    raise FileNotFoundError(f"no splatfacto-checkpoint/ or splatfacto/ dir found under {frame_dir}")
 
 
 def find_features_csv(dataset_dir: Path, frame_idx: int) -> Path:

@@ -1,6 +1,6 @@
 """
 T3 body/wing 二分类，第二版：无监督聚类(KMeans)方法，作为规则阈值法
-(binary_split.py，现归档在 binary_split_NO_USE/ 供对照)的替代方案。
+(binary_split.py，现归档在 postprocessing/labeling/binary/ 供对照)的替代方案。
 
 背景(阈值法失败的根本原因): body -> wing 是连续渐变(尤其翼根附近)，不是双峰分布，
 硬阈值(dist_to_principal_axis / planarity 任一超阈值)只能抓住翼尖附近的极值点，
@@ -21,7 +21,7 @@ T3 body/wing 二分类，第二版：无监督聚类(KMeans)方法，作为规�
    - 规则B: mean planarity最低的簇 = body(翅膀是膜状结构，planarity该更高)。
    两规则如果对body的判定一致最好；不一致时都打印，供人工判断哪个更可信，
    不在代码里自动拍板选一个。
-4. 出图: 前视+俯视两视角散点图(排版同binary_split_NO_USE/check_binary_split.py，
+4. 出图: 前视+俯视两视角散点图(排版同postprocessing/labeling/binary/diag/check_binary_split.py，
    方便直接对比)，三簇三色(按raw cluster_id着色，不是body/wing语义)，存到
    eda_outputs/，文件名带"kmeans"以区分threshold版的图。
 5. 稳定性检查: kmeans对初始化敏感，不能假设它天然稳定——同一帧用5个不同
@@ -66,7 +66,7 @@ v3 更新(双翼种子引导初始化，三个簇都有显式init):
 
 背景: v2只给body一个种子，剩下两个wing簇仍用kmeans++随机挑起点，f0061/f0069等帧
 不同random_state之间ARI低(不稳定)，且body簇有时把翼根也吞进去。复用T1已验证的
-发现(axis_diag诊断，见eda_outputs/color_by_feature/axis_diag_*.png)：全局第一
+发现(axis_diag诊断，见postprocessing/labeling/binary/diag/eda_outputs/axis_diag_*.png)：全局第一
 PCA主轴(最大方差方向)大致沿"翼尖到翼尖"方向，body在轴中段附近，两翼分别向轴的
 正负两端延伸——用这条轴给两翼各找一个种子点。
 
@@ -103,10 +103,10 @@ v3 方法:
    [ARI均值, ARI最小值, 疑似硬切簇对数]，存成一张长表(每帧x每版本一行)，方便直接
    按frame筛选对比f0061/f0069这两帧改善没有，而不是只看全局均值掩盖单帧的问题。
 8. 出图: 同款前视+俯视双视角3D散点图，文件名带"kmeans_v3"。v3的图和汇总表存到
-   k_means_results/v3/(不是eda_outputs/，跟v1/v2的输出目录分开，方便单独归档)。
+   kmeans/k_means_results/v3/(不是eda_outputs/，跟v1/v2的输出目录分开，方便单独归档)。
 
 用法:
-    python -m postprocessing.labeling.kmeans_split
+    python -m postprocessing.labeling.kmeans.kmeans_split
 """
 import sys
 from itertools import combinations
@@ -126,15 +126,15 @@ from sklearn.cluster import KMeans, kmeans_plusplus
 from sklearn.metrics import adjusted_rand_score
 from sklearn.preprocessing import StandardScaler
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT))
 
 from postprocessing.cleaning.viz_floater_check import find_features_csv  # noqa: E402
 from postprocessing.kinematics.geometry import weighted_pca  # noqa: E402
-from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
+from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
 from utils.ply import connected_component_sizes  # noqa: E402
 
-OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs"
+OUT_DIR = Path(__file__).resolve().parent / "eda_outputs"
 
 FEATURES = ["x", "y", "z", "planarity", "scale_ratio", "opacity"]
 K = 3
@@ -154,7 +154,7 @@ AUX_WEIGHTS = [1, 3, 5]                  # [opacity, R]标准化后乘的权重�
 K_NN_INTRA = 5                           # 簇内"典型"kNN距离用的近邻数，同eda_body_wing_features.py
 
 # ---- v3: 双翼种子引导初始化，见模块docstring "v3 更新" ----
-V3_OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "k_means_results" / "v3"
+V3_OUT_DIR = Path(__file__).resolve().parent / "k_means_results" / "v3"
 V3_AUX_WEIGHT = 1                        # 跟v2同权重才可比，三质心都已显式给定，不再扫权重
 WING_SEED_FRAC = 0.075                   # 主轴t值最大/最小的一段极值点比例(5~10%区间内的固定值)
 WING_SEED_CC_K = 10                      # 候选点自己的局部kNN图用的k，同utils.ply.connected_component_sizes默认
@@ -162,7 +162,7 @@ WING_SEED_CC_PERCENTILE = 75.0           # 同上，同该函数默认dist_perce
 
 
 def load_kept(frame: str) -> pd.DataFrame:
-    """加载该帧的_marked表，只取if_keep=True的点(跟binary_split_NO_USE同样的口径)。"""
+    """加载该帧的_marked表，只取if_keep=True的点(跟binary/同样的口径)。"""
     features_csv = find_features_csv(frame, DATASET_DIR)
     marked_csv = features_csv.with_name(features_csv.stem + "_marked.csv")
     df = pd.read_csv(marked_csv)

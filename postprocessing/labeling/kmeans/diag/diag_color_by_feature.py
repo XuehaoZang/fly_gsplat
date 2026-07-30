@@ -5,8 +5,8 @@ opacity 直方图里 1.0 附近的尖峰，不确定是 sigmoid 饱和的 artifa
 body/wing 区分信号。
 
 本脚本纯出图诊断，不做任何判定/阈值化/统计检验，不产出标签列，不改动
-kmeans_split.py / binary_split_NO_USE/binary_split.py。画法复用
-binary_split_NO_USE/diag_principal_axis.py 的 plot_axis_diag 同款风格
+kmeans_split.py / binary/binary_split.py。画法复用
+binary/diag/diag_principal_axis.py 的 plot_axis_diag 同款风格
 (前视 elev=0,azim=-90 + 俯视 elev=90,azim=-90 双视角，连续值colormap叠加3D散点)。
 
 在 select_dev_frames.DEV_FRAMES 每一帧上，用 kmeans_split.load_kept (if_keep=True
@@ -26,7 +26,7 @@ binary_split_NO_USE/diag_principal_axis.py 的 plot_axis_diag 同款风格
 图存到 eda_outputs/color_by_feature/ 子目录。
 
 用法:
-    python -m postprocessing.labeling.diag.diag_color_by_feature
+    python -m postprocessing.labeling.kmeans.diag.diag_color_by_feature
 """
 import sys
 from pathlib import Path
@@ -38,13 +38,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(REPO_ROOT))
 
-from postprocessing.labeling.kmeans_split import load_kept  # noqa: E402
-from postprocessing.labeling.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
+from postprocessing.labeling.kmeans.kmeans_split import load_kept  # noqa: E402
+from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
 
-OUT_DIR = REPO_ROOT / "postprocessing" / "labeling" / "eda_outputs" / "color_by_feature"
+OUT_DIR = Path(__file__).resolve().parent / "eda_outputs" / "color_by_feature"
 
 VIEWS = [
     ("front (elev=0, azim=-90)", dict(elev=0, azim=-90)),
