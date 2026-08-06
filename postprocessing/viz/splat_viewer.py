@@ -474,7 +474,7 @@ def run_viewer(
     category_state = {"category": MODE_CATEGORY[default_mode]}
 
     server = start_viser(port=port)
-    server.scene.set_up_direction("+z")
+    server.scene.set_up_direction("-z")
 
     # processed source 的CSV是实验室系下的真实物理坐标(米，整只果蝇bbox只有几mm，见
     # calc_kinematics.md §0)。viser前端相机near clip固定在0.05世界单位(写死在js bundle里，
@@ -501,7 +501,7 @@ def run_viewer(
         cam_offset = np.array([0.0, -15.0, -10.0])
         client.camera.position = splat_scene_center + cam_offset
         client.camera.look_at = splat_scene_center
-        client.camera.up_direction = (0.0, 0.0, 1.0)
+        client.camera.up_direction = (0.0, 0.0, -1.0)
 
     def apply_camera_for_processed(client):
         if processed_scene_center is None:
@@ -510,7 +510,7 @@ def run_viewer(
         cam_offset = np.array([0.0, -d, d * 0.6])
         client.camera.position = processed_scene_center + cam_offset
         client.camera.look_at = processed_scene_center
-        client.camera.up_direction = (0.0, 0.0, 1.0)
+        client.camera.up_direction = (0.0, 0.0, -1.0)
 
     def apply_camera_for_source(client, src: str):
         if src == "splat":

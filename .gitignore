@@ -4,6 +4,8 @@ outputs/
 postprocessing/labeling/**/eda_outputs/
 postprocessing/labeling/kmeans/k_means_results/
 postprocessing/kinematics/diagnostics_output
+postprocessing/kinematics/correct_body_axis/diag
+postprocessing/kinematics/correct_wing_pitch/diag
 
 # Python
 __pycache__/
