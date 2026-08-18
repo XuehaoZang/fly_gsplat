@@ -3,6 +3,21 @@
 3D Gaussian Splatting pipeline for fruit fly reconstruction from multi-camera view recordings. 
 ---
 
+## Methods & Specific Contribution (3D Gaussian Splatting Reconstruction — New)
+
+This is a from-scratch 3D Gaussian Splatting (nerfstudio/gsplat `splatfacto`) reconstruction pipeline built to replace the prior visual-hull + multi-camera-triangulation approach used in the fly antenna mechanosensation project. It runs on the same 4-camera + EasyWand DLT calibration input the old pipeline used, but replaces the reconstruction and part-labeling stage with a trained radiance/Gaussian field.
+
+- Rebuilt the EasyWand→camera-geometry chain around a single `CameraConfig` data structure (`utils/camera.py`) that converts EasyWand DLT calibration into Nerfstudio-compatible OpenGL camera poses (`transforms.json`), via RQ decomposition of the 11 DLT coefficients per camera (`CameraConfig.easywand_dlt`, mirroring the original MATLAB `decompose_dlt`) rather than EasyWand's own `focalLengths`/`principalPoints`/`rotationMatrices` fields, which were found unreliable (notably an unreliable Cam4 principal point, commit `55f9afc`). Verified with a 3-way reprojection comparison (`roni`/`rq`/`native` methods) in `debug/validate_calib.py`.
+- Built the dataset + initialization stage: `generate_dataset.py` reconstructs per-frame grayscale images from EasyWand sparse-pixel `.mat` files and emits Nerfstudio `transforms.json`; `generate_hull.py` produces a `splatfacto` initialization point cloud via visual-hull carving (1M points sampled in a 2 mm sphere around the triangulated centroid, kept if visible in ≥4 of 4 cameras).
+- Extended nerfstudio's `SplatfactoModel` with a custom `splatfacto-checkpoint` variant (`models/splatfacto_checkpoint.py`) that dumps Gaussian stats/points/eval-images at configurable training-step intervals, plus a synthetic oblique 5th viewpoint for qualitative monitoring beyond the 4 real training cameras — used for mid-training debugging that plain `splatfacto` doesn't expose.
+- Built a queue-based, idempotent, multi-GPU/multi-worker parallel training scheduler (`gpu/schedule/`, JSON-config-driven hyperparameter sweeps over `param_sets` × `frames`, commits `0d2e690`, `014300f`) plus a single-GPU serial-batch mode (`run/serial/`), replacing manual per-frame runs.
+- Profiled the full per-frame pipeline stage-by-stage (`gpu/timing/`, `TIMING_REPORT.md`, 2026-07-21, n=5 repeats) and used the result to justify the scheduler's concurrency design (see Quantified Results).
+- Built a 4-stage postprocessing pipeline (`postprocessing/`) that turns a raw trained `splat.ply` into fly kinematics: **T1** per-point Gaussian feature extraction (`utils/gaussian_features.py`), **T2** floater removal via k-NN connected-component size filtering (`postprocessing/cleaning/mark_floaters.py`, k=10, dist_percentile=75, min_patch_size=10, locked/validated), **T3** body/wing_L/wing_R point labeling (two implementations built and compared: cross-frame motion-accumulated density split — current default — and single-frame k-means, `postprocessing/labeling/`), **T4** body-frame (yaw/pitch/roll) and per-wing (stroke/deviation `phi`/`theta`, chord/pitch `eta`) angle extraction (`postprocessing/kinematics/`).
+- Ported the prior MATLAB motion-based body/wing 2D segmentation algorithm (`seg_class`) to Python as an explicit baseline (`postprocessing/reference/seg2d/`, commit `86f1658`), and built a point-to-pixel reprojection cross-check (`seg2d_spec.md` §9) that projects trained 3D Gaussian points back onto the 4 raw camera views and looks up each point's old-pipeline 2D body/wing label — the mechanism for validating the new 3D labels against the old 2D ones, though the comparison itself has not yet been run end-to-end (see Gaps).
+- Ran systematic hyperparameter sweeps (scale-regularization ratio, densification schedule) across 8+6 parameter-set groups × 100 frames each, scoring point-cloud quality via `n_gaussians`, `scale_ratio`, `opacity`, `dbscan_floater_frac`, `extent_overshoot` (`outputs/ctrl_009_002_8groups_100frames/summary.json`, `outputs/ctrl_009_002_densify_6groups_100frames/summary.json`).
+
+---
+
 ## Environment
 
 ```bash
@@ -155,7 +170,15 @@ python -m postprocessing.labeling.labeling --start 0 --end 99          # k-means
 ```
 
 ### T4 — Kinematics: `postprocessing/kinematics/pipeline.py`
-Per-frame `_labeled.csv` → body frame (yaw/pitch/roll) + per-wing angles (phi/theta/eta, L/R) → `kinematics_{name}.csv` + debug `.pkl` (`PipelineConfig` controls `frame_glob`, `min_points`, etc.). A failing frame never aborts the batch — it's recorded in the `status` column instead. Normally invoked via `calc_kinematics.py`, not run standalone.
+Per-frame `_labeled.csv` → body frame (yaw/pitch/roll) + per-wing angles (phi/theta/eta, L/R) → `kinematics_{name}.csv` + debug `.pkl` (`PipelineConfig` controls `frame_glob`, `min_points`, etc.). A failing frame never aborts the batch — it's recorded in the `status` column instead. `x_body` (body long-axis sign) is sequence-corrected (continuity chain + mandatory anchor-flip safety net, `correct_body_axis/sequence_axis.py`) via `pipeline.run_dataset_with_sequence_correction`, not a per-frame independent guess. Normally invoked via `calc_kinematics.py`, not run standalone.
+
+**T4 diagnostics** (`postprocessing/kinematics/diagnostics.py`): smoothness/periodicity/L-R-symmetry/plausible-range checks on an existing T4 run, no ground truth needed. Writes PNGs + `report.md`:
+```bash
+python -m postprocessing.kinematics.diagnostics \
+    outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense \
+    postprocessing/kinematics/diagnostics_output/ratio3_sh0_dense
+# args are optional; with none, defaults to the G2b_G9 100-frame dataset
+```
 
 ### Visualization
 - **Point cloud (hull, pre-training)**: `generate_hull.py` opens Viser at `http://localhost:8080` by default; or `python debug/debug_splat_ply.py` to compare hull `init_points.ply` vs a trained `splat.ply` side by side with coordinate-space diagnostics (edit `__main__` to set `data_dir`/`splat_dir`).

@@ -41,6 +41,17 @@ bools, and `_estimate_frame_impl` would fetch `orientation`/`planarity` via
 `io_schema.get_part_columns(df, side, [...])` alongside the existing
 `io_schema.get_part(df, side)` call, and pass all four through to
 `estimate_chord`.
+
+**Velocity cue pass-through** (`correct_wing_pitch/diag_report.md` §8,
+opt-in, separate from S4b's flags above): `estimate_chord`'s `prev_tip`/
+`prev_body_cm`/`velocity_threshold_scale` are forwarded verbatim to every
+`wing_angles.estimate_leading_edge` call this module makes on the caller's
+behalf (see `wing_angles.py` module docstring for what the cue does). All
+three default to "cue disabled," so `estimate_chord`'s own default behavior
+is unaffected; a caller that already has a cued `LeadingEdge` (e.g. from
+`wing_angles.stroke_deviation(..., prev_tip=..., prev_body_cm=...)`) and
+passes it in via `leading_edge=` doesn't need these at all -- they only
+matter for the `estimate_leading_edge` calls this function makes itself.
 """
 from __future__ import annotations
 
@@ -51,6 +62,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from . import geometry as geo
+from . import wing_angles as wa
 from .body_frame import BodyFrame
 from .wing_angles import LeadingEdge, _SIGN_LEFT, _check_side, estimate_leading_edge
 
@@ -451,6 +463,9 @@ def estimate_chord(
     use_gaussian_normals: bool = False,
     orientation: np.ndarray | None = None,
     planarity: np.ndarray | None = None,
+    prev_tip: np.ndarray | None = None,
+    prev_body_cm: np.ndarray | None = None,
+    velocity_threshold_scale: float = wa.VELOCITY_THRESHOLD_SCALE_DEFAULT,
 ) -> ChordResult:
     """One wing's chord direction and pitch (`eta`), one frame (§5).
 
@@ -459,6 +474,16 @@ def estimate_chord(
     `wing_angles.estimate_leading_edge(wing_xyz, body_frame, side,
     weights=weights)` is called. `weights` only affects LE/plane fitting, not
     bin aggregation.
+
+    `prev_tip`/`prev_body_cm`/`velocity_threshold_scale` are `wing_angles`'s
+    opt-in velocity cue (module docstring there), forwarded to every internal
+    `estimate_leading_edge` call this function makes -- both the initial fit
+    (when `leading_edge` is omitted) and the `use_gaussian_normals` refit on
+    contaminant survivors. Not consumed at all when `leading_edge` is passed
+    in already-computed (the caller made that cue decision upstream, e.g. via
+    `wing_angles.stroke_deviation`). All three default to the same
+    "cue disabled" values `estimate_leading_edge` itself defaults to, so this
+    function's output is unaffected unless a caller opts in.
 
     `orientation` (`(N,3)`) / `planarity` (`(N,)`) are new, optional, and
     row-aligned with `wing_xyz` (e.g. via `io_schema.get_part_columns`); only
@@ -493,7 +518,8 @@ def estimate_chord(
     sign_left = _SIGN_LEFT[side]
 
     base_leading_edge = leading_edge if leading_edge is not None else estimate_leading_edge(
-        wing_xyz, body_frame, side, weights=weights
+        wing_xyz, body_frame, side, weights=weights,
+        prev_tip=prev_tip, prev_body_cm=prev_body_cm, velocity_threshold_scale=velocity_threshold_scale,
     )
 
     active_xyz = wing_xyz
@@ -517,7 +543,9 @@ def estimate_chord(
                 candidate_weights = None if weights is None else np.asarray(weights, dtype=float)[candidate_survivors]
                 try:
                     active_leading_edge = estimate_leading_edge(
-                        candidate_xyz, body_frame, side, weights=candidate_weights
+                        candidate_xyz, body_frame, side, weights=candidate_weights,
+                        prev_tip=prev_tip, prev_body_cm=prev_body_cm,
+                        velocity_threshold_scale=velocity_threshold_scale,
                     )
                 except ValueError as e:
                     logger.warning(

@@ -3,22 +3,35 @@
 Implements calc_kinematics.md §0 (conventions), §1 (input/output contract),
 and §6 (T4-adopted definitions) end to end, chaining S2 (`body_frame.py`) ->
 S3 (`wing_angles.py`) -> S4a (`chord.py`) per frame. No multi-frame logic
-lives here (no unwrap, no smoothing, no stroke-plane bootstrap across
-frames) -- S5 is stateless: each frame's output row depends only on that
-frame's own CSV, per §2/§4's "single frame" scope.
+lives here for wing angles/chord (no unwrap, no smoothing, no stroke-plane
+bootstrap across frames) -- per-frame estimation stays a pure function of
+that frame's own CSV, per §2/§4's "single frame" scope.
+
+The one exception is `x_body` (§2 step 1's body long-axis sign): a
+per-frame-independent PCA guess is not reliable on its own (see
+`body_frame.estimate_body_frame`'s docstring), so `PipelineConfig.sequence_x_body`
+optionally carries a precomputed `{frame_id: x_body}` table from
+`correct_body_axis.sequence_axis.compute_sequence_x_body` (continuity chain +
+mandatory anchor verification, see that module) -- `run_dataset_with_
+sequence_correction` builds and supplies this automatically; `estimate_frame`/
+`run_dataset` fall back to `body_frame.py`'s own single-frame heuristic for
+any frame not in the table (e.g. no `sequence_x_body` given at all, or a
+frame this round-trip's underlying `identity_flip_stats` loader couldn't
+find), never raising or dropping the frame over a missing table entry.
 
 `estimate_frame` is the single-frame entry point (pure function of one
-already-loaded `pd.DataFrame`); `run_dataset` is the I/O layer (globbing,
-loading, writing outputs) built on top of it. A frame is never dropped: any
-per-stage failure (missing/too-small part, RANSAC or PCA degeneracy) is
-caught, leaves the affected output fields NaN, and is recorded in a
-`status` string instead of raising -- see `_estimate_frame_impl`.
+already-loaded `pd.DataFrame` plus, optionally, this frame's own precomputed
+`x_body`); `run_dataset` is the I/O layer (globbing, loading, writing
+outputs) built on top of it. A frame is never dropped: any per-stage
+failure (missing/too-small part, RANSAC or PCA degeneracy) is caught,
+leaves the affected output fields NaN, and is recorded in a `status`
+string instead of raising -- see `_estimate_frame_impl`.
 """
 from __future__ import annotations
 
 import pickle
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import numpy as np
@@ -75,6 +88,16 @@ class PipelineConfig:
     `*_labeled.csv` (adds `part_label`, `confidence`), leaving `_marked.csv`
     untouched. Point this at `"f*/splatfacto-checkpoint/*/*_labeled.csv"` (or
     any other real layout) to run against actual T3 output."""
+    sequence_x_body: dict[int, np.ndarray] | None = None
+    """Optional `{frame_id: x_body}` table (unit vectors) overriding
+    `body_frame.py`'s own single-frame `x_body` heuristic per frame -- see
+    module docstring. `None` (default) keeps every frame on the old
+    per-frame heuristic; build one via
+    `correct_body_axis.sequence_axis.compute_sequence_x_body`, or just call
+    `run_dataset_with_sequence_correction` instead of `run_dataset` to have
+    it built and applied automatically. A frame_id absent from the table
+    (even when the table itself is non-`None`) falls back to the per-frame
+    heuristic for that one frame only."""
 
 
 def _empty_debug() -> dict:
@@ -115,12 +138,14 @@ def _estimate_frame_impl(df: pd.DataFrame, frame_id: int, config: PipelineConfig
             return row, debug
 
     try:
+        x_body = None if config.sequence_x_body is None else config.sequence_x_body.get(frame_id)
         frame = bf.estimate_body_frame(
             body_xyz, wingL_xyz, wingR_xyz,
             up=config.up,
             stroke_plane_pitch_deg=config.stroke_plane_pitch_deg,
             stroke_plane_normal=config.stroke_plane_normal,
             root_mode=config.root_mode,
+            x_body=x_body,
         )
         if not _all_finite(frame.x_body, frame.y_body, frame.z_body, frame.n_sp,
                             frame.yaw, frame.pitch, frame.roll):
@@ -257,3 +282,38 @@ def run_dataset(dataset_root: str | Path, config: PipelineConfig | None = None) 
             pickle.dump(debug_by_frame, f)
 
     return out_df
+
+
+def run_dataset_with_sequence_correction(
+    dataset_root: str | Path, config: PipelineConfig | None = None,
+) -> pd.DataFrame:
+    """`run_dataset`, but with `config.sequence_x_body` built and applied
+    automatically -- the production entry point for a real (non-synthetic,
+    non-single-frame-test) dataset; see module docstring and
+    `correct_body_axis/sequence_axis.py`.
+
+    Building the table (`correct_body_axis.sequence_axis.compute_sequence_x_body`)
+    currently goes through `postprocessing.labeling.motion.diag.
+    identity_flip_stats`'s own `_labeled.csv` discovery, a separate code path
+    from this function's own `_discover_frame_files`/`io_schema.load_frame` --
+    both read the same on-disk `f<NNNN>/.../*_labeled.csv` layout and agree
+    on `frame_id`, so the resulting table's keys line up with this function's
+    own per-frame loop, but a frame one loader finds and the other doesn't
+    (e.g. a stray malformed CSV) simply falls back to the single-frame
+    heuristic for that frame rather than erroring -- see `PipelineConfig.
+    sequence_x_body`'s own fallback note.
+
+    Imports `correct_body_axis.sequence_axis` lazily (not at this module's
+    top level) since that import chain reaches back into
+    `postprocessing.calc_kinematics`, which itself imports this module --
+    see `sequence_axis.py`'s own docstring for why.
+    """
+    from .correct_body_axis.sequence_axis import compute_sequence_x_body
+
+    config = config if config is not None else PipelineConfig()
+    dataset_root = Path(dataset_root)
+
+    x_body_table, _audit_df = compute_sequence_x_body(dataset_root, up=config.up)
+    config = replace(config, sequence_x_body=x_body_table)
+
+    return run_dataset(dataset_root, config)

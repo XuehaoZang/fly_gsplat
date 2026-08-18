@@ -50,12 +50,29 @@ def test_clean_scenario_recovers_yaw_pitch_roll():
     """Tolerance note: `scenario_clean()`'s default point counts (n_body=300,
     n_wing=400) leave a real, measured few-degree noise floor on this
     estimator — `x_body` is a PCA axis of a finite ellipsoid-surface sample
-    (body aspect ratio ~2.8:1, not infinitely elongated), and `hinge_*` is a
-    single most-extreme sampled point along each wing's span (per §2 step 2),
-    whose chordwise position is an independent random draw that does not
-    shrink with more span samples. Both are measured (not `<1` deg as the
-    spec's illustrative bound suggested) at ~1-2.5 deg for this seed, so the
-    tolerance here reflects that real floor rather than a looser stand-in.
+    (body aspect ratio ~2.8:1, not infinitely elongated), measured (not `<1`
+    deg as the spec's illustrative bound suggested) at ~1-2.5 deg for this
+    seed, so `yaw`/`pitch`'s tolerance reflects that real floor rather than a
+    looser stand-in.
+
+    `roll` (via `hinge_*`, §2 step 2) has a separate, wider floor since
+    `_wing_hinge`'s `root_mode="root"` moved from a single most-extreme
+    sampled point along the wing's own PCA span axis to
+    `robust_body_axis.compute_wing_hinge_far_cc` (far-from-wing-centroid +
+    connected-component root cluster, oriented by `guide_axis = unit(body_cm
+    - wing_cm)` -- see that function's docstring, and `_wing_hinge`'s, for
+    why this is the wired-in default despite being *noisier* on this
+    particular synthetic scenario: it fixes a large real-data roll-jump
+    problem, measured on `correct_body_axis/diag/i_roll_source_isolation.py`,
+    that this idealized clean synthetic mock never exercises). On this exact
+    scenario `guide_axis` is a genuinely different, slightly-off-span
+    direction from the wing's own PCA axis (the mock's wing sweep/root
+    offset means `body_cm - wing_cm` isn't perfectly spanwise), so the
+    far/CC method's root-cluster centroid picks up a small systematic bias
+    the old single-extreme-point method didn't have here -- measured at
+    mean=2.76 deg, max=4.97 deg over 30 seeds (`np.random.default_rng`
+    seeds 0-29, same `scenario_clean` call), vs the old method's ~1-2.5 deg.
+    6.0 deg is a bound with headroom above that measured max, not a guess.
     """
     df, gt = mock.scenario_clean(seed=0)
     frame = bf.estimate_body_frame(
@@ -63,7 +80,7 @@ def test_clean_scenario_recovers_yaw_pitch_roll():
     )
     assert abs(_angular_diff_deg(frame.yaw, gt.yaw_deg)) < 3.0, frame.yaw
     assert abs(_angular_diff_deg(frame.pitch, gt.pitch_deg)) < 3.0, frame.pitch
-    assert abs(_angular_diff_deg(frame.roll, gt.roll_deg)) < 3.0, frame.roll
+    assert abs(_angular_diff_deg(frame.roll, gt.roll_deg)) < 6.0, frame.roll
 
 
 def test_clean_scenario_frame_is_orthonormal_right_handed():

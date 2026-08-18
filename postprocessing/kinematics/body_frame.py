@@ -17,6 +17,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from . import geometry as geo
+from . import robust_body_axis as rba
 
 
 @dataclass
@@ -45,9 +46,19 @@ class BodyFrame:
 def _wing_hinge(wing_xyz: np.ndarray, body_cm: np.ndarray, root_mode: str) -> np.ndarray:
     """Proximal (nearest-body) end of one wing's span (§2 step 2).
 
-    `root_mode="root"`: PCA the wing's own points to get its span axis, take
-    the two extreme points along that axis (the wing's "ends"), and return
-    whichever is closer to `body_cm` — the hinge, not the tip.
+    `root_mode="root"`: `robust_body_axis.compute_wing_hinge_far_cc` --
+    far-from-wing-centroid + connected-component root cluster, oriented by
+    `guide_axis = unit(body_cm - wing_cm)` (see that function's docstring).
+    Replaces this mode's earlier PCA-span-axis extreme-point pick (PCA the
+    wing's own points, take whichever of the axis's two extreme points is
+    closer to `body_cm`): that method's axis *direction* — not just sign —
+    is unstable on a near-degenerate (folded/foreshortened) wing cloud, the
+    same PCA failure mode this codebase already diagnosed for the body, and
+    it returns a single sampled point rather than a centroid. Measured on
+    the real 640-frame dataset (`correct_body_axis/diag/
+    i_roll_source_isolation.py`'s method 3, body axis held fixed): swapping
+    just this wing-hinge method dropped adjacent-frame roll jumps (>90 deg)
+    from 25 to 13 (48%) -- see `compute_wing_hinge_far_cc`'s docstring.
     `root_mode="centroid"`: fallback per §2 step 2 — the wing's point
     centroid, used when root-region points aren't reliably separable from
     the tip (e.g. T3 mislabeling near the body).
@@ -57,13 +68,8 @@ def _wing_hinge(wing_xyz: np.ndarray, body_cm: np.ndarray, root_mode: str) -> np
     if root_mode != "root":
         raise ValueError(f"_wing_hinge: unknown root_mode {root_mode!r}, expected 'root' or 'centroid'")
 
-    _, eigvecs, centroid = geo.weighted_pca(wing_xyz)
-    span_axis = eigvecs[:, -1]
-    t = (wing_xyz - centroid) @ span_axis
-    p_min, p_max = wing_xyz[np.argmin(t)], wing_xyz[np.argmax(t)]
-    d_min = np.linalg.norm(p_min - body_cm)
-    d_max = np.linalg.norm(p_max - body_cm)
-    return p_min if d_min < d_max else p_max
+    hinge_cm, _diag = rba.compute_wing_hinge_far_cc(wing_xyz, body_cm)
+    return hinge_cm
 
 
 def _calculate_roll(yaw_rad: float, pitch_rad: float, y_body: np.ndarray) -> float:
@@ -89,6 +95,7 @@ def estimate_body_frame(
     stroke_plane_pitch_deg: float = 45.0,
     stroke_plane_normal: np.ndarray | None = None,
     root_mode: str = "root",
+    x_body: np.ndarray | None = None,
 ) -> BodyFrame:
     """Estimate one frame's `BodyFrame` from labeled body/wing points (§2/§3).
 
@@ -98,14 +105,29 @@ def estimate_body_frame(
     the `pitch` reference axis. `root_mode` selects the §2-step-2 wing-hinge
     method (`"root"` or `"centroid"`, see `_wing_hinge`).
 
-    Head-sign heuristic (§2 step 1): the body point cloud's PCA major axis
-    has no head/tail sign of its own, so it is oriented via
-    `dot(x_body, up) > 0` — i.e. assuming the fly's head points up-ish. This
-    is a single-frame fallback, not a real head detector: it fails (picks the
-    tail-as-head) whenever the true body pitch is negative enough that the
-    nose is not the "up" end (e.g. a steep dive). Downstream `yaw`/`pitch`
-    inherit that sign flip. Not fixed here — a multi-frame or
-    marker-based head cue would resolve it; see calc_kinematics.md §2.
+    `x_body`, if given, is used verbatim (re-normalized) as the body long
+    axis instead of this function's own single-frame head-sign heuristic
+    below — this is how a sequence-level caller
+    (`correct_body_axis.sequence_axis.compute_sequence_x_body`, wired in via
+    `pipeline.run_dataset_with_sequence_correction`) supplies a
+    continuity-chained, anchor-verified axis per frame instead of the
+    per-frame-independent PCA guess. `hinge_L`/`hinge_R`/`y_body`/`n_sp`/
+    angles are unaffected either way — only where `x_body` itself comes from
+    changes.
+
+    Head-sign heuristic (§2 step 1, used only when `x_body` is not supplied):
+    the body point cloud's PCA major axis has no head/tail sign of its own,
+    so it is oriented via `dot(x_body, up) > 0` — i.e. assuming the fly's
+    head points up-ish. This is a single-frame fallback, not a real head
+    detector: it fails (picks the tail-as-head) whenever the true body pitch
+    is negative enough that the nose is not the "up" end (e.g. a steep
+    dive), and — measured on the real 640-frame dataset,
+    `correct_body_axis/diag/h_robust_axis_timeseries.py` — flips sign on
+    ~6% of adjacent frame pairs whenever the body point cloud is near a
+    disc shape (PCA's own major-axis *direction* going unstable, not just
+    this heuristic's sign guess). Downstream `yaw`/`pitch`/`roll` inherit
+    whichever error. Not fixed here for the no-`x_body` case — see
+    `correct_body_axis/sequence_axis.py` for the sequence-level fix.
     """
     body_xyz = np.asarray(body_xyz, dtype=float)
     wingL_xyz = np.asarray(wingL_xyz, dtype=float)
@@ -114,8 +136,11 @@ def estimate_body_frame(
 
     body_cm = body_xyz.mean(axis=0)
 
-    _, eigvecs, _ = geo.weighted_pca(body_xyz)
-    x_body = geo.orient_to_reference(eigvecs[:, -1], up_hat)
+    if x_body is not None:
+        x_body = geo.unit(np.asarray(x_body, dtype=float))
+    else:
+        _, eigvecs, _ = geo.weighted_pca(body_xyz)
+        x_body = geo.orient_to_reference(eigvecs[:, -1], up_hat)
 
     hinge_L = _wing_hinge(wingL_xyz, body_cm, root_mode)
     hinge_R = _wing_hinge(wingR_xyz, body_cm, root_mode)

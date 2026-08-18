@@ -13,10 +13,12 @@ CSV `pipeline.run_dataset` already produces (§ single-frame scope, see
 
 Reusable/importable: every `plot_*`/`*_stats`/`*_check` function takes plain
 arrays or the output DataFrame and is usable standalone; `run_diagnostics`
-is the orchestrating entry point. The `if __name__ == "__main__"` block runs
-it against the real 100-frame `outputs/ctrl_009_002_8groups_100frames/G2b_G9`
-dataset (see `reference/s6a_real_data_smoke_test_findings.md`) and writes
-figures + `report.md` to a scratch directory (never into tracked `outputs/`).
+is the orchestrating entry point. The `if __name__ == "__main__"` block
+(`main()`) takes two optional positional CLI args, `dataset_root` and
+`out_dir` -- defaulting, when omitted, to the real 100-frame
+`outputs/ctrl_009_002_8groups_100frames/G2b_G9` dataset (see
+`reference/s6a_real_data_smoke_test_findings.md`) and this file's own
+`diagnostics_output/` (never into tracked `outputs/`).
 """
 from __future__ import annotations
 
@@ -459,30 +461,43 @@ def _write_report_md(
 
 
 # ---------------------------------------------------------------------------
-# CLI: run against the real 100-frame dataset
+# CLI: run against a real dataset
 # ---------------------------------------------------------------------------
 
 REAL_DATASET_ROOT = REPO_ROOT / "outputs" / "ctrl_009_002_8groups_100frames" / "G2b_G9"
+"""Default `dataset_root` when none is given on the command line."""
 SCRATCH_OUT = Path(__file__).resolve().parent / "diagnostics_output" / "s6b_g2b_g9"
+"""Default `out_dir` when none is given on the command line."""
+LABELED_FRAME_GLOB = "f*/*/*/*_labeled.csv"
+"""Doesn't hardcode `splatfacto`/`splatfacto-checkpoint` (method-dir naming
+differs per sweep, see `calc_kinematics.py`'s own `LABELED_FRAME_GLOB`) --
+`f<frame>/<method dir>/<timestamp>/*_labeled.csv` matches both, so this same
+glob works for `G2b_G9` (`splatfacto-checkpoint`) and e.g. `ratio3_sh0_dense`
+(`splatfacto`) alike."""
 FPS = 16000.0
 """Camera frame rate, user-confirmed (not discoverable anywhere in the repo)."""
 
 
 def main() -> None:
-    if not REAL_DATASET_ROOT.exists():
-        print(f"SKIP  real dataset root not found: {REAL_DATASET_ROOT}")
+    dataset_root = Path(sys.argv[1]) if len(sys.argv) > 1 else REAL_DATASET_ROOT
+    out_dir = Path(sys.argv[2]) if len(sys.argv) > 2 else SCRATCH_OUT
+
+    if not dataset_root.exists():
+        print(f"SKIP  dataset root not found: {dataset_root}")
         return
 
-    SCRATCH_OUT.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
     config = pipeline.PipelineConfig(
         min_points=10,
-        output_dir=SCRATCH_OUT,
+        output_dir=out_dir,
         write_debug=False,
-        frame_glob="f*/splatfacto-checkpoint/*/*_labeled.csv",
+        frame_glob=LABELED_FRAME_GLOB,
     )
-    df = pipeline.run_dataset(REAL_DATASET_ROOT, config)
-    run_diagnostics(df, SCRATCH_OUT, fps=FPS)
-    print(f"\nfigures + report.md written to: {SCRATCH_OUT}")
+    # 用连续性链条+锚点校验(必做)算出的x_body，跟calc_kinematics.py的生产入口一致
+    # -- 见 pipeline.run_dataset_with_sequence_correction 的模块级说明。
+    df = pipeline.run_dataset_with_sequence_correction(dataset_root, config)
+    run_diagnostics(df, out_dir, fps=FPS)
+    print(f"\nfigures + report.md written to: {out_dir}")
 
 
 if __name__ == "__main__":
