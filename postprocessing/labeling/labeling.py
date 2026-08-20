@@ -4,6 +4,16 @@ body/wing_L/wing_R 三分标签，落盘为 _labeled.csv，打通到 T4 的端�
 
 流程 (对应此前讨论的 ST1~ST4):
 1. v2 聚类 + confidence 标签 (复用 n_hardcut_pairs + 5种子ARI稳定性两个既有诊断)。
+1.5 motion-veto融合(2026-08-19新增，见segmentation_fusion_progress.md phase4.3/4.4/4.6):
+    kmeans判定为body但motion(postprocessing/labeling/motion/density.py，跨帧体素密度)
+    判定为"非持续占据体素"的点，改判出body簇、按最近距离并入wing_A/wing_B候选——这是
+    新的默认行为(这一轮任务书的红线放开，不再走opt-in开关)，只在motion有效窗口内
+    (density.valid_frame_range()，帧号距序列边界>=HALF_WINDOW=36)生效，窗口外
+    (postprocessing.labeling.fusion.motion_is_body_for_frame_idx返回None)是严格空操作，
+    退化为改动前的纯kmeans行为。simulate_gt上验证: seg_accuracy全量100帧0.8150->0.8252，
+    有效窗口内28帧0.8731->0.9096，窗口外72帧逐帧数值不变(按设计验证过)。融合逻辑本身
+    (motion_body_veto等)在postprocessing/labeling/fusion.py，被这里和
+    simulate_gt/segment.py共用，不重复实现。
 2. 两个 wing 簇各自做连通分量检查，碎块合并到最近的主块(body/wing_A/wing_B 三者之一)。
 3. body PCA 定 x_body, right_axis = x_body x up，两翼质心投影定 wing_L/wing_R；
    if_keep=False 的点用 1-NN 从已标点传播 part_label。
@@ -27,6 +37,7 @@ sys.path.insert(0, str(REPO_ROOT))
 from postprocessing.cleaning.viz_floater_check import load_marked  # noqa: E402
 from postprocessing.kinematics.geometry import orient_to_reference, weighted_pca  # noqa: E402
 from postprocessing.kinematics.io_schema import PART_LABELS  # noqa: E402
+from postprocessing.labeling.fusion import motion_body_veto, motion_is_body_for_frame_idx  # noqa: E402
 from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
     K, MAIN_RANDOM_STATE, build_seed_init, cluster_sizes, cross_vs_intra_table,
     label_by_rule_a, n_hardcut_pairs, run_kmeans, run_kmeans_v2, secondary_axis,
@@ -59,14 +70,24 @@ def compute_confidence(n_hardcut: int, ari_min: float) -> str:
     return "low"
 
 
-def fix_wing_connectivity(df_kept: pd.DataFrame, labels: np.ndarray, mapping: dict[int, str],
+def fix_wing_connectivity(df_kept: pd.DataFrame, semantic: np.ndarray,
                            k: int = WING_CC_K, dist_percentile: float = WING_CC_PERCENTILE
                            ) -> tuple[np.ndarray, dict]:
-    """对mapping里语义为wing_A/wing_B的两个簇分别做连通分量检查；每个簇里的非最大
+    """对semantic里语义为wing_A/wing_B的两个簇分别做连通分量检查；每个簇里的非最大
     分量(碎块)重新分配到最近的主块(body全部点 / wing_A主分量 / wing_B主分量三者之一)。
-    返回(更新后的semantic数组, 诊断dict)。"""
+    返回(更新后的semantic数组, 诊断dict)。
+
+    参数从(labels, mapping)改为直接传入semantic数组(2026-08-19，见
+    postprocessing/kinematics/reference/segmentation_fusion_progress.md):
+    旧签名内部会重新用`mapping[c] for c in labels`算出semantic，这在
+    process_frame插入motion-veto步骤(在raw cluster labels之后、这个函数之前，
+    修改了部分点的body/wing归属)后会静默丢弃veto的效果——veto后的semantic
+    必须原样传进来，不能在这里从labels/mapping重新推导。旧调用方式
+    (fix_wing_connectivity(df_kept, labels, mapping))在这个改动前就已经等价于
+    fix_wing_connectivity(df_kept, np.array([mapping[c] for c in labels]))，
+    行为对没有veto发生的帧(motion信号不可用/未触发veto)完全不变。"""
     xyz = df_kept[["x", "y", "z"]].to_numpy()
-    semantic = np.array([mapping[c] for c in labels], dtype=object)
+    semantic = semantic.copy()
 
     main_idx = {"wing_A": None, "wing_B": None}
     fragments: list[tuple[str, np.ndarray]] = []
@@ -225,6 +246,29 @@ def process_frame(frame: str, data_root: Path = DATASET_DIR) -> dict:
         confidence = "low"
 
     semantic_raw = np.array([mapping[c] for c in labels], dtype=object)
+
+    # Motion-veto fusion (see postprocessing/labeling/fusion.py's module
+    # docstring + postprocessing/kinematics/reference/segmentation_fusion_progress.md
+    # phase 4.3/4.4/4.5 for the derivation/validation): wherever motion's
+    # cross-frame voxel-density evidence (HALF_WINDOW=36 each side) says a
+    # point kmeans put in `body` is NOT in a persistently-occupied voxel,
+    # move it out of `body` before the wing-merge check below runs. No-op
+    # (n_motion_veto=0) for any frame outside motion's valid window
+    # (density.valid_frame_range()) or missing T2 output somewhere in that
+    # window -- `motion_is_body_for_frame_idx` returns None in both cases,
+    # which `motion_body_veto` treats as "no signal, don't touch anything".
+    frame_idx = int(frame[1:])
+    is_body_motion = motion_is_body_for_frame_idx(frame_idx, xyz_kept, data_root)
+    n_motion_veto = 0
+    if is_body_motion is not None:
+        pre_veto_body = semantic_raw == "body"
+        semantic_raw = motion_body_veto(xyz_kept, semantic_raw, is_body_motion)
+        n_motion_veto = int(np.sum(pre_veto_body & (semantic_raw != "body")))
+        if n_motion_veto > 0:
+            print(f"  [motion-veto][{frame}] motion信号在窗口内可用: "
+                  f"{n_motion_veto}个kmeans判定为body的点被motion判定为非持续占据体素，"
+                  f"重新分配到最近的wing_A/wing_B")
+
     is_wing_merged = check_wing_merged(xyz_kept, semantic_raw)
     if is_wing_merged:
         print(f"  [警告][{frame}] wing_merged_forced_split: 两翼连通分量分析后只有1个显著分量"
@@ -234,7 +278,7 @@ def process_frame(frame: str, data_root: Path = DATASET_DIR) -> dict:
         cc_diag = {"n_fragments": 0, "reassigned": []}
         confidence = "low"
     else:
-        semantic, cc_diag = fix_wing_connectivity(df_kept, labels, mapping)
+        semantic, cc_diag = fix_wing_connectivity(df_kept, semantic_raw)
 
     part_label_full, lr_map = finalize_part_labels(df_full, kept_mask, semantic)
 
@@ -271,11 +315,13 @@ def process_frame(frame: str, data_root: Path = DATASET_DIR) -> dict:
     print("  part_label分布(全部点，含if_keep=False的1-NN传播): " + "  ".join(
         f"{lab}={int((part_label_full == lab).sum())}" for lab in sorted(PART_LABELS)))
     print(f"  labeled csv -> {labeled_csv}")
+    print(f"  motion-veto: {'不可用(帧在motion有效窗口外或T2窗口不完整)' if is_body_motion is None else f'{n_motion_veto}点被改判'}")
 
     return {"frame": frame, "confidence": confidence, "n_hardcut": n_hardcut,
             "ari_min": stability["min_ari"], "ari_mean": stability["mean_ari"],
             "n_body_seed": n_body_seed, "degraded_seed_init": degraded_seed,
             "is_wing_merged_forced": is_wing_merged, "n_total": n_total, "n_kept": n_kept,
+            "n_motion_veto": n_motion_veto, "motion_available": is_body_motion is not None,
             "labeled_csv": labeled_csv, "df_out": df_out}
 
 
@@ -312,14 +358,16 @@ def build_summary_df(results: list[dict], failures: list[dict]) -> pd.DataFrame:
             "n_hardcut_pairs": r["n_hardcut"], "ari_min": r["ari_min"], "ari_mean": r["ari_mean"],
             "is_wing_merged_forced": r["is_wing_merged_forced"],
             "degraded_seed_init": r["degraded_seed_init"], "n_body_seed": r["n_body_seed"],
-            "n_total": r["n_total"], "n_kept": r["n_kept"], "error": "",
+            "n_total": r["n_total"], "n_kept": r["n_kept"],
+            "motion_available": r["motion_available"], "n_motion_veto": r["n_motion_veto"], "error": "",
         })
     for f in failures:
         rows.append({
             "frame_id": f["frame"], "status": "failed", "confidence": np.nan,
             "n_hardcut_pairs": np.nan, "ari_min": np.nan, "ari_mean": np.nan,
             "is_wing_merged_forced": np.nan, "degraded_seed_init": np.nan, "n_body_seed": np.nan,
-            "n_total": np.nan, "n_kept": np.nan, "error": f["error"],
+            "n_total": np.nan, "n_kept": np.nan,
+            "motion_available": np.nan, "n_motion_veto": np.nan, "error": f["error"],
         })
     df = pd.DataFrame(rows)
     df["_frame_idx"] = df["frame_id"].str[1:].astype(int)
