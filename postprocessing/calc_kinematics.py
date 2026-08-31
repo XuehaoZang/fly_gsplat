@@ -194,9 +194,10 @@ def main() -> None:
         print(f"\n== T4 kinematics pipeline: {dataset_root} (frame_glob={LABELED_FRAME_GLOB!r}) ==")
         config = pipeline.PipelineConfig(output_dir=out_dir, write_debug=True, frame_glob=LABELED_FRAME_GLOB)
         # 用连续性链条 + 锚点校验(必做，见 correct_body_axis/sequence_axis.py)算出的
-        # x_body 表，而不是逐帧独立PCA猜符号 -- 见 pipeline.run_dataset_with_sequence_correction
-        # 的模块级说明。
-        df = pipeline.run_dataset_with_sequence_correction(dataset_root, config)
+        # x_body 表，而不是逐帧独立PCA猜符号，并在写CSV前对eta_L/eta_R做整段
+        # unwrap(圆域中值滤波去野值 + 180度翻转纠正 + unwrap，见
+        # pipeline.run_dataset_with_eta_unwrap / eta_unwrap.py 的模块级说明)。
+        df = pipeline.run_dataset_with_eta_unwrap(dataset_root, config)
         print(f"  -> {csv_path}  ({len(df)} frame(s))")
 
     ok = df[df["status"] == "ok"].reset_index(drop=True)

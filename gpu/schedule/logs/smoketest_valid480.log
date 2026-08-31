@@ -1,0 +1,109 @@
+[gpu1_w2] queue drained: 0 ok, 0 failed
+[gpu1_w5] queue drained: 0 ok, 0 failed
+[gpu0_w5] queue drained: 0 ok, 0 failed
+[gpu0_w4] queue drained: 0 ok, 0 failed
+[gpu1_w1] queue drained: 0 ok, 0 failed
+[gpu1_w3] queue drained: 0 ok, 0 failed
+[gpu1_w4] queue drained: 0 ok, 0 failed
+[17:20:04]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+[17:20:05] use color only optimization with sigmoid activation                                         splatfacto.py:266
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0963/splatfacto/2026-08-24_171842/nerfstudio_
+models/step-000001999.ckpt
+[gpu1_w0] ratio3_sh0_dense__f0963 -> ok (92.7s)
+[gpu1_w0] queue drained: 1 ok, 0 failed
+[17:20:11]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+[17:20:11]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+[17:20:11]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+           use color only optimization with sigmoid activation                                         splatfacto.py:266
+           use color only optimization with sigmoid activation                                         splatfacto.py:266
+           use color only optimization with sigmoid activation                                         splatfacto.py:266
+[17:20:11]  Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+            Be careful with '--eval-mode=all'. If using camera optimization, the cameras    nerfstudio_dataparser.py:216
+           may diverge in the current implementation, giving unpredictable results.                                     
+[17:20:12] use color only optimization with sigmoid activation                                         splatfacto.py:266
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_171842/nerfstudio_
+models/step-000001999.ckpt
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0962/splatfacto/2026-08-24_171840/nerfstudio_
+models/step-000001999.ckpt
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0964/splatfacto/2026-08-24_171840/nerfstudio_
+models/step-000001999.ckpt
+0 Gaussians have NaN/Inf and 1 have low opacity, only export 24276/24277
+Loading latest checkpoint from load_dir
+✅ Done loading checkpoint from 
+outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0960/splatfacto/2026-08-24_171840/nerfstudio_
+models/step-000001999.ckpt
+0 Gaussians have NaN/Inf and 1 have low opacity, only export 23802/23803
+[gpu0_w0] ratio3_sh0_dense__f0961 -> ok (99.9s)
+[gpu0_w0] queue drained: 1 ok, 0 failed
+[gpu0_w3] ratio3_sh0_dense__f0964 -> ok (99.9s)
+[gpu0_w3] queue drained: 1 ok, 0 failed
+[gpu0_w2] ratio3_sh0_dense__f0962 -> ok (100.0s)
+[gpu0_w2] queue drained: 1 ok, 0 failed
+[gpu0_w1] ratio3_sh0_dense__f0960 -> ok (100.4s)
+[gpu0_w1] queue drained: 1 ok, 0 failed
+=== Phase A: data prep ===
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0960
+4 cameras loaded
+Seed: [-0.00158835 -0.00193097 -0.00118142]  triangulation residual=1.202 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 6181
+After outlier removal: 5959 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0960/init_points.ply
+[prepare] frame 960 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0961
+4 cameras loaded
+Seed: [-0.00159334 -0.00192262 -0.00118292]  triangulation residual=1.200 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 6215
+After outlier removal: 5953 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0961/init_points.ply
+[prepare] frame 961 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0962
+4 cameras loaded
+Seed: [-0.00159222 -0.00193499 -0.00118592]  triangulation residual=1.207 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 6284
+After outlier removal: 6027 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0962/init_points.ply
+[prepare] frame 962 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0963
+4 cameras loaded
+Seed: [-0.00159944 -0.00192874 -0.0011924 ]  triangulation residual=1.200 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 6368
+After outlier removal: 6107 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0963/init_points.ply
+[prepare] frame 963 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0964
+4 cameras loaded
+Seed: [-0.00159718 -0.00193328 -0.00119682]  triangulation residual=1.208 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 6312
+After outlier removal: 6062 points
+Saved -> /home/computer0/fly_project/fly_gsplat/data/ctrl_009/001/f0964/init_points.ply
+[prepare] frame 964 data ready
+=== Phase B: build queue ===
+[queue] 5 tasks queued, 0 already done (skipped)
+=== Phase C: dispatch 2x6 workers ===
+Done in 100.9s: 5 ok, 0 failed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/schedule_summary.json

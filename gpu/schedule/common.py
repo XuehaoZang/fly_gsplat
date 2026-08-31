@@ -27,7 +27,10 @@ REPO = Path(__file__).resolve().parent.parent.parent
 # -------------------------------------------------------------------- 路径规则 --
 
 def data_dir_for(base_name: str, frame_idx: int) -> Path:
-    return REPO / "data" / base_name / f"f{frame_idx:04d}"
+    """base_name是相对REPO的完整路径(如"data/ctrl_009_002"或"ctrl_009/001")，
+    不再假定固定挂在data/下——不同批次的数据可以落在不同顶层目录，靠config自己
+    的base_name字段指定。"""
+    return REPO / base_name / f"f{frame_idx:04d}"
 
 
 def task_id(param_set: str, frame_idx: int) -> str:

@@ -317,3 +317,91 @@ def run_dataset_with_sequence_correction(
     config = replace(config, sequence_x_body=x_body_table)
 
     return run_dataset(dataset_root, config)
+
+
+def run_dataset_with_eta_unwrap(
+    dataset_root: str | Path, config: PipelineConfig | None = None,
+) -> pd.DataFrame:
+    """`run_dataset_with_sequence_correction`, plus a whole-sequence post-pass
+    over `eta_L`/`eta_R` (wing pitch) -- the production T4 entry point
+    (`calc_kinematics.py` calls this, not `run_dataset_with_sequence_correction`
+    directly).
+
+    Per-frame `eta` (`chord.py::estimate_chord`) is an `atan2` angle folded
+    to `(-180, 180]`; across a real wingbeat cycle this produces spurious
+    ~360 deg jumps at the wrap boundary that no single-frame fix can remove.
+    `eta_unwrap.process_eta` (see that module's docstring for the two
+    independent failure modes it targets -- the wrap itself, and a real
+    +/-180 leading/trailing-edge sign ambiguity in `chord.py` on some
+    high-`chord_conf` frames) fixes this as a pure post-pass; it does not
+    touch `chord.py`/`wing_angles.py`'s per-frame formula.
+
+    Only `status == "ok"` rows are unwrapped, in `frame_id` order (mirrors
+    how the fix was validated); other rows' `eta_L`/`eta_R` are left as-is
+    (already NaN). The corrected columns overwrite the CSV
+    `run_dataset_with_sequence_correction` already wrote.
+    """
+    from .eta_unwrap import process_eta
+
+    config = config if config is not None else PipelineConfig()
+    dataset_root = Path(dataset_root)
+
+    df = run_dataset_with_sequence_correction(dataset_root, config)
+
+    ok_idx = df.index[df["status"] == "ok"]
+    for suffix in ("L", "R"):
+        if len(ok_idx) == 0:
+            continue
+        result = process_eta(
+            df.loc[ok_idx, f"eta_{suffix}"].to_numpy(),
+            chord_conf=df.loc[ok_idx, f"chord_conf_{suffix}"].to_numpy(),
+        )
+        df.loc[ok_idx, f"eta_{suffix}"] = result.unwrapped
+
+    dataset_name = dataset_root.name
+    output_dir = Path(config.output_dir) if config.output_dir is not None else dataset_root
+    output_dir.mkdir(parents=True, exist_ok=True)
+    df.to_csv(output_dir / f"kinematics_{dataset_name}.csv", index=False)
+
+    return df
+
+
+def run_dataset_with_eta_unwrap_dp(
+    dataset_root: str | Path, config: PipelineConfig | None = None,
+) -> pd.DataFrame:
+    """Same as `run_dataset_with_eta_unwrap`, but the eta post-pass uses
+    `eta_unwrap.process_eta_dp` (global two-state DP branch resolution +
+    chunked/overlap-stitched unwrap) instead of `process_eta`'s single-pass
+    whole-sequence unwrap.
+
+    Trying this as the fix for the unbounded (~800-1000+ deg) drift
+    `process_eta` produces on longer (~450+ frame, e.g. `valid480`)
+    sequences -- see `eta_unwrap.unwrap_deg_chunked`'s docstring for why a
+    single-pass cumulative unwrap turns occasional local branch-resolution
+    errors into a permanent staircase on sequences this long. Not yet the
+    default production path (`calc_kinematics.py` still calls
+    `run_dataset_with_eta_unwrap`); call this directly to opt in.
+    """
+    from .eta_unwrap import process_eta_dp
+
+    config = config if config is not None else PipelineConfig()
+    dataset_root = Path(dataset_root)
+
+    df = run_dataset_with_sequence_correction(dataset_root, config)
+
+    ok_idx = df.index[df["status"] == "ok"]
+    for suffix in ("L", "R"):
+        if len(ok_idx) == 0:
+            continue
+        result = process_eta_dp(
+            df.loc[ok_idx, f"eta_{suffix}"].to_numpy(),
+            chord_conf=df.loc[ok_idx, f"chord_conf_{suffix}"].to_numpy(),
+        )
+        df.loc[ok_idx, f"eta_{suffix}"] = result.unwrapped
+
+    dataset_name = dataset_root.name
+    output_dir = Path(config.output_dir) if config.output_dir is not None else dataset_root
+    output_dir.mkdir(parents=True, exist_ok=True)
+    df.to_csv(output_dir / f"kinematics_{dataset_name}.csv", index=False)
+
+    return df

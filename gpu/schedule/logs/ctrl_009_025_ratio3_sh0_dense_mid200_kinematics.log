@@ -1,0 +1,10 @@
+
+============================================================
+ctrl_009_025_ratio3_sh0_dense_mid200  (raw_data_dir=/home/computer0/fly_project/fly_gsplat/ctrl_009/025)
+============================================================
+== 未检测到T3标注，从raw splat.ply开始跑T1-T3 ==
+[ERROR] ctrl_009_025_ratio3_sh0_dense_mid200: 未在 /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_025_ratio3_sh0_dense_mid200/ratio3_sh0_dense 下找到 f#### 帧目录
+
+============================================================
+done: 0/1 ok
+failed: [('ctrl_009_025_ratio3_sh0_dense_mid200', '未在 /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_025_ratio3_sh0_dense_mid200/ratio3_sh0_dense 下找到 f#### 帧目录')]

@@ -1,0 +1,40 @@
+
+============================================================
+ctrl_009_001_ratio3_sh0_dense_valid480_smoketest  (raw_data_dir=/home/computer0/fly_project/fly_gsplat/data/ctrl_009/001)
+============================================================
+== 未检测到T3标注，从raw splat.ply开始跑T1-T3 ==
+  [T1] gaussian_features (跳过已算过的帧) ...
+  [T1][f0960] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0960/splatfacto/2026-08-24_171840/gaussian_features_f0960.csv
+  [T1][f0961] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_171842/gaussian_features_f0961.csv
+  [T1][f0962] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0962/splatfacto/2026-08-24_171840/gaussian_features_f0962.csv
+  [T1][f0963] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0963/splatfacto/2026-08-24_171842/gaussian_features_f0963.csv
+  [T1][f0964] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0964/splatfacto/2026-08-24_171840/gaussian_features_f0964.csv
+
+  [T2] mark_floaters (cleaning) ...
+[f0960] n_total=23802 n_floater=2531 (10.6%) mid_10_17=[12, 12, 12, 12, 12, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0960/splatfacto/2026-08-24_171840/gaussian_features_f0960_marked.csv
+[f0961] n_total=23924 n_floater=2421 (10.1%) mid_10_17=[12, 12, 12, 13, 15, 15, 16, 16, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_171842/gaussian_features_f0961_marked.csv
+[f0962] n_total=23676 n_floater=2459 (10.4%) mid_10_17=[11, 11, 12, 12, 13, 13, 13, 13, 14, 15, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0962/splatfacto/2026-08-24_171840/gaussian_features_f0962_marked.csv
+[f0963] n_total=23548 n_floater=2340 (9.9%) mid_10_17=[11, 14, 15, 15, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0963/splatfacto/2026-08-24_171842/gaussian_features_f0963_marked.csv
+[f0964] n_total=24276 n_floater=2681 (11.0%) mid_10_17=[11, 13, 13, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense/f0964/splatfacto/2026-08-24_171840/gaussian_features_f0964_marked.csv
+
+  [T3] motion accumulation labeling ...
+[density] frame_idx=960: 窗口内68/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0924', 'f0925', 'f0926', 'f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959', 'f0965', 'f0966', 'f0967', 'f0968', 'f0969', 'f0970', 'f0971', 'f0972', 'f0973', 'f0974', 'f0975', 'f0976', 'f0977', 'f0978', 'f0979', 'f0980', 'f0981', 'f0982', 'f0983', 'f0984', 'f0985', 'f0986', 'f0987', 'f0988', 'f0989', 'f0990', 'f0991', 'f0992', 'f0993', 'f0994', 'f0995', 'f0996']
+[f0960] FAILED: ValueError: weighted_pca: sum of weights must be positive, got 0.0
+[density] frame_idx=961: 窗口内68/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0925', 'f0926', 'f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959', 'f0965', 'f0966', 'f0967', 'f0968', 'f0969', 'f0970', 'f0971', 'f0972', 'f0973', 'f0974', 'f0975', 'f0976', 'f0977', 'f0978', 'f0979', 'f0980', 'f0981', 'f0982', 'f0983', 'f0984', 'f0985', 'f0986', 'f0987', 'f0988', 'f0989', 'f0990', 'f0991', 'f0992', 'f0993', 'f0994', 'f0995', 'f0996', 'f0997']
+[f0961] FAILED: ValueError: weighted_pca: sum of weights must be positive, got 0.0
+[density] frame_idx=962: 窗口内68/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0926', 'f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959', 'f0965', 'f0966', 'f0967', 'f0968', 'f0969', 'f0970', 'f0971', 'f0972', 'f0973', 'f0974', 'f0975', 'f0976', 'f0977', 'f0978', 'f0979', 'f0980', 'f0981', 'f0982', 'f0983', 'f0984', 'f0985', 'f0986', 'f0987', 'f0988', 'f0989', 'f0990', 'f0991', 'f0992', 'f0993', 'f0994', 'f0995', 'f0996', 'f0997', 'f0998']
+  [警告][f0962] wing_merged_forced_split: wing候选点的连通分量分析后只有1个显著分量(贴一起无法物理拆分)，强行按x_body×up投影中位数切成两半，强制confidence=low
+[f0962] FAILED: ValueError: weighted_pca: sum of weights must be positive, got 0.0
+[density] frame_idx=963: 窗口内68/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959', 'f0965', 'f0966', 'f0967', 'f0968', 'f0969', 'f0970', 'f0971', 'f0972', 'f0973', 'f0974', 'f0975', 'f0976', 'f0977', 'f0978', 'f0979', 'f0980', 'f0981', 'f0982', 'f0983', 'f0984', 'f0985', 'f0986', 'f0987', 'f0988', 'f0989', 'f0990', 'f0991', 'f0992', 'f0993', 'f0994', 'f0995', 'f0996', 'f0997', 'f0998', 'f0999']
+[f0963] FAILED: ValueError: weighted_pca: sum of weights must be positive, got 0.0
+[density] frame_idx=964: 窗口内68/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959', 'f0965', 'f0966', 'f0967', 'f0968', 'f0969', 'f0970', 'f0971', 'f0972', 'f0973', 'f0974', 'f0975', 'f0976', 'f0977', 'f0978', 'f0979', 'f0980', 'f0981', 'f0982', 'f0983', 'f0984', 'f0985', 'f0986', 'f0987', 'f0988', 'f0989', 'f0990', 'f0991', 'f0992', 'f0993', 'f0994', 'f0995', 'f0996', 'f0997', 'f0998', 'f0999', 'f1000']
+  [警告][f0964] wing_merged_forced_split: wing候选点的连通分量分析后只有1个显著分量(贴一起无法物理拆分)，强行按x_body×up投影中位数切成两半，强制confidence=low
+[f0964] FAILED: ValueError: weighted_pca: sum of weights must be positive, got 0.0
+  [WARN][T3] 失败帧: ['f0960', 'f0961', 'f0962', 'f0963', 'f0964']
+
+== T4 kinematics pipeline: /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest/ratio3_sh0_dense ==
+[ERROR] ctrl_009_001_ratio3_sh0_dense_valid480_smoketest: list index out of range
+
+============================================================
+done: 0/1 ok
+failed: [('ctrl_009_001_ratio3_sh0_dense_valid480_smoketest', 'list index out of range')]

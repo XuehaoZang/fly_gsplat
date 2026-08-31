@@ -1,0 +1,1753 @@
+
+============================================================
+ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide  (raw_data_dir=/home/computer0/fly_project/fly_gsplat/data/ctrl_009/001)
+============================================================
+== 未检测到T3标注，从raw splat.ply开始跑T1-T3 ==
+  [T1] gaussian_features (跳过已算过的帧) ...
+  [T1][f0960] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0960/splatfacto/2026-08-24_172402/gaussian_features_f0960.csv
+  [T1][f0961] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_172401/gaussian_features_f0961.csv
+  [T1][f0962] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0962/splatfacto/2026-08-24_172402/gaussian_features_f0962.csv
+  [T1][f0963] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0963/splatfacto/2026-08-24_172402/gaussian_features_f0963.csv
+  [T1][f0964] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0964/splatfacto/2026-08-24_172401/gaussian_features_f0964.csv
+  [T1][f0965] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0965/splatfacto/2026-08-24_172401/gaussian_features_f0965.csv
+  [T1][f0966] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0966/splatfacto/2026-08-24_172401/gaussian_features_f0966.csv
+  [T1][f0967] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0967/splatfacto/2026-08-24_172401/gaussian_features_f0967.csv
+  [T1][f0968] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0968/splatfacto/2026-08-24_172402/gaussian_features_f0968.csv
+  [T1][f0969] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0969/splatfacto/2026-08-24_172401/gaussian_features_f0969.csv
+  [T1][f0970] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0970/splatfacto/2026-08-24_172402/gaussian_features_f0970.csv
+  [T1][f0971] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0971/splatfacto/2026-08-24_172401/gaussian_features_f0971.csv
+  [T1][f0972] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0972/splatfacto/2026-08-24_172628/gaussian_features_f0972.csv
+  [T1][f0973] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0973/splatfacto/2026-08-24_172628/gaussian_features_f0973.csv
+  [T1][f0974] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0974/splatfacto/2026-08-24_172628/gaussian_features_f0974.csv
+  [T1][f0975] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0975/splatfacto/2026-08-24_172628/gaussian_features_f0975.csv
+  [T1][f0976] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0976/splatfacto/2026-08-24_172627/gaussian_features_f0976.csv
+  [T1][f0977] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0977/splatfacto/2026-08-24_172627/gaussian_features_f0977.csv
+  [T1][f0978] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0978/splatfacto/2026-08-24_172627/gaussian_features_f0978.csv
+  [T1][f0979] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0979/splatfacto/2026-08-24_172629/gaussian_features_f0979.csv
+  [T1][f0980] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0980/splatfacto/2026-08-24_172628/gaussian_features_f0980.csv
+  [T1][f0981] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0981/splatfacto/2026-08-24_172628/gaussian_features_f0981.csv
+  [T1][f0982] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0982/splatfacto/2026-08-24_172628/gaussian_features_f0982.csv
+  [T1][f0983] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0983/splatfacto/2026-08-24_172628/gaussian_features_f0983.csv
+  [T1][f0984] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0984/splatfacto/2026-08-24_172841/gaussian_features_f0984.csv
+  [T1][f0985] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0985/splatfacto/2026-08-24_172842/gaussian_features_f0985.csv
+  [T1][f0986] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0986/splatfacto/2026-08-24_172841/gaussian_features_f0986.csv
+  [T1][f0987] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0987/splatfacto/2026-08-24_172843/gaussian_features_f0987.csv
+  [T1][f0988] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0988/splatfacto/2026-08-24_172843/gaussian_features_f0988.csv
+  [T1][f0989] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0989/splatfacto/2026-08-24_172842/gaussian_features_f0989.csv
+  [T1][f0990] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0990/splatfacto/2026-08-24_172843/gaussian_features_f0990.csv
+  [T1][f0991] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0991/splatfacto/2026-08-24_172843/gaussian_features_f0991.csv
+  [T1][f0992] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0992/splatfacto/2026-08-24_172843/gaussian_features_f0992.csv
+  [T1][f0993] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0993/splatfacto/2026-08-24_172843/gaussian_features_f0993.csv
+  [T1][f0994] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0994/splatfacto/2026-08-24_172843/gaussian_features_f0994.csv
+  [T1][f0995] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0995/splatfacto/2026-08-24_172843/gaussian_features_f0995.csv
+  [T1][f0996] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0996/splatfacto/2026-08-24_173054/gaussian_features_f0996.csv
+  [T1][f0997] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0997/splatfacto/2026-08-24_173054/gaussian_features_f0997.csv
+  [T1][f0998] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0998/splatfacto/2026-08-24_173055/gaussian_features_f0998.csv
+  [T1][f0999] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0999/splatfacto/2026-08-24_173054/gaussian_features_f0999.csv
+  [T1][f1000] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1000/splatfacto/2026-08-24_173056/gaussian_features_f1000.csv
+  [T1][f1001] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1001/splatfacto/2026-08-24_173055/gaussian_features_f1001.csv
+  [T1][f1002] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1002/splatfacto/2026-08-24_173056/gaussian_features_f1002.csv
+  [T1][f1003] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1003/splatfacto/2026-08-24_173057/gaussian_features_f1003.csv
+  [T1][f1004] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1004/splatfacto/2026-08-24_173056/gaussian_features_f1004.csv
+  [T1][f1005] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1005/splatfacto/2026-08-24_173057/gaussian_features_f1005.csv
+  [T1][f1006] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1006/splatfacto/2026-08-24_173057/gaussian_features_f1006.csv
+  [T1][f1007] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1007/splatfacto/2026-08-24_173057/gaussian_features_f1007.csv
+  [T1][f1008] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1008/splatfacto/2026-08-24_173307/gaussian_features_f1008.csv
+  [T1][f1009] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1009/splatfacto/2026-08-24_173311/gaussian_features_f1009.csv
+  [T1][f1010] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1010/splatfacto/2026-08-24_173311/gaussian_features_f1010.csv
+  [T1][f1011] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1011/splatfacto/2026-08-24_173311/gaussian_features_f1011.csv
+  [T1][f1012] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1012/splatfacto/2026-08-24_173311/gaussian_features_f1012.csv
+  [T1][f1013] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1013/splatfacto/2026-08-24_173312/gaussian_features_f1013.csv
+  [T1][f1014] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1014/splatfacto/2026-08-24_173312/gaussian_features_f1014.csv
+  [T1][f1015] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1015/splatfacto/2026-08-24_173312/gaussian_features_f1015.csv
+  [T1][f1016] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1016/splatfacto/2026-08-24_173311/gaussian_features_f1016.csv
+  [T1][f1017] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1017/splatfacto/2026-08-24_173312/gaussian_features_f1017.csv
+  [T1][f1018] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1018/splatfacto/2026-08-24_173312/gaussian_features_f1018.csv
+  [T1][f1019] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1019/splatfacto/2026-08-24_173313/gaussian_features_f1019.csv
+  [T1][f1020] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1020/splatfacto/2026-08-24_173521/gaussian_features_f1020.csv
+  [T1][f1021] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1021/splatfacto/2026-08-24_173522/gaussian_features_f1021.csv
+  [T1][f1022] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1022/splatfacto/2026-08-24_173523/gaussian_features_f1022.csv
+  [T1][f1023] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1023/splatfacto/2026-08-24_173524/gaussian_features_f1023.csv
+  [T1][f1024] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1024/splatfacto/2026-08-24_173524/gaussian_features_f1024.csv
+  [T1][f1025] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1025/splatfacto/2026-08-24_173525/gaussian_features_f1025.csv
+  [T1][f1026] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1026/splatfacto/2026-08-24_173525/gaussian_features_f1026.csv
+  [T1][f1027] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1027/splatfacto/2026-08-24_173525/gaussian_features_f1027.csv
+  [T1][f1028] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1028/splatfacto/2026-08-24_173524/gaussian_features_f1028.csv
+  [T1][f1029] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1029/splatfacto/2026-08-24_173525/gaussian_features_f1029.csv
+  [T1][f1030] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1030/splatfacto/2026-08-24_173526/gaussian_features_f1030.csv
+  [T1][f1031] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1031/splatfacto/2026-08-24_173525/gaussian_features_f1031.csv
+  [T1][f1032] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1032/splatfacto/2026-08-24_173733/gaussian_features_f1032.csv
+  [T1][f1033] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1033/splatfacto/2026-08-24_173734/gaussian_features_f1033.csv
+  [T1][f1034] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1034/splatfacto/2026-08-24_173737/gaussian_features_f1034.csv
+  [T1][f1035] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1035/splatfacto/2026-08-24_173737/gaussian_features_f1035.csv
+  [T1][f1036] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1036/splatfacto/2026-08-24_173737/gaussian_features_f1036.csv
+  [T1][f1037] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1037/splatfacto/2026-08-24_173737/gaussian_features_f1037.csv
+  [T1][f1038] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1038/splatfacto/2026-08-24_173738/gaussian_features_f1038.csv
+  [T1][f1039] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1039/splatfacto/2026-08-24_173738/gaussian_features_f1039.csv
+  [T1][f1040] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1040/splatfacto/2026-08-24_173739/gaussian_features_f1040.csv
+  [T1][f1041] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1041/splatfacto/2026-08-24_173739/gaussian_features_f1041.csv
+  [T1][f1042] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1042/splatfacto/2026-08-24_173738/gaussian_features_f1042.csv
+  [T1][f1043] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1043/splatfacto/2026-08-24_173738/gaussian_features_f1043.csv
+  [T1][f1044] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1044/splatfacto/2026-08-24_173946/gaussian_features_f1044.csv
+  [T1][f1045] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1045/splatfacto/2026-08-24_173949/gaussian_features_f1045.csv
+  [T1][f1046] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1046/splatfacto/2026-08-24_173951/gaussian_features_f1046.csv
+  [T1][f1047] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1047/splatfacto/2026-08-24_173952/gaussian_features_f1047.csv
+  [T1][f1048] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1048/splatfacto/2026-08-24_173952/gaussian_features_f1048.csv
+  [T1][f1049] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1049/splatfacto/2026-08-24_173953/gaussian_features_f1049.csv
+  [T1][f1050] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1050/splatfacto/2026-08-24_173953/gaussian_features_f1050.csv
+  [T1][f1051] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1051/splatfacto/2026-08-24_173952/gaussian_features_f1051.csv
+  [T1][f1052] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1052/splatfacto/2026-08-24_173952/gaussian_features_f1052.csv
+  [T1][f1053] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1053/splatfacto/2026-08-24_173952/gaussian_features_f1053.csv
+  [T1][f1054] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1054/splatfacto/2026-08-24_173952/gaussian_features_f1054.csv
+  [T1][f1055] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1055/splatfacto/2026-08-24_173953/gaussian_features_f1055.csv
+  [T1][f1056] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1056/splatfacto/2026-08-24_174154/gaussian_features_f1056.csv
+  [T1][f1057] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1057/splatfacto/2026-08-24_174203/gaussian_features_f1057.csv
+  [T1][f1058] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1058/splatfacto/2026-08-24_174206/gaussian_features_f1058.csv
+  [T1][f1059] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1059/splatfacto/2026-08-24_174206/gaussian_features_f1059.csv
+  [T1][f1060] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1060/splatfacto/2026-08-24_174205/gaussian_features_f1060.csv
+  [T1][f1061] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1061/splatfacto/2026-08-24_174206/gaussian_features_f1061.csv
+  [T1][f1062] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1062/splatfacto/2026-08-24_174207/gaussian_features_f1062.csv
+  [T1][f1063] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1063/splatfacto/2026-08-24_174207/gaussian_features_f1063.csv
+  [T1][f1064] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1064/splatfacto/2026-08-24_174207/gaussian_features_f1064.csv
+  [T1][f1065] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1065/splatfacto/2026-08-24_174208/gaussian_features_f1065.csv
+  [T1][f1066] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1066/splatfacto/2026-08-24_174208/gaussian_features_f1066.csv
+  [T1][f1067] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1067/splatfacto/2026-08-24_174208/gaussian_features_f1067.csv
+  [T1][f1068] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1068/splatfacto/2026-08-24_174357/gaussian_features_f1068.csv
+  [T1][f1069] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1069/splatfacto/2026-08-24_174415/gaussian_features_f1069.csv
+  [T1][f1070] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1070/splatfacto/2026-08-24_174418/gaussian_features_f1070.csv
+  [T1][f1071] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1071/splatfacto/2026-08-24_174418/gaussian_features_f1071.csv
+  [T1][f1072] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1072/splatfacto/2026-08-24_174418/gaussian_features_f1072.csv
+  [T1][f1073] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1073/splatfacto/2026-08-24_174419/gaussian_features_f1073.csv
+  [T1][f1074] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1074/splatfacto/2026-08-24_174419/gaussian_features_f1074.csv
+  [T1][f1075] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1075/splatfacto/2026-08-24_174419/gaussian_features_f1075.csv
+  [T1][f1076] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1076/splatfacto/2026-08-24_174421/gaussian_features_f1076.csv
+  [T1][f1077] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1077/splatfacto/2026-08-24_174422/gaussian_features_f1077.csv
+  [T1][f1078] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1078/splatfacto/2026-08-24_174422/gaussian_features_f1078.csv
+  [T1][f1079] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1079/splatfacto/2026-08-24_174423/gaussian_features_f1079.csv
+  [T1][f1080] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1080/splatfacto/2026-08-24_174549/gaussian_features_f1080.csv
+  [T1][f1081] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1081/splatfacto/2026-08-24_174621/gaussian_features_f1081.csv
+  [T1][f1082] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1082/splatfacto/2026-08-24_174628/gaussian_features_f1082.csv
+  [T1][f1083] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1083/splatfacto/2026-08-24_174629/gaussian_features_f1083.csv
+  [T1][f1084] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1084/splatfacto/2026-08-24_174629/gaussian_features_f1084.csv
+  [T1][f1085] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1085/splatfacto/2026-08-24_174629/gaussian_features_f1085.csv
+  [T1][f1086] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1086/splatfacto/2026-08-24_174630/gaussian_features_f1086.csv
+  [T1][f1087] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1087/splatfacto/2026-08-24_174631/gaussian_features_f1087.csv
+  [T1][f1088] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1088/splatfacto/2026-08-24_174632/gaussian_features_f1088.csv
+  [T1][f1089] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1089/splatfacto/2026-08-24_174633/gaussian_features_f1089.csv
+  [T1][f1090] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1090/splatfacto/2026-08-24_174635/gaussian_features_f1090.csv
+  [T1][f1091] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1091/splatfacto/2026-08-24_174636/gaussian_features_f1091.csv
+  [T1][f1092] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1092/splatfacto/2026-08-24_174727/gaussian_features_f1092.csv
+  [T1][f1093] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1093/splatfacto/2026-08-24_174822/gaussian_features_f1093.csv
+  [T1][f1094] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1094/splatfacto/2026-08-24_174838/gaussian_features_f1094.csv
+  [T1][f1095] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1095/splatfacto/2026-08-24_174838/gaussian_features_f1095.csv
+  [T1][f1096] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1096/splatfacto/2026-08-24_174840/gaussian_features_f1096.csv
+  [T1][f1097] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1097/splatfacto/2026-08-24_174840/gaussian_features_f1097.csv
+  [T1][f1098] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1098/splatfacto/2026-08-24_174843/gaussian_features_f1098.csv
+  [T1][f1099] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1099/splatfacto/2026-08-24_174844/gaussian_features_f1099.csv
+  [T1][f1100] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1100/splatfacto/2026-08-24_174846/gaussian_features_f1100.csv
+  [T1][f1101] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1101/splatfacto/2026-08-24_174846/gaussian_features_f1101.csv
+  [T1][f1102] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1102/splatfacto/2026-08-24_174847/gaussian_features_f1102.csv
+  [T1][f1103] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1103/splatfacto/2026-08-24_174847/gaussian_features_f1103.csv
+  [T1][f1104] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1104/splatfacto/2026-08-24_174910/gaussian_features_f1104.csv
+  [T1][f1105] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1105/splatfacto/2026-08-24_175017/gaussian_features_f1105.csv
+  [T1][f1106] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1106/splatfacto/2026-08-24_175045/gaussian_features_f1106.csv
+  [T1][f1107] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1107/splatfacto/2026-08-24_175045/gaussian_features_f1107.csv
+  [T1][f1108] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1108/splatfacto/2026-08-24_175047/gaussian_features_f1108.csv
+  [T1][f1109] computed -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1109/splatfacto/2026-08-24_175047/gaussian_features_f1109.csv
+
+  [T2] mark_floaters (cleaning) ...
+[f0960] n_total=24860 n_floater=2433 (9.8%) mid_10_17=[11, 11, 11, 11, 13, 13, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0960/splatfacto/2026-08-24_172402/gaussian_features_f0960_marked.csv
+[f0961] n_total=24603 n_floater=2685 (10.9%) mid_10_17=[11, 11, 12, 12, 12, 13, 13] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_172401/gaussian_features_f0961_marked.csv
+[f0962] n_total=23307 n_floater=2507 (10.8%) mid_10_17=[12, 12, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0962/splatfacto/2026-08-24_172402/gaussian_features_f0962_marked.csv
+[f0963] n_total=24309 n_floater=2487 (10.2%) mid_10_17=[11, 12, 12, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0963/splatfacto/2026-08-24_172402/gaussian_features_f0963_marked.csv
+[f0964] n_total=24047 n_floater=2511 (10.4%) mid_10_17=[12, 12, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0964/splatfacto/2026-08-24_172401/gaussian_features_f0964_marked.csv
+[f0965] n_total=23904 n_floater=2532 (10.6%) mid_10_17=[11, 11, 11, 12, 13, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0965/splatfacto/2026-08-24_172401/gaussian_features_f0965_marked.csv
+[f0966] n_total=23713 n_floater=2525 (10.6%) mid_10_17=[11, 12, 12, 12, 12, 13, 13, 13, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0966/splatfacto/2026-08-24_172401/gaussian_features_f0966_marked.csv
+[f0967] n_total=23257 n_floater=2353 (10.1%) mid_10_17=[11, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0967/splatfacto/2026-08-24_172401/gaussian_features_f0967_marked.csv
+[f0968] n_total=23289 n_floater=2412 (10.4%) mid_10_17=[11, 11, 11, 12, 14, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0968/splatfacto/2026-08-24_172402/gaussian_features_f0968_marked.csv
+[f0969] n_total=23958 n_floater=2598 (10.8%) mid_10_17=[11, 11, 12, 12, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0969/splatfacto/2026-08-24_172401/gaussian_features_f0969_marked.csv
+[f0970] n_total=22642 n_floater=2294 (10.1%) mid_10_17=[13, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0970/splatfacto/2026-08-24_172402/gaussian_features_f0970_marked.csv
+[f0971] n_total=23503 n_floater=2320 (9.9%) mid_10_17=[12, 13, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0971/splatfacto/2026-08-24_172401/gaussian_features_f0971_marked.csv
+[f0972] n_total=23070 n_floater=2326 (10.1%) mid_10_17=[11, 11, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0972/splatfacto/2026-08-24_172628/gaussian_features_f0972_marked.csv
+[f0973] n_total=23766 n_floater=2571 (10.8%) mid_10_17=[11, 11, 12, 12, 14, 15, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0973/splatfacto/2026-08-24_172628/gaussian_features_f0973_marked.csv
+[f0974] n_total=25098 n_floater=2752 (11.0%) mid_10_17=[11, 12, 12, 12, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0974/splatfacto/2026-08-24_172628/gaussian_features_f0974_marked.csv
+[f0975] n_total=23054 n_floater=2480 (10.8%) mid_10_17=[11, 12, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0975/splatfacto/2026-08-24_172628/gaussian_features_f0975_marked.csv
+[f0976] n_total=24691 n_floater=2619 (10.6%) mid_10_17=[13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0976/splatfacto/2026-08-24_172627/gaussian_features_f0976_marked.csv
+[f0977] n_total=25088 n_floater=2654 (10.6%) mid_10_17=[11, 11, 11, 12, 12, 12, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0977/splatfacto/2026-08-24_172627/gaussian_features_f0977_marked.csv
+[f0978] n_total=23281 n_floater=2439 (10.5%) mid_10_17=[11, 11, 13, 14, 14, 14, 15, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0978/splatfacto/2026-08-24_172627/gaussian_features_f0978_marked.csv
+[f0979] n_total=23679 n_floater=2248 (9.5%) mid_10_17=[11, 11, 12, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0979/splatfacto/2026-08-24_172629/gaussian_features_f0979_marked.csv
+[f0980] n_total=23403 n_floater=2424 (10.4%) mid_10_17=[11, 13, 13, 14, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0980/splatfacto/2026-08-24_172628/gaussian_features_f0980_marked.csv
+[f0981] n_total=23052 n_floater=2361 (10.2%) mid_10_17=[11, 11, 11, 12, 13, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0981/splatfacto/2026-08-24_172628/gaussian_features_f0981_marked.csv
+[f0982] n_total=23632 n_floater=2530 (10.7%) mid_10_17=[11, 11, 11, 11, 12, 12, 12, 12, 13, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0982/splatfacto/2026-08-24_172628/gaussian_features_f0982_marked.csv
+[f0983] n_total=22886 n_floater=2442 (10.7%) mid_10_17=[11, 11, 12, 12, 12, 12, 13, 13, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0983/splatfacto/2026-08-24_172628/gaussian_features_f0983_marked.csv
+[f0984] n_total=23426 n_floater=2341 (10.0%) mid_10_17=[11, 11, 12, 13, 13, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0984/splatfacto/2026-08-24_172841/gaussian_features_f0984_marked.csv
+[f0985] n_total=23852 n_floater=2465 (10.3%) mid_10_17=[13, 13, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0985/splatfacto/2026-08-24_172842/gaussian_features_f0985_marked.csv
+[f0986] n_total=23446 n_floater=2301 (9.8%) mid_10_17=[11, 12, 12, 12, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0986/splatfacto/2026-08-24_172841/gaussian_features_f0986_marked.csv
+[f0987] n_total=23478 n_floater=2572 (11.0%) mid_10_17=[11, 12, 13, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0987/splatfacto/2026-08-24_172843/gaussian_features_f0987_marked.csv
+[f0988] n_total=24329 n_floater=2650 (10.9%) mid_10_17=[11, 11, 11, 11, 11, 11, 13, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0988/splatfacto/2026-08-24_172843/gaussian_features_f0988_marked.csv
+[f0989] n_total=24164 n_floater=2648 (11.0%) mid_10_17=[12, 12, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0989/splatfacto/2026-08-24_172842/gaussian_features_f0989_marked.csv
+[f0990] n_total=23806 n_floater=2426 (10.2%) mid_10_17=[11, 11, 11, 12, 12, 12, 12, 12, 13, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0990/splatfacto/2026-08-24_172843/gaussian_features_f0990_marked.csv
+[f0991] n_total=24479 n_floater=2648 (10.8%) mid_10_17=[11, 11, 11, 12, 13, 14, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0991/splatfacto/2026-08-24_172843/gaussian_features_f0991_marked.csv
+[f0992] n_total=23042 n_floater=2231 (9.7%) mid_10_17=[12, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0992/splatfacto/2026-08-24_172843/gaussian_features_f0992_marked.csv
+[f0993] n_total=22916 n_floater=2513 (11.0%) mid_10_17=[11, 11, 11, 13, 13, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0993/splatfacto/2026-08-24_172843/gaussian_features_f0993_marked.csv
+[f0994] n_total=23715 n_floater=2354 (9.9%) mid_10_17=[11, 12, 14, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0994/splatfacto/2026-08-24_172843/gaussian_features_f0994_marked.csv
+[f0995] n_total=24286 n_floater=2498 (10.3%) mid_10_17=[11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0995/splatfacto/2026-08-24_172843/gaussian_features_f0995_marked.csv
+[f0996] n_total=24002 n_floater=2860 (11.9%) mid_10_17=[11, 11, 11, 12, 12, 12, 13] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0996/splatfacto/2026-08-24_173054/gaussian_features_f0996_marked.csv
+[f0997] n_total=24730 n_floater=2853 (11.5%) mid_10_17=[11, 11, 11, 11, 12, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0997/splatfacto/2026-08-24_173054/gaussian_features_f0997_marked.csv
+[f0998] n_total=23392 n_floater=2324 (9.9%) mid_10_17=[12, 12, 13, 14, 14, 14, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0998/splatfacto/2026-08-24_173055/gaussian_features_f0998_marked.csv
+[f0999] n_total=23794 n_floater=2434 (10.2%) mid_10_17=[12, 12, 12, 13, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0999/splatfacto/2026-08-24_173054/gaussian_features_f0999_marked.csv
+[f1000] n_total=22958 n_floater=2324 (10.1%) mid_10_17=[11, 11, 12, 13, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1000/splatfacto/2026-08-24_173056/gaussian_features_f1000_marked.csv
+[f1001] n_total=24535 n_floater=2666 (10.9%) mid_10_17=[11, 11, 11, 11, 12, 12, 13, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1001/splatfacto/2026-08-24_173055/gaussian_features_f1001_marked.csv
+[f1002] n_total=23925 n_floater=2414 (10.1%) mid_10_17=[11, 12, 12, 13, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1002/splatfacto/2026-08-24_173056/gaussian_features_f1002_marked.csv
+[f1003] n_total=23686 n_floater=2444 (10.3%) mid_10_17=[11, 11, 11, 11, 12, 12, 12, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1003/splatfacto/2026-08-24_173057/gaussian_features_f1003_marked.csv
+[f1004] n_total=23235 n_floater=2372 (10.2%) mid_10_17=[11, 12, 12, 12, 12, 13, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1004/splatfacto/2026-08-24_173056/gaussian_features_f1004_marked.csv
+[f1005] n_total=24012 n_floater=2628 (10.9%) mid_10_17=[11, 12, 12, 13, 14, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1005/splatfacto/2026-08-24_173057/gaussian_features_f1005_marked.csv
+[f1006] n_total=23271 n_floater=2493 (10.7%) mid_10_17=[11, 12, 13, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1006/splatfacto/2026-08-24_173057/gaussian_features_f1006_marked.csv
+[f1007] n_total=23347 n_floater=2481 (10.6%) mid_10_17=[11, 11, 12, 12, 13, 13, 15, 16, 16, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1007/splatfacto/2026-08-24_173057/gaussian_features_f1007_marked.csv
+[f1008] n_total=23630 n_floater=2630 (11.1%) mid_10_17=[11, 12, 13, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1008/splatfacto/2026-08-24_173307/gaussian_features_f1008_marked.csv
+[f1009] n_total=24568 n_floater=2621 (10.7%) mid_10_17=[11, 11, 11, 13, 13, 13, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1009/splatfacto/2026-08-24_173311/gaussian_features_f1009_marked.csv
+[f1010] n_total=23578 n_floater=2501 (10.6%) mid_10_17=[11, 13, 13, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1010/splatfacto/2026-08-24_173311/gaussian_features_f1010_marked.csv
+[f1011] n_total=23492 n_floater=2579 (11.0%) mid_10_17=[12, 13, 14, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1011/splatfacto/2026-08-24_173311/gaussian_features_f1011_marked.csv
+[f1012] n_total=23944 n_floater=2602 (10.9%) mid_10_17=[11, 11, 11, 12, 13, 13, 13, 14, 15, 16, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1012/splatfacto/2026-08-24_173311/gaussian_features_f1012_marked.csv
+[f1013] n_total=23532 n_floater=2471 (10.5%) mid_10_17=[11, 12, 12, 12, 13, 13, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1013/splatfacto/2026-08-24_173312/gaussian_features_f1013_marked.csv
+[f1014] n_total=23623 n_floater=2395 (10.1%) mid_10_17=[11, 11, 11, 12, 13, 13, 13, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1014/splatfacto/2026-08-24_173312/gaussian_features_f1014_marked.csv
+[f1015] n_total=24062 n_floater=2666 (11.1%) mid_10_17=[11, 11, 11, 12, 13, 14, 14, 15, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1015/splatfacto/2026-08-24_173312/gaussian_features_f1015_marked.csv
+[f1016] n_total=24046 n_floater=2576 (10.7%) mid_10_17=[11, 11, 11, 14, 15, 16, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1016/splatfacto/2026-08-24_173311/gaussian_features_f1016_marked.csv
+[f1017] n_total=23084 n_floater=2605 (11.3%) mid_10_17=[11, 11, 11, 12, 12, 13, 14, 14, 14, 15, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1017/splatfacto/2026-08-24_173312/gaussian_features_f1017_marked.csv
+[f1018] n_total=23499 n_floater=2489 (10.6%) mid_10_17=[11, 11, 11, 11, 12, 12, 13, 14, 14, 14, 15, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1018/splatfacto/2026-08-24_173312/gaussian_features_f1018_marked.csv
+[f1019] n_total=24044 n_floater=2573 (10.7%) mid_10_17=[12, 13, 13, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1019/splatfacto/2026-08-24_173313/gaussian_features_f1019_marked.csv
+[f1020] n_total=23175 n_floater=2349 (10.1%) mid_10_17=[12, 12, 12, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1020/splatfacto/2026-08-24_173521/gaussian_features_f1020_marked.csv
+[f1021] n_total=24573 n_floater=2635 (10.7%) mid_10_17=[11, 12, 14, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1021/splatfacto/2026-08-24_173522/gaussian_features_f1021_marked.csv
+[f1022] n_total=23617 n_floater=2329 (9.9%) mid_10_17=[12, 13, 13, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1022/splatfacto/2026-08-24_173523/gaussian_features_f1022_marked.csv
+[f1023] n_total=24279 n_floater=2468 (10.2%) mid_10_17=[11, 11, 12, 12, 12, 13, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1023/splatfacto/2026-08-24_173524/gaussian_features_f1023_marked.csv
+[f1024] n_total=24147 n_floater=2508 (10.4%) mid_10_17=[12, 12, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1024/splatfacto/2026-08-24_173524/gaussian_features_f1024_marked.csv
+[f1025] n_total=22852 n_floater=2356 (10.3%) mid_10_17=[11, 11, 13, 13, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1025/splatfacto/2026-08-24_173525/gaussian_features_f1025_marked.csv
+[f1026] n_total=24107 n_floater=2434 (10.1%) mid_10_17=[11, 12, 12, 12, 12, 12] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1026/splatfacto/2026-08-24_173525/gaussian_features_f1026_marked.csv
+[f1027] n_total=24595 n_floater=2593 (10.5%) mid_10_17=[11, 11, 11, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1027/splatfacto/2026-08-24_173525/gaussian_features_f1027_marked.csv
+[f1028] n_total=25689 n_floater=2781 (10.8%) mid_10_17=[11, 11, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1028/splatfacto/2026-08-24_173524/gaussian_features_f1028_marked.csv
+[f1029] n_total=24319 n_floater=2662 (10.9%) mid_10_17=[11, 12, 13, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1029/splatfacto/2026-08-24_173525/gaussian_features_f1029_marked.csv
+[f1030] n_total=23961 n_floater=2372 (9.9%) mid_10_17=[12, 13, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1030/splatfacto/2026-08-24_173526/gaussian_features_f1030_marked.csv
+[f1031] n_total=23677 n_floater=2538 (10.7%) mid_10_17=[11, 11, 12, 12, 13, 14, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1031/splatfacto/2026-08-24_173525/gaussian_features_f1031_marked.csv
+[f1032] n_total=24029 n_floater=2501 (10.4%) mid_10_17=[12, 12, 13, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1032/splatfacto/2026-08-24_173733/gaussian_features_f1032_marked.csv
+[f1033] n_total=24284 n_floater=2609 (10.7%) mid_10_17=[11, 13, 13, 13, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1033/splatfacto/2026-08-24_173734/gaussian_features_f1033_marked.csv
+[f1034] n_total=23455 n_floater=2565 (10.9%) mid_10_17=[11, 12, 12, 13, 13, 13, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1034/splatfacto/2026-08-24_173737/gaussian_features_f1034_marked.csv
+[f1035] n_total=23487 n_floater=2487 (10.6%) mid_10_17=[11, 11, 12, 12, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1035/splatfacto/2026-08-24_173737/gaussian_features_f1035_marked.csv
+[f1036] n_total=24233 n_floater=2594 (10.7%) mid_10_17=[11, 11, 11, 12, 12, 13, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1036/splatfacto/2026-08-24_173737/gaussian_features_f1036_marked.csv
+[f1037] n_total=23615 n_floater=2665 (11.3%) mid_10_17=[11, 11, 11, 11, 12, 12, 13, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1037/splatfacto/2026-08-24_173737/gaussian_features_f1037_marked.csv
+[f1038] n_total=23705 n_floater=2392 (10.1%) mid_10_17=[11, 13, 13, 13, 14, 14, 14, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1038/splatfacto/2026-08-24_173738/gaussian_features_f1038_marked.csv
+[f1039] n_total=24081 n_floater=2446 (10.2%) mid_10_17=[12, 13, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1039/splatfacto/2026-08-24_173738/gaussian_features_f1039_marked.csv
+[f1040] n_total=23152 n_floater=2296 (9.9%) mid_10_17=[11, 12, 12, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1040/splatfacto/2026-08-24_173739/gaussian_features_f1040_marked.csv
+[f1041] n_total=23219 n_floater=2386 (10.3%) mid_10_17=[11, 11, 11, 11, 12, 12, 14, 14, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1041/splatfacto/2026-08-24_173739/gaussian_features_f1041_marked.csv
+[f1042] n_total=24052 n_floater=2702 (11.2%) mid_10_17=[11, 11, 12, 12, 12, 13, 13, 14, 14, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1042/splatfacto/2026-08-24_173738/gaussian_features_f1042_marked.csv
+[f1043] n_total=24128 n_floater=2488 (10.3%) mid_10_17=[11, 11, 14, 14, 14, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1043/splatfacto/2026-08-24_173738/gaussian_features_f1043_marked.csv
+[f1044] n_total=23758 n_floater=2506 (10.5%) mid_10_17=[11, 11, 11, 12, 13, 14, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1044/splatfacto/2026-08-24_173946/gaussian_features_f1044_marked.csv
+[f1045] n_total=23545 n_floater=2528 (10.7%) mid_10_17=[11, 11, 11, 12, 12, 12, 13, 13, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1045/splatfacto/2026-08-24_173949/gaussian_features_f1045_marked.csv
+[f1046] n_total=24090 n_floater=2544 (10.6%) mid_10_17=[11, 11, 11, 12, 12, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1046/splatfacto/2026-08-24_173951/gaussian_features_f1046_marked.csv
+[f1047] n_total=24370 n_floater=2590 (10.6%) mid_10_17=[11, 11, 11, 12, 13, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1047/splatfacto/2026-08-24_173952/gaussian_features_f1047_marked.csv
+[f1048] n_total=23542 n_floater=2485 (10.6%) mid_10_17=[11, 11, 11, 11, 11, 12, 14, 14, 15, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1048/splatfacto/2026-08-24_173952/gaussian_features_f1048_marked.csv
+[f1049] n_total=24041 n_floater=2400 (10.0%) mid_10_17=[11, 11, 11, 11, 12, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1049/splatfacto/2026-08-24_173953/gaussian_features_f1049_marked.csv
+[f1050] n_total=24998 n_floater=2457 (9.8%) mid_10_17=[12, 12, 12, 12, 13, 14, 15, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1050/splatfacto/2026-08-24_173953/gaussian_features_f1050_marked.csv
+[f1051] n_total=23716 n_floater=2679 (11.3%) mid_10_17=[11, 11, 12, 12, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1051/splatfacto/2026-08-24_173952/gaussian_features_f1051_marked.csv
+[f1052] n_total=24440 n_floater=2522 (10.3%) mid_10_17=[11, 11, 12, 12, 13, 13, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1052/splatfacto/2026-08-24_173952/gaussian_features_f1052_marked.csv
+[f1053] n_total=23986 n_floater=2758 (11.5%) mid_10_17=[11, 11, 11, 12, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1053/splatfacto/2026-08-24_173952/gaussian_features_f1053_marked.csv
+[f1054] n_total=23578 n_floater=2501 (10.6%) mid_10_17=[12, 13, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1054/splatfacto/2026-08-24_173952/gaussian_features_f1054_marked.csv
+[f1055] n_total=23743 n_floater=2359 (9.9%) mid_10_17=[11, 11, 11, 11, 12, 13, 13, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1055/splatfacto/2026-08-24_173953/gaussian_features_f1055_marked.csv
+[f1056] n_total=23357 n_floater=2483 (10.6%) mid_10_17=[12, 14, 14, 14, 14, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1056/splatfacto/2026-08-24_174154/gaussian_features_f1056_marked.csv
+[f1057] n_total=23214 n_floater=2562 (11.0%) mid_10_17=[11, 11, 11, 12, 12, 12, 12, 13] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1057/splatfacto/2026-08-24_174203/gaussian_features_f1057_marked.csv
+[f1058] n_total=23816 n_floater=2406 (10.1%) mid_10_17=[11, 12, 12, 12, 12, 13, 14, 14, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1058/splatfacto/2026-08-24_174206/gaussian_features_f1058_marked.csv
+[f1059] n_total=24612 n_floater=2662 (10.8%) mid_10_17=[12, 13, 13, 14, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1059/splatfacto/2026-08-24_174206/gaussian_features_f1059_marked.csv
+[f1060] n_total=25006 n_floater=2585 (10.3%) mid_10_17=[11, 11, 13, 13, 13] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1060/splatfacto/2026-08-24_174205/gaussian_features_f1060_marked.csv
+[f1061] n_total=23835 n_floater=2411 (10.1%) mid_10_17=[11, 12, 13, 13] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1061/splatfacto/2026-08-24_174206/gaussian_features_f1061_marked.csv
+[f1062] n_total=23705 n_floater=2581 (10.9%) mid_10_17=[11, 11, 12, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1062/splatfacto/2026-08-24_174207/gaussian_features_f1062_marked.csv
+[f1063] n_total=24323 n_floater=2551 (10.5%) mid_10_17=[11, 11, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1063/splatfacto/2026-08-24_174207/gaussian_features_f1063_marked.csv
+[f1064] n_total=23900 n_floater=2320 (9.7%) mid_10_17=[11, 12, 12, 12, 12, 12, 12, 13, 13, 14, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1064/splatfacto/2026-08-24_174207/gaussian_features_f1064_marked.csv
+[f1065] n_total=23582 n_floater=2333 (9.9%) mid_10_17=[11, 12, 12, 13, 13, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1065/splatfacto/2026-08-24_174208/gaussian_features_f1065_marked.csv
+[f1066] n_total=23700 n_floater=2442 (10.3%) mid_10_17=[12, 13, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1066/splatfacto/2026-08-24_174208/gaussian_features_f1066_marked.csv
+[f1067] n_total=22867 n_floater=2265 (9.9%) mid_10_17=[11, 15, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1067/splatfacto/2026-08-24_174208/gaussian_features_f1067_marked.csv
+[f1068] n_total=24212 n_floater=2682 (11.1%) mid_10_17=[11, 11, 11, 11, 11, 12, 12, 13, 13, 13, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1068/splatfacto/2026-08-24_174357/gaussian_features_f1068_marked.csv
+[f1069] n_total=23595 n_floater=2315 (9.8%) mid_10_17=[11, 13, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1069/splatfacto/2026-08-24_174415/gaussian_features_f1069_marked.csv
+[f1070] n_total=23358 n_floater=2509 (10.7%) mid_10_17=[12, 13, 13, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1070/splatfacto/2026-08-24_174418/gaussian_features_f1070_marked.csv
+[f1071] n_total=23391 n_floater=2350 (10.0%) mid_10_17=[11, 11, 12, 12, 12, 13, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1071/splatfacto/2026-08-24_174418/gaussian_features_f1071_marked.csv
+[f1072] n_total=24187 n_floater=2501 (10.3%) mid_10_17=[11, 11, 13, 14, 15, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1072/splatfacto/2026-08-24_174418/gaussian_features_f1072_marked.csv
+[f1073] n_total=24132 n_floater=2577 (10.7%) mid_10_17=[11, 13, 13, 13, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1073/splatfacto/2026-08-24_174419/gaussian_features_f1073_marked.csv
+[f1074] n_total=25059 n_floater=2797 (11.2%) mid_10_17=[11, 12, 13, 13, 14, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1074/splatfacto/2026-08-24_174419/gaussian_features_f1074_marked.csv
+[f1075] n_total=22507 n_floater=2283 (10.1%) mid_10_17=[11, 11, 11, 11, 12, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1075/splatfacto/2026-08-24_174419/gaussian_features_f1075_marked.csv
+[f1076] n_total=24071 n_floater=2563 (10.6%) mid_10_17=[11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1076/splatfacto/2026-08-24_174421/gaussian_features_f1076_marked.csv
+[f1077] n_total=24001 n_floater=2485 (10.4%) mid_10_17=[11, 11, 12, 12, 13, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1077/splatfacto/2026-08-24_174422/gaussian_features_f1077_marked.csv
+[f1078] n_total=23519 n_floater=2348 (10.0%) mid_10_17=[11, 12, 13, 13, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1078/splatfacto/2026-08-24_174422/gaussian_features_f1078_marked.csv
+[f1079] n_total=22357 n_floater=2355 (10.5%) mid_10_17=[11, 12, 12, 12, 12] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1079/splatfacto/2026-08-24_174423/gaussian_features_f1079_marked.csv
+[f1080] n_total=24013 n_floater=2423 (10.1%) mid_10_17=[11, 11, 12, 13] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1080/splatfacto/2026-08-24_174549/gaussian_features_f1080_marked.csv
+[f1081] n_total=24176 n_floater=2367 (9.8%) mid_10_17=[11, 11, 12, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1081/splatfacto/2026-08-24_174621/gaussian_features_f1081_marked.csv
+[f1082] n_total=24030 n_floater=2464 (10.3%) mid_10_17=[12, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1082/splatfacto/2026-08-24_174628/gaussian_features_f1082_marked.csv
+[f1083] n_total=24451 n_floater=2459 (10.1%) mid_10_17=[11, 11, 12, 13, 14, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1083/splatfacto/2026-08-24_174629/gaussian_features_f1083_marked.csv
+[f1084] n_total=23528 n_floater=2438 (10.4%) mid_10_17=[12, 12, 13, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1084/splatfacto/2026-08-24_174629/gaussian_features_f1084_marked.csv
+[f1085] n_total=23647 n_floater=2496 (10.6%) mid_10_17=[13, 14, 14, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1085/splatfacto/2026-08-24_174629/gaussian_features_f1085_marked.csv
+[f1086] n_total=24697 n_floater=2569 (10.4%) mid_10_17=[12, 12, 13, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1086/splatfacto/2026-08-24_174630/gaussian_features_f1086_marked.csv
+[f1087] n_total=24395 n_floater=2697 (11.1%) mid_10_17=[11, 12, 12, 13, 13, 14] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1087/splatfacto/2026-08-24_174631/gaussian_features_f1087_marked.csv
+[f1088] n_total=25292 n_floater=2736 (10.8%) mid_10_17=[11, 12, 12, 12, 14, 15, 15, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1088/splatfacto/2026-08-24_174632/gaussian_features_f1088_marked.csv
+[f1089] n_total=23680 n_floater=2339 (9.9%) mid_10_17=[11, 11, 11, 11, 12, 12, 13, 13, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1089/splatfacto/2026-08-24_174633/gaussian_features_f1089_marked.csv
+[f1090] n_total=23700 n_floater=2427 (10.2%) mid_10_17=[11, 13, 14, 14, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1090/splatfacto/2026-08-24_174635/gaussian_features_f1090_marked.csv
+[f1091] n_total=23961 n_floater=2500 (10.4%) mid_10_17=[11, 11, 12, 12, 12, 14, 15, 16, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1091/splatfacto/2026-08-24_174636/gaussian_features_f1091_marked.csv
+[f1092] n_total=23881 n_floater=2619 (11.0%) mid_10_17=[11, 11, 11, 13, 13, 14, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1092/splatfacto/2026-08-24_174727/gaussian_features_f1092_marked.csv
+[f1093] n_total=23978 n_floater=2459 (10.3%) mid_10_17=[11, 11, 12, 12, 13, 13, 15, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1093/splatfacto/2026-08-24_174822/gaussian_features_f1093_marked.csv
+[f1094] n_total=24951 n_floater=2626 (10.5%) mid_10_17=[11, 12, 13, 13, 13, 14, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1094/splatfacto/2026-08-24_174838/gaussian_features_f1094_marked.csv
+[f1095] n_total=24607 n_floater=2551 (10.4%) mid_10_17=[11, 12, 12, 14, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1095/splatfacto/2026-08-24_174838/gaussian_features_f1095_marked.csv
+[f1096] n_total=24924 n_floater=2662 (10.7%) mid_10_17=[11, 12, 12, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1096/splatfacto/2026-08-24_174840/gaussian_features_f1096_marked.csv
+[f1097] n_total=23526 n_floater=2400 (10.2%) mid_10_17=[11, 12, 13, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1097/splatfacto/2026-08-24_174840/gaussian_features_f1097_marked.csv
+[f1098] n_total=24540 n_floater=2482 (10.1%) mid_10_17=[11, 11, 14, 14, 15, 16, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1098/splatfacto/2026-08-24_174843/gaussian_features_f1098_marked.csv
+[f1099] n_total=23590 n_floater=2398 (10.2%) mid_10_17=[11, 11, 11, 13, 13, 14, 14, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1099/splatfacto/2026-08-24_174844/gaussian_features_f1099_marked.csv
+[f1100] n_total=23860 n_floater=2383 (10.0%) mid_10_17=[11, 11, 11, 11, 12, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1100/splatfacto/2026-08-24_174846/gaussian_features_f1100_marked.csv
+[f1101] n_total=24288 n_floater=2460 (10.1%) mid_10_17=[11, 11, 11, 11, 11, 11, 12, 13, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1101/splatfacto/2026-08-24_174846/gaussian_features_f1101_marked.csv
+[f1102] n_total=23805 n_floater=2297 (9.6%) mid_10_17=[11, 11, 12, 13, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1102/splatfacto/2026-08-24_174847/gaussian_features_f1102_marked.csv
+[f1103] n_total=23172 n_floater=2462 (10.6%) mid_10_17=[11, 11, 12, 12, 13, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1103/splatfacto/2026-08-24_174847/gaussian_features_f1103_marked.csv
+[f1104] n_total=23940 n_floater=2479 (10.4%) mid_10_17=[11, 11, 11, 11, 14, 14, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1104/splatfacto/2026-08-24_174910/gaussian_features_f1104_marked.csv
+[f1105] n_total=22735 n_floater=2397 (10.5%) mid_10_17=[12, 12, 13, 13, 14, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1105/splatfacto/2026-08-24_175017/gaussian_features_f1105_marked.csv
+[f1106] n_total=24094 n_floater=2553 (10.6%) mid_10_17=[11, 11, 11, 12, 13, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1106/splatfacto/2026-08-24_175045/gaussian_features_f1106_marked.csv
+[f1107] n_total=23251 n_floater=2577 (11.1%) mid_10_17=[11, 11, 11, 12, 12, 13, 13, 13, 14, 14, 15, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1107/splatfacto/2026-08-24_175045/gaussian_features_f1107_marked.csv
+[f1108] n_total=24252 n_floater=2397 (9.9%) mid_10_17=[11, 11, 12, 12, 12, 13, 13, 13, 13, 13, 15, 16] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1108/splatfacto/2026-08-24_175047/gaussian_features_f1108_marked.csv
+[f1109] n_total=23628 n_floater=2428 (10.3%) mid_10_17=[11, 11, 11, 12, 12, 13, 13, 14, 15, 15] saved -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1109/splatfacto/2026-08-24_175047/gaussian_features_f1109_marked.csv
+
+  [T3] motion accumulation labeling ...
+[density] frame_idx=960: 窗口内36/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0924', 'f0925', 'f0926', 'f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃2/5262个非最大连通分量的碎块体素
+
+[f0960] n_total=24860 n_kept=22427 (90.2%)  n_frames_in_window=37
+  body候选体素数(阈值+连通分量后)=5260  body候选点数=19126(85.3% of kept)
+  wing连通性: 碎块点=2191  实际改判=2191
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22748  wing_L=822  wing_R=1290
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0960/splatfacto/2026-08-24_172402/gaussian_features_f0960_labeled.csv
+[density] frame_idx=961: 窗口内35/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0925', 'f0926', 'f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃1/5358个非最大连通分量的碎块体素
+
+[f0961] n_total=24603 n_kept=21918 (89.1%)  n_frames_in_window=38
+  body候选体素数(阈值+连通分量后)=5357  body候选点数=19236(87.8% of kept)
+  wing连通性: 碎块点=1727  实际改判=1727
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23180  wing_L=392  wing_R=1031
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_172401/gaussian_features_f0961_labeled.csv
+[density] frame_idx=962: 窗口内34/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0926', 'f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+
+[f0962] n_total=23307 n_kept=20800 (89.2%)  n_frames_in_window=39
+  body候选体素数(阈值+连通分量后)=5445  body候选点数=18111(87.1% of kept)
+  wing连通性: 碎块点=1887  实际改判=1887
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22230  wing_L=521  wing_R=556
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0962/splatfacto/2026-08-24_172402/gaussian_features_f0962_labeled.csv
+[density] frame_idx=963: 窗口内33/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0927', 'f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+
+[f0963] n_total=24309 n_kept=21822 (89.8%)  n_frames_in_window=40
+  body候选体素数(阈值+连通分量后)=5557  body候选点数=19112(87.6% of kept)
+  wing连通性: 碎块点=1704  实际改判=1704
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22442  wing_L=470  wing_R=1397
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0963/splatfacto/2026-08-24_172402/gaussian_features_f0963_labeled.csv
+[density] frame_idx=964: 窗口内32/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0928', 'f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+
+[f0964] n_total=24047 n_kept=21536 (89.6%)  n_frames_in_window=41
+  body候选体素数(阈值+连通分量后)=5657  body候选点数=18865(87.6% of kept)
+  wing连通性: 碎块点=1769  实际改判=1769
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22196  wing_L=1418  wing_R=433
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0964/splatfacto/2026-08-24_172401/gaussian_features_f0964_labeled.csv
+[density] frame_idx=965: 窗口内31/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0929', 'f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃1/5748个非最大连通分量的碎块体素
+
+[f0965] n_total=23904 n_kept=21372 (89.4%)  n_frames_in_window=42
+  body候选体素数(阈值+连通分量后)=5747  body候选点数=18845(88.2% of kept)
+  wing连通性: 碎块点=1487  实际改判=1487
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21380  wing_L=1398  wing_R=1126
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0965/splatfacto/2026-08-24_172401/gaussian_features_f0965_labeled.csv
+[density] frame_idx=966: 窗口内30/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0930', 'f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃1/5827个非最大连通分量的碎块体素
+
+[f0966] n_total=23713 n_kept=21188 (89.4%)  n_frames_in_window=43
+  body候选体素数(阈值+连通分量后)=5826  body候选点数=18841(88.9% of kept)
+  wing连通性: 碎块点=1926  实际改判=1926
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22189  wing_L=307  wing_R=1217
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0966/splatfacto/2026-08-24_172401/gaussian_features_f0966_labeled.csv
+[density] frame_idx=967: 窗口内29/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0931', 'f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃2/5906个非最大连通分量的碎块体素
+
+[f0967] n_total=23257 n_kept=20904 (89.9%)  n_frames_in_window=44
+  body候选体素数(阈值+连通分量后)=5904  body候选点数=18427(88.2% of kept)
+  wing连通性: 碎块点=1285  实际改判=1285
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21061  wing_L=1300  wing_R=896
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0967/splatfacto/2026-08-24_172401/gaussian_features_f0967_labeled.csv
+[density] frame_idx=968: 窗口内28/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0932', 'f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/5992个非最大连通分量的碎块体素
+
+[f0968] n_total=23289 n_kept=20877 (89.6%)  n_frames_in_window=45
+  body候选体素数(阈值+连通分量后)=5989  body候选点数=18638(89.3% of kept)
+  wing连通性: 碎块点=1343  实际改判=1343
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21423  wing_L=1597  wing_R=269
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0968/splatfacto/2026-08-24_172402/gaussian_features_f0968_labeled.csv
+[density] frame_idx=969: 窗口内27/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0933', 'f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6074个非最大连通分量的碎块体素
+
+[f0969] n_total=23958 n_kept=21360 (89.2%)  n_frames_in_window=46
+  body候选体素数(阈值+连通分量后)=6071  body候选点数=19327(90.5% of kept)
+  wing连通性: 碎块点=1381  实际改判=1381
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22500  wing_L=631  wing_R=827
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0969/splatfacto/2026-08-24_172401/gaussian_features_f0969_labeled.csv
+[density] frame_idx=970: 窗口内26/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0934', 'f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃4/6165个非最大连通分量的碎块体素
+
+[f0970] n_total=22642 n_kept=20348 (89.9%)  n_frames_in_window=47
+  body候选体素数(阈值+连通分量后)=6161  body候选点数=18283(89.9% of kept)
+  wing连通性: 碎块点=1197  实际改判=1197
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=20897  wing_L=1438  wing_R=307
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0970/splatfacto/2026-08-24_172402/gaussian_features_f0970_labeled.csv
+[density] frame_idx=971: 窗口内25/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0935', 'f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃2/6241个非最大连通分量的碎块体素
+
+[f0971] n_total=23503 n_kept=21183 (90.1%)  n_frames_in_window=48
+  body候选体素数(阈值+连通分量后)=6239  body候选点数=19090(90.1% of kept)
+  wing连通性: 碎块点=1281  实际改判=1281
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21577  wing_L=1606  wing_R=320
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0971/splatfacto/2026-08-24_172401/gaussian_features_f0971_labeled.csv
+[density] frame_idx=972: 窗口内24/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0936', 'f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6309个非最大连通分量的碎块体素
+
+[f0972] n_total=23070 n_kept=20744 (89.9%)  n_frames_in_window=49
+  body候选体素数(阈值+连通分量后)=6306  body候选点数=18698(90.1% of kept)
+  wing连通性: 碎块点=1282  实际改判=1282
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21374  wing_L=1360  wing_R=336
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0972/splatfacto/2026-08-24_172628/gaussian_features_f0972_labeled.csv
+[density] frame_idx=973: 窗口内23/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0937', 'f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6378个非最大连通分量的碎块体素
+
+[f0973] n_total=23766 n_kept=21195 (89.2%)  n_frames_in_window=50
+  body候选体素数(阈值+连通分量后)=6375  body候选点数=19084(90.0% of kept)
+  wing连通性: 碎块点=1551  实际改判=1551
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22047  wing_L=524  wing_R=1195
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0973/splatfacto/2026-08-24_172628/gaussian_features_f0973_labeled.csv
+[density] frame_idx=974: 窗口内22/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0938', 'f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6438个非最大连通分量的碎块体素
+
+[f0974] n_total=25098 n_kept=22346 (89.0%)  n_frames_in_window=51
+  body候选体素数(阈值+连通分量后)=6435  body候选点数=20515(91.8% of kept)
+  wing连通性: 碎块点=1413  实际改判=1413
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=24303  wing_L=523  wing_R=272
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0974/splatfacto/2026-08-24_172628/gaussian_features_f0974_labeled.csv
+[density] frame_idx=975: 窗口内21/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0939', 'f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6521个非最大连通分量的碎块体素
+
+[f0975] n_total=23054 n_kept=20574 (89.2%)  n_frames_in_window=52
+  body候选体素数(阈值+连通分量后)=6518  body候选点数=18911(91.9% of kept)
+  wing连通性: 碎块点=954  实际改判=954
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21371  wing_L=174  wing_R=1509
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0975/splatfacto/2026-08-24_172628/gaussian_features_f0975_labeled.csv
+[density] frame_idx=976: 窗口内20/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0940', 'f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6581个非最大连通分量的碎块体素
+
+[f0976] n_total=24691 n_kept=22072 (89.4%)  n_frames_in_window=53
+  body候选体素数(阈值+连通分量后)=6578  body候选点数=20331(92.1% of kept)
+  wing连通性: 碎块点=1222  实际改判=1222
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23357  wing_L=334  wing_R=1000
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0976/splatfacto/2026-08-24_172627/gaussian_features_f0976_labeled.csv
+[density] frame_idx=977: 窗口内19/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0941', 'f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/6640个非最大连通分量的碎块体素
+
+[f0977] n_total=25088 n_kept=22434 (89.4%)  n_frames_in_window=54
+  body候选体素数(阈值+连通分量后)=6637  body候选点数=20747(92.5% of kept)
+  wing连通性: 碎块点=1096  实际改判=1096
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23807  wing_L=870  wing_R=411
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0977/splatfacto/2026-08-24_172627/gaussian_features_f0977_labeled.csv
+[density] frame_idx=978: 窗口内18/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0942', 'f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃6/6719个非最大连通分量的碎块体素
+
+[f0978] n_total=23281 n_kept=20842 (89.5%)  n_frames_in_window=55
+  body候选体素数(阈值+连通分量后)=6713  body候选点数=19352(92.9% of kept)
+  wing连通性: 碎块点=1039  实际改判=1039
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22016  wing_L=889  wing_R=376
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0978/splatfacto/2026-08-24_172627/gaussian_features_f0978_labeled.csv
+[density] frame_idx=979: 窗口内17/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0943', 'f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃7/6779个非最大连通分量的碎块体素
+
+[f0979] n_total=23679 n_kept=21431 (90.5%)  n_frames_in_window=56
+  body候选体素数(阈值+连通分量后)=6772  body候选点数=19795(92.4% of kept)
+  wing连通性: 碎块点=1041  实际改判=1041
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22353  wing_L=458  wing_R=868
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0979/splatfacto/2026-08-24_172629/gaussian_features_f0979_labeled.csv
+[density] frame_idx=980: 窗口内16/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0944', 'f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃7/6841个非最大连通分量的碎块体素
+
+[f0980] n_total=23403 n_kept=20979 (89.6%)  n_frames_in_window=57
+  body候选体素数(阈值+连通分量后)=6834  body候选点数=19421(92.6% of kept)
+  wing连通性: 碎块点=913  实际改判=913
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21700  wing_L=1224  wing_R=479
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0980/splatfacto/2026-08-24_172628/gaussian_features_f0980_labeled.csv
+[density] frame_idx=981: 窗口内15/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0945', 'f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃7/6903个非最大连通分量的碎块体素
+
+[f0981] n_total=23052 n_kept=20691 (89.8%)  n_frames_in_window=58
+  body候选体素数(阈值+连通分量后)=6896  body候选点数=19048(92.1% of kept)
+  wing连通性: 碎块点=1060  实际改判=1060
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22154  wing_L=677  wing_R=221
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0981/splatfacto/2026-08-24_172628/gaussian_features_f0981_labeled.csv
+[density] frame_idx=982: 窗口内14/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0946', 'f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃7/6969个非最大连通分量的碎块体素
+
+[f0982] n_total=23632 n_kept=21102 (89.3%)  n_frames_in_window=59
+  body候选体素数(阈值+连通分量后)=6962  body候选点数=19324(91.6% of kept)
+  wing连通性: 碎块点=1246  实际改判=1246
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22544  wing_L=563  wing_R=525
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0982/splatfacto/2026-08-24_172628/gaussian_features_f0982_labeled.csv
+[density] frame_idx=983: 窗口内13/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0947', 'f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃9/7035个非最大连通分量的碎块体素
+
+[f0983] n_total=22886 n_kept=20444 (89.3%)  n_frames_in_window=60
+  body候选体素数(阈值+连通分量后)=7026  body候选点数=18837(92.1% of kept)
+  wing连通性: 碎块点=1015  实际改判=1015
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21287  wing_L=923  wing_R=676
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0983/splatfacto/2026-08-24_172628/gaussian_features_f0983_labeled.csv
+[density] frame_idx=984: 窗口内12/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0948', 'f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃9/7096个非最大连通分量的碎块体素
+
+[f0984] n_total=23426 n_kept=21085 (90.0%)  n_frames_in_window=61
+  body候选体素数(阈值+连通分量后)=7087  body候选点数=19700(93.4% of kept)
+  wing连通性: 碎块点=834  实际改判=834
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22445  wing_L=444  wing_R=537
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0984/splatfacto/2026-08-24_172841/gaussian_features_f0984_labeled.csv
+[density] frame_idx=985: 窗口内11/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0949', 'f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7156个非最大连通分量的碎块体素
+
+[f0985] n_total=23852 n_kept=21387 (89.7%)  n_frames_in_window=62
+  body候选体素数(阈值+连通分量后)=7153  body候选点数=20361(95.2% of kept)
+  wing连通性: 碎块点=725  实际改判=725
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23105  wing_L=577  wing_R=170
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0985/splatfacto/2026-08-24_172842/gaussian_features_f0985_labeled.csv
+[density] frame_idx=986: 窗口内10/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0950', 'f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7221个非最大连通分量的碎块体素
+
+[f0986] n_total=23446 n_kept=21145 (90.2%)  n_frames_in_window=63
+  body候选体素数(阈值+连通分量后)=7218  body候选点数=20039(94.8% of kept)
+  wing连通性: 碎块点=676  实际改判=676
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22398  wing_L=822  wing_R=226
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0986/splatfacto/2026-08-24_172841/gaussian_features_f0986_labeled.csv
+[density] frame_idx=987: 窗口内9/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0951', 'f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7282个非最大连通分量的碎块体素
+
+[f0987] n_total=23478 n_kept=20906 (89.0%)  n_frames_in_window=64
+  body候选体素数(阈值+连通分量后)=7279  body候选点数=19639(93.9% of kept)
+  wing连通性: 碎块点=928  实际改判=928
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22632  wing_L=539  wing_R=307
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0987/splatfacto/2026-08-24_172843/gaussian_features_f0987_labeled.csv
+[density] frame_idx=988: 窗口内8/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0952', 'f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7339个非最大连通分量的碎块体素
+
+[f0988] n_total=24329 n_kept=21679 (89.1%)  n_frames_in_window=65
+  body候选体素数(阈值+连通分量后)=7336  body候选点数=20443(94.3% of kept)
+  wing连通性: 碎块点=793  实际改判=793
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23474  wing_L=627  wing_R=228
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0988/splatfacto/2026-08-24_172843/gaussian_features_f0988_labeled.csv
+[density] frame_idx=989: 窗口内7/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0953', 'f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7404个非最大连通分量的碎块体素
+
+[f0989] n_total=24164 n_kept=21516 (89.0%)  n_frames_in_window=66
+  body候选体素数(阈值+连通分量后)=7401  body候选点数=20324(94.5% of kept)
+  wing连通性: 碎块点=686  实际改判=686
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22908  wing_L=856  wing_R=400
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0989/splatfacto/2026-08-24_172842/gaussian_features_f0989_labeled.csv
+[density] frame_idx=990: 窗口内6/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0954', 'f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7453个非最大连通分量的碎块体素
+
+[f0990] n_total=23806 n_kept=21380 (89.8%)  n_frames_in_window=67
+  body候选体素数(阈值+连通分量后)=7450  body候选点数=19848(92.8% of kept)
+  wing连通性: 碎块点=721  实际改判=721
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22386  wing_L=1288  wing_R=132
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0990/splatfacto/2026-08-24_172843/gaussian_features_f0990_labeled.csv
+[density] frame_idx=991: 窗口内5/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0955', 'f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃3/7522个非最大连通分量的碎块体素
+
+[f0991] n_total=24479 n_kept=21831 (89.2%)  n_frames_in_window=68
+  body候选体素数(阈值+连通分量后)=7519  body候选点数=20854(95.5% of kept)
+  wing连通性: 碎块点=655  实际改判=655
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23575  wing_L=695  wing_R=209
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0991/splatfacto/2026-08-24_172843/gaussian_features_f0991_labeled.csv
+[density] frame_idx=992: 窗口内4/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0956', 'f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃4/7577个非最大连通分量的碎块体素
+
+[f0992] n_total=23042 n_kept=20811 (90.3%)  n_frames_in_window=69
+  body候选体素数(阈值+连通分量后)=7573  body候选点数=19692(94.6% of kept)
+  wing连通性: 碎块点=770  实际改判=770
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21966  wing_L=882  wing_R=194
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0992/splatfacto/2026-08-24_172843/gaussian_features_f0992_labeled.csv
+[density] frame_idx=993: 窗口内3/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0957', 'f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃5/7656个非最大连通分量的碎块体素
+
+[f0993] n_total=22916 n_kept=20403 (89.0%)  n_frames_in_window=70
+  body候选体素数(阈值+连通分量后)=7651  body候选点数=19450(95.3% of kept)
+  wing连通性: 碎块点=714  实际改判=714
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22299  wing_L=449  wing_R=168
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0993/splatfacto/2026-08-24_172843/gaussian_features_f0993_labeled.csv
+[density] frame_idx=994: 窗口内2/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0958', 'f0959']
+[density] body候选体素连通分量分析: 丢弃5/7725个非最大连通分量的碎块体素
+
+[f0994] n_total=23715 n_kept=21361 (90.1%)  n_frames_in_window=71
+  body候选体素数(阈值+连通分量后)=7720  body候选点数=20069(94.0% of kept)
+  wing连通性: 碎块点=771  实际改判=771
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22463  wing_L=484  wing_R=768
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0994/splatfacto/2026-08-24_172843/gaussian_features_f0994_labeled.csv
+[density] frame_idx=995: 窗口内1/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f0959']
+[density] body候选体素连通分量分析: 丢弃5/7780个非最大连通分量的碎块体素
+
+[f0995] n_total=24286 n_kept=21788 (89.7%)  n_frames_in_window=72
+  body候选体素数(阈值+连通分量后)=7775  body候选点数=20668(94.9% of kept)
+  wing连通性: 碎块点=644  实际改判=644
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22868  wing_L=1237  wing_R=181
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0995/splatfacto/2026-08-24_172843/gaussian_features_f0995_labeled.csv
+[density] body候选体素连通分量分析: 丢弃5/7832个非最大连通分量的碎块体素
+
+[f0996] n_total=24002 n_kept=21142 (88.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7827  body候选点数=20105(95.1% of kept)
+  wing连通性: 碎块点=795  实际改判=795
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23031  wing_L=270  wing_R=701
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0996/splatfacto/2026-08-24_173054/gaussian_features_f0996_labeled.csv
+[density] body候选体素连通分量分析: 丢弃6/7822个非最大连通分量的碎块体素
+
+[f0997] n_total=24730 n_kept=21877 (88.5%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7816  body候选点数=20755(94.9% of kept)
+  wing连通性: 碎块点=748  实际改判=748
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23364  wing_L=419  wing_R=947
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0997/splatfacto/2026-08-24_173054/gaussian_features_f0997_labeled.csv
+[density] body候选体素连通分量分析: 丢弃5/7818个非最大连通分量的碎块体素
+
+[f0998] n_total=23392 n_kept=21068 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7813  body候选点数=19786(93.9% of kept)
+  wing连通性: 碎块点=820  实际改判=820
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22369  wing_L=386  wing_R=637
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0998/splatfacto/2026-08-24_173055/gaussian_features_f0998_labeled.csv
+[density] body候选体素连通分量分析: 丢弃6/7795个非最大连通分量的碎块体素
+
+[f0999] n_total=23794 n_kept=21360 (89.8%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7789  body候选点数=20459(95.8% of kept)
+  wing连通性: 碎块点=516  实际改判=516
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22602  wing_L=285  wing_R=907
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0999/splatfacto/2026-08-24_173054/gaussian_features_f0999_labeled.csv
+[density] body候选体素连通分量分析: 丢弃4/7793个非最大连通分量的碎块体素
+
+[f1000] n_total=22958 n_kept=20634 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7789  body候选点数=19772(95.8% of kept)
+  wing连通性: 碎块点=569  实际改判=569
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22464  wing_L=330  wing_R=164
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1000/splatfacto/2026-08-24_173056/gaussian_features_f1000_labeled.csv
+[density] body候选体素连通分量分析: 丢弃4/7783个非最大连通分量的碎块体素
+
+[f1001] n_total=24535 n_kept=21869 (89.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7779  body候选点数=20810(95.2% of kept)
+  wing连通性: 碎块点=778  实际改判=778
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23544  wing_L=390  wing_R=601
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1001/splatfacto/2026-08-24_173055/gaussian_features_f1001_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/7779个非最大连通分量的碎块体素
+
+[f1002] n_total=23925 n_kept=21511 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7776  body候选点数=20268(94.2% of kept)
+  wing连通性: 碎块点=878  实际改判=878
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23017  wing_L=416  wing_R=492
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1002/splatfacto/2026-08-24_173056/gaussian_features_f1002_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/7793个非最大连通分量的碎块体素
+
+[f1003] n_total=23686 n_kept=21242 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7790  body候选点数=20250(95.3% of kept)
+  wing连通性: 碎块点=512  实际改判=512
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22289  wing_L=1121  wing_R=276
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1003/splatfacto/2026-08-24_173057/gaussian_features_f1003_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/7812个非最大连通分量的碎块体素
+
+[f1004] n_total=23235 n_kept=20863 (89.8%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7809  body候选点数=19625(94.1% of kept)
+  wing连通性: 碎块点=712  实际改判=712
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22098  wing_L=281  wing_R=856
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1004/splatfacto/2026-08-24_173056/gaussian_features_f1004_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/7796个非最大连通分量的碎块体素
+
+[f1005] n_total=24012 n_kept=21384 (89.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7793  body候选点数=20056(93.8% of kept)
+  wing连通性: 碎块点=886  实际改判=886
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22927  wing_L=651  wing_R=434
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1005/splatfacto/2026-08-24_173057/gaussian_features_f1005_labeled.csv
+[density] body候选体素连通分量分析: 丢弃4/7801个非最大连通分量的碎块体素
+
+[f1006] n_total=23271 n_kept=20778 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7797  body候选点数=19885(95.7% of kept)
+  wing连通性: 碎块点=587  实际改判=587
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22635  wing_L=528  wing_R=108
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1006/splatfacto/2026-08-24_173057/gaussian_features_f1006_labeled.csv
+[density] body候选体素连通分量分析: 丢弃17/7788个非最大连通分量的碎块体素
+
+[f1007] n_total=23347 n_kept=20866 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7771  body候选点数=19901(95.4% of kept)
+  wing连通性: 碎块点=590  实际改判=590
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22097  wing_L=302  wing_R=948
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1007/splatfacto/2026-08-24_173057/gaussian_features_f1007_labeled.csv
+[density] body候选体素连通分量分析: 丢弃20/7780个非最大连通分量的碎块体素
+
+[f1008] n_total=23630 n_kept=21000 (88.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7760  body候选点数=19995(95.2% of kept)
+  wing连通性: 碎块点=805  实际改判=805
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23092  wing_L=257  wing_R=281
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1008/splatfacto/2026-08-24_173307/gaussian_features_f1008_labeled.csv
+[density] body候选体素连通分量分析: 丢弃18/7776个非最大连通分量的碎块体素
+
+[f1009] n_total=24568 n_kept=21947 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7758  body候选点数=20724(94.4% of kept)
+  wing连通性: 碎块点=862  实际改判=862
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23563  wing_L=632  wing_R=373
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1009/splatfacto/2026-08-24_173311/gaussian_features_f1009_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7778个非最大连通分量的碎块体素
+
+[f1010] n_total=23578 n_kept=21077 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7762  body候选点数=20191(95.8% of kept)
+  wing连通性: 碎块点=634  实际改判=634
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22575  wing_L=753  wing_R=250
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1010/splatfacto/2026-08-24_173311/gaussian_features_f1010_labeled.csv
+[density] body候选体素连通分量分析: 丢弃15/7773个非最大连通分量的碎块体素
+
+[f1011] n_total=23492 n_kept=20913 (89.0%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7758  body候选点数=19838(94.9% of kept)
+  wing连通性: 碎块点=781  实际改判=781
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22295  wing_L=229  wing_R=968
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1011/splatfacto/2026-08-24_173311/gaussian_features_f1011_labeled.csv
+[density] body候选体素连通分量分析: 丢弃17/7780个非最大连通分量的碎块体素
+
+[f1012] n_total=23944 n_kept=21342 (89.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7763  body候选点数=20336(95.3% of kept)
+  wing连通性: 碎块点=588  实际改判=588
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22518  wing_L=234  wing_R=1192
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1012/splatfacto/2026-08-24_173311/gaussian_features_f1012_labeled.csv
+[density] body候选体素连通分量分析: 丢弃20/7781个非最大连通分量的碎块体素
+
+[f1013] n_total=23532 n_kept=21061 (89.5%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7761  body候选点数=19941(94.7% of kept)
+  wing连通性: 碎块点=637  实际改判=637
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22618  wing_L=601  wing_R=313
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1013/splatfacto/2026-08-24_173312/gaussian_features_f1013_labeled.csv
+[density] body候选体素连通分量分析: 丢弃17/7799个非最大连通分量的碎块体素
+
+[f1014] n_total=23623 n_kept=21228 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7782  body候选点数=20034(94.4% of kept)
+  wing连通性: 碎块点=710  实际改判=710
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22359  wing_L=128  wing_R=1136
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1014/splatfacto/2026-08-24_173312/gaussian_features_f1014_labeled.csv
+[density] body候选体素连通分量分析: 丢弃15/7805个非最大连通分量的碎块体素
+
+[f1015] n_total=24062 n_kept=21396 (88.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7790  body候选点数=20409(95.4% of kept)
+  wing连通性: 碎块点=731  实际改判=731
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22910  wing_L=613  wing_R=539
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1015/splatfacto/2026-08-24_173312/gaussian_features_f1015_labeled.csv
+[density] body候选体素连通分量分析: 丢弃15/7819个非最大连通分量的碎块体素
+
+[f1016] n_total=24046 n_kept=21470 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7804  body候选点数=20571(95.8% of kept)
+  wing连通性: 碎块点=600  实际改判=600
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23007  wing_L=744  wing_R=295
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1016/splatfacto/2026-08-24_173311/gaussian_features_f1016_labeled.csv
+[density] body候选体素连通分量分析: 丢弃17/7816个非最大连通分量的碎块体素
+
+[f1017] n_total=23084 n_kept=20479 (88.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7799  body候选点数=19529(95.4% of kept)
+  wing连通性: 碎块点=739  实际改判=739
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22482  wing_L=412  wing_R=190
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1017/splatfacto/2026-08-24_173312/gaussian_features_f1017_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7827个非最大连通分量的碎块体素
+
+[f1018] n_total=23499 n_kept=21010 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7811  body候选点数=20050(95.4% of kept)
+  wing连通性: 碎块点=714  实际改判=714
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22748  wing_L=537  wing_R=214
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1018/splatfacto/2026-08-24_173312/gaussian_features_f1018_labeled.csv
+[density] body候选体素连通分量分析: 丢弃15/7835个非最大连通分量的碎块体素
+
+[f1019] n_total=24044 n_kept=21471 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7820  body候选点数=20367(94.9% of kept)
+  wing连通性: 碎块点=655  实际改判=655
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23163  wing_L=582  wing_R=299
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1019/splatfacto/2026-08-24_173313/gaussian_features_f1019_labeled.csv
+[density] body候选体素连通分量分析: 丢弃17/7835个非最大连通分量的碎块体素
+
+[f1020] n_total=23175 n_kept=20826 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7818  body候选点数=19794(95.0% of kept)
+  wing连通性: 碎块点=504  实际改判=504
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21948  wing_L=1086  wing_R=141
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1020/splatfacto/2026-08-24_173521/gaussian_features_f1020_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7827个非最大连通分量的碎块体素
+
+[f1021] n_total=24573 n_kept=21938 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7811  body候选点数=20898(95.3% of kept)
+  wing连通性: 碎块点=713  实际改判=713
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23424  wing_L=248  wing_R=901
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1021/splatfacto/2026-08-24_173522/gaussian_features_f1021_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7848个非最大连通分量的碎块体素
+
+[f1022] n_total=23617 n_kept=21288 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7832  body候选点数=20281(95.3% of kept)
+  wing连通性: 碎块点=657  实际改判=657
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22513  wing_L=1017  wing_R=87
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1022/splatfacto/2026-08-24_173523/gaussian_features_f1022_labeled.csv
+[density] body候选体素连通分量分析: 丢弃17/7841个非最大连通分量的碎块体素
+
+[f1023] n_total=24279 n_kept=21811 (89.8%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7824  body候选点数=20671(94.8% of kept)
+  wing连通性: 碎块点=739  实际改判=739
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23228  wing_L=361  wing_R=690
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1023/splatfacto/2026-08-24_173524/gaussian_features_f1023_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7856个非最大连通分量的碎块体素
+  [警告][f1024] wing_merged_forced_split: wing候选点的连通分量分析后只有1个显著分量(贴一起无法物理拆分)，强行按x_body×up投影中位数切成两半，强制confidence=low
+
+[f1024] n_total=24147 n_kept=21639 (89.6%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7840  body候选点数=20597(95.2% of kept)
+  wing连通性: 碎块点=452  实际改判=452
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23050  wing_L=473  wing_R=624
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1024/splatfacto/2026-08-24_173524/gaussian_features_f1024_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7870个非最大连通分量的碎块体素
+
+[f1025] n_total=22852 n_kept=20496 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7854  body候选点数=19669(96.0% of kept)
+  wing连通性: 碎块点=554  实际改判=554
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21986  wing_L=694  wing_R=172
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1025/splatfacto/2026-08-24_173525/gaussian_features_f1025_labeled.csv
+[density] body候选体素连通分量分析: 丢弃16/7868个非最大连通分量的碎块体素
+
+[f1026] n_total=24107 n_kept=21673 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7852  body候选点数=20543(94.8% of kept)
+  wing连通性: 碎块点=583  实际改判=583
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22701  wing_L=1112  wing_R=294
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1026/splatfacto/2026-08-24_173525/gaussian_features_f1026_labeled.csv
+[density] body候选体素连通分量分析: 丢弃15/7894个非最大连通分量的碎块体素
+
+[f1027] n_total=24595 n_kept=22002 (89.5%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7879  body候选点数=20974(95.3% of kept)
+  wing连通性: 碎块点=659  实际改判=659
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23692  wing_L=625  wing_R=278
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1027/splatfacto/2026-08-24_173525/gaussian_features_f1027_labeled.csv
+[density] body候选体素连通分量分析: 丢弃14/7899个非最大连通分量的碎块体素
+
+[f1028] n_total=25689 n_kept=22908 (89.2%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7885  body候选点数=21790(95.1% of kept)
+  wing连通性: 碎块点=651  实际改判=651
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=24273  wing_L=707  wing_R=709
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1028/splatfacto/2026-08-24_173524/gaussian_features_f1028_labeled.csv
+[density] body候选体素连通分量分析: 丢弃14/7909个非最大连通分量的碎块体素
+
+[f1029] n_total=24319 n_kept=21657 (89.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7895  body候选点数=20587(95.1% of kept)
+  wing连通性: 碎块点=717  实际改判=717
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23524  wing_L=435  wing_R=360
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1029/splatfacto/2026-08-24_173525/gaussian_features_f1029_labeled.csv
+[density] body候选体素连通分量分析: 丢弃13/7901个非最大连通分量的碎块体素
+
+[f1030] n_total=23961 n_kept=21589 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7888  body候选点数=20418(94.6% of kept)
+  wing连通性: 碎块点=730  实际改判=730
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22950  wing_L=640  wing_R=371
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1030/splatfacto/2026-08-24_173526/gaussian_features_f1030_labeled.csv
+[density] body候选体素连通分量分析: 丢弃12/7908个非最大连通分量的碎块体素
+
+[f1031] n_total=23677 n_kept=21139 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7896  body候选点数=20317(96.1% of kept)
+  wing连通性: 碎块点=470  实际改判=470
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22754  wing_L=779  wing_R=144
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1031/splatfacto/2026-08-24_173525/gaussian_features_f1031_labeled.csv
+[density] body候选体素连通分量分析: 丢弃12/7909个非最大连通分量的碎块体素
+
+[f1032] n_total=24029 n_kept=21528 (89.6%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7897  body候选点数=20593(95.7% of kept)
+  wing连通性: 碎块点=490  实际改判=490
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22931  wing_L=974  wing_R=124
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1032/splatfacto/2026-08-24_173733/gaussian_features_f1032_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7894个非最大连通分量的碎块体素
+
+[f1033] n_total=24284 n_kept=21675 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7893  body候选点数=20760(95.8% of kept)
+  wing连通性: 碎块点=605  实际改判=605
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23407  wing_L=781  wing_R=96
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1033/splatfacto/2026-08-24_173734/gaussian_features_f1033_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7893个非最大连通分量的碎块体素
+
+[f1034] n_total=23455 n_kept=20890 (89.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7892  body候选点数=19936(95.4% of kept)
+  wing连通性: 碎块点=661  实际改判=661
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22379  wing_L=410  wing_R=666
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1034/splatfacto/2026-08-24_173737/gaussian_features_f1034_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/7915个非最大连通分量的碎块体素
+
+[f1035] n_total=23487 n_kept=21000 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7913  body候选点数=20045(95.5% of kept)
+  wing连通性: 碎块点=566  实际改判=566
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22168  wing_L=969  wing_R=350
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1035/splatfacto/2026-08-24_173737/gaussian_features_f1035_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/7918个非最大连通分量的碎块体素
+
+[f1036] n_total=24233 n_kept=21639 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7916  body候选点数=20764(96.0% of kept)
+  wing连通性: 碎块点=531  实际改判=531
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23536  wing_L=506  wing_R=191
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1036/splatfacto/2026-08-24_173737/gaussian_features_f1036_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7914个非最大连通分量的碎块体素
+
+[f1037] n_total=23615 n_kept=20950 (88.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7913  body候选点数=19890(94.9% of kept)
+  wing连通性: 碎块点=743  实际改判=743
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22490  wing_L=516  wing_R=609
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1037/splatfacto/2026-08-24_173737/gaussian_features_f1037_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/7918个非最大连通分量的碎块体素
+  [警告][f1038] wing_merged_forced_split: wing候选点的连通分量分析后只有1个显著分量(贴一起无法物理拆分)，强行按x_body×up投影中位数切成两半，强制confidence=low
+
+[f1038] n_total=23705 n_kept=21313 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7916  body候选点数=20342(95.4% of kept)
+  wing连通性: 碎块点=444  实际改判=444
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22549  wing_L=511  wing_R=645
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1038/splatfacto/2026-08-24_173738/gaussian_features_f1038_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/7917个非最大连通分量的碎块体素
+
+[f1039] n_total=24081 n_kept=21635 (89.8%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7915  body候选点数=20649(95.4% of kept)
+  wing连通性: 碎块点=519  实际改判=519
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22954  wing_L=949  wing_R=178
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1039/splatfacto/2026-08-24_173738/gaussian_features_f1039_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7918个非最大连通分量的碎块体素
+
+[f1040] n_total=23152 n_kept=20856 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7917  body候选点数=19816(95.0% of kept)
+  wing连通性: 碎块点=442  实际改判=442
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21788  wing_L=1007  wing_R=357
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1040/splatfacto/2026-08-24_173739/gaussian_features_f1040_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7927个非最大连通分量的碎块体素
+
+[f1041] n_total=23219 n_kept=20833 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7926  body候选点数=19771(94.9% of kept)
+  wing连通性: 碎块点=628  实际改判=628
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22035  wing_L=995  wing_R=189
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1041/splatfacto/2026-08-24_173739/gaussian_features_f1041_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7937个非最大连通分量的碎块体素
+
+[f1042] n_total=24052 n_kept=21350 (88.8%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7936  body候选点数=20350(95.3% of kept)
+  wing连通性: 碎块点=594  实际改判=594
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22743  wing_L=1060  wing_R=249
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1042/splatfacto/2026-08-24_173738/gaussian_features_f1042_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7946个非最大连通分量的碎块体素
+
+[f1043] n_total=24128 n_kept=21640 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7945  body候选点数=20541(94.9% of kept)
+  wing连通性: 碎块点=599  实际改判=599
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22791  wing_L=870  wing_R=467
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1043/splatfacto/2026-08-24_173738/gaussian_features_f1043_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7956个非最大连通分量的碎块体素
+
+[f1044] n_total=23758 n_kept=21252 (89.5%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7955  body候选点数=20276(95.4% of kept)
+  wing连通性: 碎块点=645  实际改判=645
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22783  wing_L=279  wing_R=696
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1044/splatfacto/2026-08-24_173946/gaussian_features_f1044_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7971个非最大连通分量的碎块体素
+
+[f1045] n_total=23545 n_kept=21017 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7970  body候选点数=19995(95.1% of kept)
+  wing连通性: 碎块点=708  实际改判=708
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22568  wing_L=407  wing_R=570
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1045/splatfacto/2026-08-24_173949/gaussian_features_f1045_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7974个非最大连通分量的碎块体素
+
+[f1046] n_total=24090 n_kept=21546 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7973  body候选点数=20525(95.3% of kept)
+  wing连通性: 碎块点=773  实际改判=773
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23200  wing_L=283  wing_R=607
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1046/splatfacto/2026-08-24_173951/gaussian_features_f1046_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/7988个非最大连通分量的碎块体素
+
+[f1047] n_total=24370 n_kept=21780 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7986  body候选点数=20908(96.0% of kept)
+  wing连通性: 碎块点=509  实际改判=509
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23536  wing_L=650  wing_R=184
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1047/splatfacto/2026-08-24_173952/gaussian_features_f1047_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7995个非最大连通分量的碎块体素
+
+[f1048] n_total=23542 n_kept=21057 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7994  body候选点数=20026(95.1% of kept)
+  wing连通性: 碎块点=563  实际改判=563
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22523  wing_L=896  wing_R=123
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1048/splatfacto/2026-08-24_173952/gaussian_features_f1048_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/7995个非最大连通分量的碎块体素
+
+[f1049] n_total=24041 n_kept=21641 (90.0%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7993  body候选点数=20593(95.2% of kept)
+  wing连通性: 碎块点=636  实际改判=636
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22850  wing_L=931  wing_R=260
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1049/splatfacto/2026-08-24_173953/gaussian_features_f1049_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8009个非最大连通分量的碎块体素
+
+[f1050] n_total=24998 n_kept=22541 (90.2%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8007  body候选点数=21321(94.6% of kept)
+  wing连通性: 碎块点=824  实际改判=824
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23671  wing_L=726  wing_R=601
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1050/splatfacto/2026-08-24_173953/gaussian_features_f1050_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8002个非最大连通分量的碎块体素
+
+[f1051] n_total=23716 n_kept=21037 (88.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8000  body候选点数=20119(95.6% of kept)
+  wing连通性: 碎块点=657  实际改判=657
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22855  wing_L=633  wing_R=228
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1051/splatfacto/2026-08-24_173952/gaussian_features_f1051_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8018个非最大连通分量的碎块体素
+
+[f1052] n_total=24440 n_kept=21918 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8017  body候选点数=20512(93.6% of kept)
+  wing连通性: 碎块点=809  实际改判=809
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23026  wing_L=461  wing_R=953
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1052/splatfacto/2026-08-24_173952/gaussian_features_f1052_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8018个非最大连通分量的碎块体素
+
+[f1053] n_total=23986 n_kept=21228 (88.5%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8017  body候选点数=20273(95.5% of kept)
+  wing连通性: 碎块点=442  实际改判=442
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22608  wing_L=1269  wing_R=109
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1053/splatfacto/2026-08-24_173952/gaussian_features_f1053_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8008个非最大连通分量的碎块体素
+
+[f1054] n_total=23578 n_kept=21077 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8007  body候选点数=20151(95.6% of kept)
+  wing连通性: 碎块点=657  实际改判=657
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22944  wing_L=486  wing_R=148
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1054/splatfacto/2026-08-24_173952/gaussian_features_f1054_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8019个非最大连通分量的碎块体素
+
+[f1055] n_total=23743 n_kept=21384 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8017  body候选点数=20316(95.0% of kept)
+  wing连通性: 碎块点=678  实际改判=678
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22538  wing_L=1087  wing_R=118
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1055/splatfacto/2026-08-24_173953/gaussian_features_f1055_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8009个非最大连通分量的碎块体素
+
+[f1056] n_total=23357 n_kept=20874 (89.4%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8008  body候选点数=19750(94.6% of kept)
+  wing连通性: 碎块点=848  实际改判=848
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22772  wing_L=240  wing_R=345
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1056/splatfacto/2026-08-24_174154/gaussian_features_f1056_labeled.csv
+
+[f1057] n_total=23214 n_kept=20652 (89.0%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8005  body候选点数=19310(93.5% of kept)
+  wing连通性: 碎块点=1025  实际改判=1025
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22182  wing_L=718  wing_R=314
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1057/splatfacto/2026-08-24_174203/gaussian_features_f1057_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8014个非最大连通分量的碎块体素
+
+[f1058] n_total=23816 n_kept=21410 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8013  body候选点数=20438(95.5% of kept)
+  wing连通性: 碎块点=479  实际改判=479
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22541  wing_L=1122  wing_R=153
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1058/splatfacto/2026-08-24_174206/gaussian_features_f1058_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8013个非最大连通分量的碎块体素
+
+[f1059] n_total=24612 n_kept=21950 (89.2%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8011  body候选点数=20881(95.1% of kept)
+  wing连通性: 碎块点=738  实际改判=738
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23503  wing_L=901  wing_R=208
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1059/splatfacto/2026-08-24_174206/gaussian_features_f1059_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8019个非最大连通分量的碎块体素
+
+[f1060] n_total=25006 n_kept=22421 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8018  body候选点数=21286(94.9% of kept)
+  wing连通性: 碎块点=552  实际改判=552
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23531  wing_L=1111  wing_R=364
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1060/splatfacto/2026-08-24_174205/gaussian_features_f1060_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8012个非最大连通分量的碎块体素
+
+[f1061] n_total=23835 n_kept=21424 (89.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8011  body候选点数=20267(94.6% of kept)
+  wing连通性: 碎块点=726  实际改判=726
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22921  wing_L=611  wing_R=303
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1061/splatfacto/2026-08-24_174206/gaussian_features_f1061_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8017个非最大连通分量的碎块体素
+
+[f1062] n_total=23705 n_kept=21124 (89.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8015  body候选点数=20006(94.7% of kept)
+  wing连通性: 碎块点=644  实际改判=644
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22194  wing_L=443  wing_R=1068
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1062/splatfacto/2026-08-24_174207/gaussian_features_f1062_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/7999个非最大连通分量的碎块体素
+
+[f1063] n_total=24323 n_kept=21772 (89.5%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7998  body候选点数=20757(95.3% of kept)
+  wing连通性: 碎块点=667  实际改判=667
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23354  wing_L=467  wing_R=502
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1063/splatfacto/2026-08-24_174207/gaussian_features_f1063_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8001个非最大连通分量的碎块体素
+
+[f1064] n_total=23900 n_kept=21580 (90.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=7999  body候选点数=20561(95.3% of kept)
+  wing连通性: 碎块点=540  实际改判=540
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22836  wing_L=968  wing_R=96
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1064/splatfacto/2026-08-24_174207/gaussian_features_f1064_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/8013个非最大连通分量的碎块体素
+
+[f1065] n_total=23582 n_kept=21249 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8010  body候选点数=20391(96.0% of kept)
+  wing连通性: 碎块点=639  实际改判=639
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23103  wing_L=328  wing_R=151
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1065/splatfacto/2026-08-24_174208/gaussian_features_f1065_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/8024个非最大连通分量的碎块体素
+
+[f1066] n_total=23700 n_kept=21258 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8021  body候选点数=20346(95.7% of kept)
+  wing连通性: 碎块点=577  实际改判=577
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23009  wing_L=506  wing_R=185
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1066/splatfacto/2026-08-24_174208/gaussian_features_f1066_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/8021个非最大连通分量的碎块体素
+
+[f1067] n_total=22867 n_kept=20602 (90.1%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8018  body候选点数=19553(94.9% of kept)
+  wing连通性: 碎块点=678  实际改判=678
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22156  wing_L=476  wing_R=235
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1067/splatfacto/2026-08-24_174208/gaussian_features_f1067_labeled.csv
+[density] body候选体素连通分量分析: 丢弃3/8031个非最大连通分量的碎块体素
+
+[f1068] n_total=24212 n_kept=21530 (88.9%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8028  body候选点数=20489(95.2% of kept)
+  wing连通性: 碎块点=872  实际改判=872
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23444  wing_L=130  wing_R=638
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1068/splatfacto/2026-08-24_174357/gaussian_features_f1068_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8015个非最大连通分量的碎块体素
+
+[f1069] n_total=23595 n_kept=21280 (90.2%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8013  body候选点数=20250(95.2% of kept)
+  wing连通性: 碎块点=548  实际改判=548
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22369  wing_L=89  wing_R=1137
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1069/splatfacto/2026-08-24_174415/gaussian_features_f1069_labeled.csv
+[density] body候选体素连通分量分析: 丢弃4/8021个非最大连通分量的碎块体素
+
+[f1070] n_total=23358 n_kept=20849 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8017  body候选点数=19878(95.3% of kept)
+  wing连通性: 碎块点=586  实际改判=586
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22261  wing_L=375  wing_R=722
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1070/splatfacto/2026-08-24_174418/gaussian_features_f1070_labeled.csv
+[density] body候选体素连通分量分析: 丢弃2/8037个非最大连通分量的碎块体素
+
+[f1071] n_total=23391 n_kept=21041 (90.0%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8035  body候选点数=20202(96.0% of kept)
+  wing连通性: 碎块点=591  实际改判=591
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22733  wing_L=457  wing_R=201
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1071/splatfacto/2026-08-24_174418/gaussian_features_f1071_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8034个非最大连通分量的碎块体素
+
+[f1072] n_total=24187 n_kept=21686 (89.7%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8033  body候选点数=20814(96.0% of kept)
+  wing连通性: 碎块点=593  实际改判=593
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23678  wing_L=336  wing_R=173
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1072/splatfacto/2026-08-24_174418/gaussian_features_f1072_labeled.csv
+[density] body候选体素连通分量分析: 丢弃1/8029个非最大连通分量的碎块体素
+
+[f1073] n_total=24132 n_kept=21555 (89.3%)  n_frames_in_window=73
+  body候选体素数(阈值+连通分量后)=8028  body候选点数=20546(95.3% of kept)
+  wing连通性: 碎块点=713  实际改判=713
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23140  wing_L=475  wing_R=517
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1073/splatfacto/2026-08-24_174419/gaussian_features_f1073_labeled.csv
+[density] frame_idx=1074: 窗口内1/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110']
+[density] body候选体素连通分量分析: 丢弃1/7966个非最大连通分量的碎块体素
+
+[f1074] n_total=25059 n_kept=22262 (88.8%)  n_frames_in_window=72
+  body候选体素数(阈值+连通分量后)=7965  body候选点数=21216(95.3% of kept)
+  wing连通性: 碎块点=760  实际改判=760
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=24332  wing_L=503  wing_R=224
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1074/splatfacto/2026-08-24_174419/gaussian_features_f1074_labeled.csv
+[density] frame_idx=1075: 窗口内2/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111']
+[density] body候选体素连通分量分析: 丢弃1/7901个非最大连通分量的碎块体素
+
+[f1075] n_total=22507 n_kept=20224 (89.9%)  n_frames_in_window=71
+  body候选体素数(阈值+连通分量后)=7900  body候选点数=19228(95.1% of kept)
+  wing连通性: 碎块点=523  实际改判=523
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21390  wing_L=899  wing_R=218
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1075/splatfacto/2026-08-24_174419/gaussian_features_f1075_labeled.csv
+[density] frame_idx=1076: 窗口内3/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112']
+[density] body候选体素连通分量分析: 丢弃1/7835个非最大连通分量的碎块体素
+
+[f1076] n_total=24071 n_kept=21508 (89.4%)  n_frames_in_window=70
+  body候选体素数(阈值+连通分量后)=7834  body候选点数=20558(95.6% of kept)
+  wing连通性: 碎块点=554  实际改判=554
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22746  wing_L=1116  wing_R=209
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1076/splatfacto/2026-08-24_174421/gaussian_features_f1076_labeled.csv
+[density] frame_idx=1077: 窗口内4/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113']
+[density] body候选体素连通分量分析: 丢弃2/7762个非最大连通分量的碎块体素
+
+[f1077] n_total=24001 n_kept=21516 (89.6%)  n_frames_in_window=69
+  body候选体素数(阈值+连通分量后)=7760  body候选点数=20328(94.5% of kept)
+  wing连通性: 碎块点=579  实际改判=579
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22340  wing_L=1202  wing_R=459
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1077/splatfacto/2026-08-24_174422/gaussian_features_f1077_labeled.csv
+[density] frame_idx=1078: 窗口内5/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114']
+[density] body候选体素连通分量分析: 丢弃7/7701个非最大连通分量的碎块体素
+
+[f1078] n_total=23519 n_kept=21171 (90.0%)  n_frames_in_window=68
+  body候选体素数(阈值+连通分量后)=7694  body候选点数=19983(94.4% of kept)
+  wing连通性: 碎块点=766  实际改判=766
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22789  wing_L=451  wing_R=279
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1078/splatfacto/2026-08-24_174422/gaussian_features_f1078_labeled.csv
+[density] frame_idx=1079: 窗口内6/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115']
+[density] body候选体素连通分量分析: 丢弃5/7639个非最大连通分量的碎块体素
+
+[f1079] n_total=22357 n_kept=20002 (89.5%)  n_frames_in_window=67
+  body候选体素数(阈值+连通分量后)=7634  body候选点数=18992(95.0% of kept)
+  wing连通性: 碎块点=645  实际改判=645
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21362  wing_L=825  wing_R=170
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1079/splatfacto/2026-08-24_174423/gaussian_features_f1079_labeled.csv
+[density] frame_idx=1080: 窗口内7/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116']
+[density] body候选体素连通分量分析: 丢弃4/7578个非最大连通分量的碎块体素
+
+[f1080] n_total=24013 n_kept=21590 (89.9%)  n_frames_in_window=66
+  body候选体素数(阈值+连通分量后)=7574  body候选点数=20593(95.4% of kept)
+  wing连通性: 碎块点=555  实际改判=555
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22813  wing_L=927  wing_R=273
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1080/splatfacto/2026-08-24_174549/gaussian_features_f1080_labeled.csv
+[density] frame_idx=1081: 窗口内8/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117']
+[density] body候选体素连通分量分析: 丢弃3/7510个非最大连通分量的碎块体素
+
+[f1081] n_total=24176 n_kept=21809 (90.2%)  n_frames_in_window=65
+  body候选体素数(阈值+连通分量后)=7507  body候选点数=20655(94.7% of kept)
+  wing连通性: 碎块点=683  实际改判=683
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22972  wing_L=1025  wing_R=179
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1081/splatfacto/2026-08-24_174621/gaussian_features_f1081_labeled.csv
+[density] frame_idx=1082: 窗口内9/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118']
+[density] body候选体素连通分量分析: 丢弃4/7451个非最大连通分量的碎块体素
+
+[f1082] n_total=24030 n_kept=21566 (89.7%)  n_frames_in_window=64
+  body候选体素数(阈值+连通分量后)=7447  body候选点数=20379(94.5% of kept)
+  wing连通性: 碎块点=760  实际改判=760
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23064  wing_L=540  wing_R=426
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1082/splatfacto/2026-08-24_174628/gaussian_features_f1082_labeled.csv
+[density] frame_idx=1083: 窗口内10/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119']
+[density] body候选体素连通分量分析: 丢弃4/7390个非最大连通分量的碎块体素
+
+[f1083] n_total=24451 n_kept=21992 (89.9%)  n_frames_in_window=63
+  body候选体素数(阈值+连通分量后)=7386  body候选点数=20682(94.0% of kept)
+  wing连通性: 碎块点=1005  实际改判=1005
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23597  wing_L=575  wing_R=279
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1083/splatfacto/2026-08-24_174629/gaussian_features_f1083_labeled.csv
+[density] frame_idx=1084: 窗口内11/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120']
+[density] body候选体素连通分量分析: 丢弃4/7324个非最大连通分量的碎块体素
+
+[f1084] n_total=23528 n_kept=21090 (89.6%)  n_frames_in_window=62
+  body候选体素数(阈值+连通分量后)=7320  body候选点数=19863(94.2% of kept)
+  wing连通性: 碎块点=811  实际改判=811
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22220  wing_L=510  wing_R=798
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1084/splatfacto/2026-08-24_174629/gaussian_features_f1084_labeled.csv
+[density] frame_idx=1085: 窗口内12/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121']
+[density] body候选体素连通分量分析: 丢弃4/7262个非最大连通分量的碎块体素
+
+[f1085] n_total=23647 n_kept=21151 (89.4%)  n_frames_in_window=61
+  body候选体素数(阈值+连通分量后)=7258  body候选点数=19839(93.8% of kept)
+  wing连通性: 碎块点=786  实际改判=786
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22541  wing_L=673  wing_R=433
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1085/splatfacto/2026-08-24_174629/gaussian_features_f1085_labeled.csv
+[density] frame_idx=1086: 窗口内13/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122']
+[density] body候选体素连通分量分析: 丢弃4/7189个非最大连通分量的碎块体素
+
+[f1086] n_total=24697 n_kept=22128 (89.6%)  n_frames_in_window=60
+  body候选体素数(阈值+连通分量后)=7185  body候选点数=20864(94.3% of kept)
+  wing连通性: 碎块点=1008  实际改判=1008
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23998  wing_L=428  wing_R=271
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1086/splatfacto/2026-08-24_174630/gaussian_features_f1086_labeled.csv
+[density] frame_idx=1087: 窗口内14/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123']
+[density] body候选体素连通分量分析: 丢弃3/7114个非最大连通分量的碎块体素
+
+[f1087] n_total=24395 n_kept=21698 (88.9%)  n_frames_in_window=59
+  body候选体素数(阈值+连通分量后)=7111  body候选点数=20289(93.5% of kept)
+  wing连通性: 碎块点=992  实际改判=992
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23563  wing_L=371  wing_R=461
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1087/splatfacto/2026-08-24_174631/gaussian_features_f1087_labeled.csv
+[density] frame_idx=1088: 窗口内15/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124']
+[density] body候选体素连通分量分析: 丢弃3/7032个非最大连通分量的碎块体素
+
+[f1088] n_total=25292 n_kept=22556 (89.2%)  n_frames_in_window=58
+  body候选体素数(阈值+连通分量后)=7029  body候选点数=20910(92.7% of kept)
+  wing连通性: 碎块点=906  实际改判=906
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23647  wing_L=227  wing_R=1418
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1088/splatfacto/2026-08-24_174632/gaussian_features_f1088_labeled.csv
+[density] frame_idx=1089: 窗口内16/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125']
+[density] body候选体素连通分量分析: 丢弃2/6967个非最大连通分量的碎块体素
+
+[f1089] n_total=23680 n_kept=21341 (90.1%)  n_frames_in_window=57
+  body候选体素数(阈值+连通分量后)=6965  body候选点数=19825(92.9% of kept)
+  wing连通性: 碎块点=945  实际改判=945
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22592  wing_L=566  wing_R=522
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1089/splatfacto/2026-08-24_174633/gaussian_features_f1089_labeled.csv
+[density] frame_idx=1090: 窗口内17/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126']
+[density] body候选体素连通分量分析: 丢弃1/6897个非最大连通分量的碎块体素
+
+[f1090] n_total=23700 n_kept=21273 (89.8%)  n_frames_in_window=56
+  body候选体素数(阈值+连通分量后)=6896  body候选点数=19580(92.0% of kept)
+  wing连通性: 碎块点=1191  实际改判=1191
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22031  wing_L=1383  wing_R=286
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1090/splatfacto/2026-08-24_174635/gaussian_features_f1090_labeled.csv
+[density] frame_idx=1091: 窗口内18/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127']
+
+[f1091] n_total=23961 n_kept=21461 (89.6%)  n_frames_in_window=55
+  body候选体素数(阈值+连通分量后)=6833  body候选点数=19760(92.1% of kept)
+  wing连通性: 碎块点=1333  实际改判=1333
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23224  wing_L=409  wing_R=328
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1091/splatfacto/2026-08-24_174636/gaussian_features_f1091_labeled.csv
+[density] frame_idx=1092: 窗口内19/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128']
+[density] body候选体素连通分量分析: 丢弃3/6752个非最大连通分量的碎块体素
+
+[f1092] n_total=23881 n_kept=21262 (89.0%)  n_frames_in_window=54
+  body候选体素数(阈值+连通分量后)=6749  body候选点数=19602(92.2% of kept)
+  wing连通性: 碎块点=1253  实际改判=1253
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22659  wing_L=252  wing_R=970
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1092/splatfacto/2026-08-24_174727/gaussian_features_f1092_labeled.csv
+[density] frame_idx=1093: 窗口内20/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129']
+[density] body候选体素连通分量分析: 丢弃3/6689个非最大连通分量的碎块体素
+
+[f1093] n_total=23978 n_kept=21519 (89.7%)  n_frames_in_window=53
+  body候选体素数(阈值+连通分量后)=6686  body候选点数=19816(92.1% of kept)
+  wing连通性: 碎块点=1233  实际改判=1233
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22912  wing_L=710  wing_R=356
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1093/splatfacto/2026-08-24_174822/gaussian_features_f1093_labeled.csv
+[density] frame_idx=1094: 窗口内21/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130']
+[density] body候选体素连通分量分析: 丢弃4/6613个非最大连通分量的碎块体素
+
+[f1094] n_total=24951 n_kept=22325 (89.5%)  n_frames_in_window=52
+  body候选体素数(阈值+连通分量后)=6609  body候选点数=20647(92.5% of kept)
+  wing连通性: 碎块点=1063  实际改判=1063
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23543  wing_L=1080  wing_R=328
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1094/splatfacto/2026-08-24_174838/gaussian_features_f1094_labeled.csv
+[density] frame_idx=1095: 窗口内22/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131']
+[density] body候选体素连通分量分析: 丢弃4/6545个非最大连通分量的碎块体素
+
+[f1095] n_total=24607 n_kept=22056 (89.6%)  n_frames_in_window=51
+  body候选体素数(阈值+连通分量后)=6541  body候选点数=20149(91.4% of kept)
+  wing连通性: 碎块点=1404  实际改判=1404
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23807  wing_L=572  wing_R=228
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1095/splatfacto/2026-08-24_174838/gaussian_features_f1095_labeled.csv
+[density] frame_idx=1096: 窗口内23/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132']
+[density] body候选体素连通分量分析: 丢弃3/6463个非最大连通分量的碎块体素
+
+[f1096] n_total=24924 n_kept=22262 (89.3%)  n_frames_in_window=50
+  body候选体素数(阈值+连通分量后)=6460  body候选点数=20413(91.7% of kept)
+  wing连通性: 碎块点=1299  实际改判=1299
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23837  wing_L=736  wing_R=351
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1096/splatfacto/2026-08-24_174840/gaussian_features_f1096_labeled.csv
+[density] frame_idx=1097: 窗口内24/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133']
+[density] body候选体素连通分量分析: 丢弃1/6385个非最大连通分量的碎块体素
+
+[f1097] n_total=23526 n_kept=21126 (89.8%)  n_frames_in_window=49
+  body候选体素数(阈值+连通分量后)=6384  body候选点数=19182(90.8% of kept)
+  wing连通性: 碎块点=1349  实际改判=1349
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22512  wing_L=655  wing_R=359
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1097/splatfacto/2026-08-24_174840/gaussian_features_f1097_labeled.csv
+[density] frame_idx=1098: 窗口内25/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134']
+[density] body候选体素连通分量分析: 丢弃1/6319个非最大连通分量的碎块体素
+
+[f1098] n_total=24540 n_kept=22058 (89.9%)  n_frames_in_window=48
+  body候选体素数(阈值+连通分量后)=6318  body候选点数=19914(90.3% of kept)
+  wing连通性: 碎块点=1435  实际改判=1435
+  confidence=low  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=23233  wing_L=640  wing_R=667
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1098/splatfacto/2026-08-24_174843/gaussian_features_f1098_labeled.csv
+[density] frame_idx=1099: 窗口内26/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135']
+[density] body候选体素连通分量分析: 丢弃1/6245个非最大连通分量的碎块体素
+
+[f1099] n_total=23590 n_kept=21192 (89.8%)  n_frames_in_window=47
+  body候选体素数(阈值+连通分量后)=6244  body候选点数=18846(88.9% of kept)
+  wing连通性: 碎块点=1656  实际改判=1656
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21845  wing_L=1343  wing_R=402
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1099/splatfacto/2026-08-24_174844/gaussian_features_f1099_labeled.csv
+[density] frame_idx=1100: 窗口内27/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136']
+[density] body候选体素连通分量分析: 丢弃1/6174个非最大连通分量的碎块体素
+
+[f1100] n_total=23860 n_kept=21477 (90.0%)  n_frames_in_window=46
+  body候选体素数(阈值+连通分量后)=6173  body候选点数=19261(89.7% of kept)
+  wing连通性: 碎块点=1201  实际改判=1201
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21822  wing_L=1267  wing_R=771
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1100/splatfacto/2026-08-24_174846/gaussian_features_f1100_labeled.csv
+[density] frame_idx=1101: 窗口内28/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137']
+[density] body候选体素连通分量分析: 丢弃1/6081个非最大连通分量的碎块体素
+
+[f1101] n_total=24288 n_kept=21828 (89.9%)  n_frames_in_window=45
+  body候选体素数(阈值+连通分量后)=6080  body候选点数=19378(88.8% of kept)
+  wing连通性: 碎块点=1816  实际改判=1816
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=22726  wing_L=1379  wing_R=183
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1101/splatfacto/2026-08-24_174846/gaussian_features_f1101_labeled.csv
+[density] frame_idx=1102: 窗口内29/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138']
+[density] body候选体素连通分量分析: 丢弃1/5986个非最大连通分量的碎块体素
+
+[f1102] n_total=23805 n_kept=21508 (90.4%)  n_frames_in_window=44
+  body候选体素数(阈值+连通分量后)=5985  body候选点数=18770(87.3% of kept)
+  wing连通性: 碎块点=1631  实际改判=1631
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21748  wing_L=1398  wing_R=659
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1102/splatfacto/2026-08-24_174847/gaussian_features_f1102_labeled.csv
+[density] frame_idx=1103: 窗口内30/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139']
+[density] body候选体素连通分量分析: 丢弃1/5882个非最大连通分量的碎块体素
+
+[f1103] n_total=23172 n_kept=20710 (89.4%)  n_frames_in_window=43
+  body候选体素数(阈值+连通分量后)=5881  body候选点数=18381(88.8% of kept)
+  wing连通性: 碎块点=1582  实际改判=1582
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_L  wing_B -> wing_R
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21967  wing_L=754  wing_R=451
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1103/splatfacto/2026-08-24_174847/gaussian_features_f1103_labeled.csv
+[density] frame_idx=1104: 窗口内31/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139', 'f1140']
+[density] body候选体素连通分量分析: 丢弃1/5789个非最大连通分量的碎块体素
+
+[f1104] n_total=23940 n_kept=21461 (89.6%)  n_frames_in_window=42
+  body候选体素数(阈值+连通分量后)=5788  body候选点数=18744(87.3% of kept)
+  wing连通性: 碎块点=1400  实际改判=1400
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21422  wing_L=1395  wing_R=1123
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1104/splatfacto/2026-08-24_174910/gaussian_features_f1104_labeled.csv
+[density] frame_idx=1105: 窗口内32/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139', 'f1140', 'f1141']
+
+[f1105] n_total=22735 n_kept=20338 (89.5%)  n_frames_in_window=41
+  body候选体素数(阈值+连通分量后)=5698  body候选点数=17431(85.7% of kept)
+  wing连通性: 碎块点=1948  实际改判=1948
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=20829  wing_L=443  wing_R=1463
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1105/splatfacto/2026-08-24_175017/gaussian_features_f1105_labeled.csv
+[density] frame_idx=1106: 窗口内33/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139', 'f1140', 'f1141', 'f1142']
+
+[f1106] n_total=24094 n_kept=21541 (89.4%)  n_frames_in_window=40
+  body候选体素数(阈值+连通分量后)=5592  body候选点数=18365(85.3% of kept)
+  wing连通性: 碎块点=1389  实际改判=1389
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21208  wing_L=1752  wing_R=1134
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1106/splatfacto/2026-08-24_175045/gaussian_features_f1106_labeled.csv
+[density] frame_idx=1107: 窗口内34/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139', 'f1140', 'f1141', 'f1142', 'f1143']
+
+[f1107] n_total=23251 n_kept=20674 (88.9%)  n_frames_in_window=39
+  body候选体素数(阈值+连通分量后)=5498  body候选点数=17645(85.3% of kept)
+  wing连通性: 碎块点=1297  实际改判=1297
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=19739  wing_L=1668  wing_R=1844
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1107/splatfacto/2026-08-24_175045/gaussian_features_f1107_labeled.csv
+[density] frame_idx=1108: 窗口内35/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139', 'f1140', 'f1141', 'f1142', 'f1143', 'f1144']
+
+[f1108] n_total=24252 n_kept=21855 (90.1%)  n_frames_in_window=38
+  body候选体素数(阈值+连通分量后)=5389  body候选点数=18468(84.5% of kept)
+  wing连通性: 碎块点=1118  实际改判=1118
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=20801  wing_L=1706  wing_R=1745
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1108/splatfacto/2026-08-24_175047/gaussian_features_f1108_labeled.csv
+[density] frame_idx=1109: 窗口内36/73帧缺少T2产出(_marked.csv)，跳过不参与累加: ['f1110', 'f1111', 'f1112', 'f1113', 'f1114', 'f1115', 'f1116', 'f1117', 'f1118', 'f1119', 'f1120', 'f1121', 'f1122', 'f1123', 'f1124', 'f1125', 'f1126', 'f1127', 'f1128', 'f1129', 'f1130', 'f1131', 'f1132', 'f1133', 'f1134', 'f1135', 'f1136', 'f1137', 'f1138', 'f1139', 'f1140', 'f1141', 'f1142', 'f1143', 'f1144', 'f1145']
+[density] body候选体素连通分量分析: 丢弃1/5290个非最大连通分量的碎块体素
+
+[f1109] n_total=23628 n_kept=21200 (89.7%)  n_frames_in_window=37
+  body候选体素数(阈值+连通分量后)=5289  body候选点数=17566(82.9% of kept)
+  wing连通性: 碎块点=2506  实际改判=2506
+  confidence=high  (wing_merged强制low; body候选点数<20或>0.9*n_kept强制low; 否则high)
+  L/R锚定: wing_A -> wing_R  wing_B -> wing_L
+  part_label分布(全部点，含if_keep=False的1-NN传播): body=21126  wing_L=1638  wing_R=864
+  labeled csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1109/splatfacto/2026-08-24_175047/gaussian_features_f1109_labeled.csv
+
+== T4 kinematics pipeline: /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense ==
+[build_sequence] 150 labeled frames under /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense: f0960..f1109
+[build_sequence] 0/150 frames failed (n_body_points < 10)
+[f_residual_jitter] body_cm csv -> /home/computer0/fly_project/fly_gsplat/postprocessing/kinematics/correct_body_axis/diag/f_body_cm.csv (150 rows)
+[anchor_detect] angle_dev_deg <= 88.025 deg (quantile=0.25, n_valid=150)
+[anchor_detect] wing_span >= 0.066595 (quantile=0.75, n_valid=150)
+[anchor_detect] eigval_ratio < 0.2
+  -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics/kinematics_ratio3_sh0_dense.csv  (150 frame(s))
+  status=ok: 61/150
+  非ok帧: [(960, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=355 in 300 iters (best=292)'), (963, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=354 in 300 iters (best=296)'), (964, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=304 in 300 iters (best=285)'), (965, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=266 in 300 iters (best=212)'), (966, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=232 in 300 iters (best=190)'), (967, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=349 in 300 iters (best=298)'), (969, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=180 in 300 iters (best=157)'), (970, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=376 in 300 iters (best=320)'), (971, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=400 in 300 iters (best=328)'), (972, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=328 in 300 iters (best=291)'), (975, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=334 in 300 iters (best=311)'), (976, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=212 in 300 iters (best=190)'), (977, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=234 in 300 iters (best=215)'), (978, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=169 in 300 iters (best=161)'), (980, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=261 in 300 iters (best=256)'), (983, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=228 in 300 iters (best=214)'), (987, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=142 in 300 iters (best=123)'), (988, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=166 in 300 iters (best=130)'), (990, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=382 in 300 iters (best=359)'), (991, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=54 in 300 iters (best=49)'), (993, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=111 in 300 iters (best=109)'), (994, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=156 in 300 iters (best=149)'), (995, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=244 in 300 iters (best=197)'), (999, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=150 in 300 iters (best=143)'), (1003, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=187 in 300 iters (best=177)'), (1004, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=201 in 300 iters (best=187)'), (1007, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=174 in 300 iters (best=150)'), (1008, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=52 in 300 iters (best=49)'), (1009, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=143 in 300 iters (best=114)'), (1010, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=126 in 300 iters (best=122)'), (1011, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=126 in 300 iters (best=114)'), (1012, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=205 in 300 iters (best=181)'), (1013, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=173 in 300 iters (best=162)'), (1014, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=237 in 300 iters (best=231)'), (1015, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=91 in 300 iters (best=90)'), (1016, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=136 in 300 iters (best=135)'), (1018, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=100 in 300 iters (best=89)'), (1020, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=276 in 300 iters (best=196)'), (1021, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=123 in 300 iters (best=121)'), (1023, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=117 in 300 iters (best=110)'), (1024, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=151 in 300 iters (best=146)'), (1025, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=122 in 300 iters (best=121)'), (1026, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=218 in 300 iters (best=193)'), (1028, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=182 in 300 iters (best=131)'), (1029, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=109 in 300 iters (best=106)'), (1031, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=153 in 300 iters (best=138)'), (1035, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=142 in 300 iters (best=119)'), (1038, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=137 in 300 iters (best=127)'), (1039, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=203 in 300 iters (best=160)'), (1040, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=187 in 300 iters (best=154)'), (1041, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=222 in 300 iters (best=159)'), (1042, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=156 in 300 iters (best=125)'), (1043, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=153 in 300 iters (best=142)'), (1044, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=130 in 300 iters (best=119)'), (1048, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=200 in 300 iters (best=196)'), (1049, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=170 in 300 iters (best=150)'), (1050, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=170 in 300 iters (best=148)'), (1051, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=119 in 300 iters (best=109)'), (1053, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=245 in 300 iters (best=233)'), (1054, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=109 in 300 iters (best=98)'), (1055, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=209 in 300 iters (best=147)'), (1057, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=150 in 300 iters (best=135)'), (1058, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=238 in 300 iters (best=212)'), (1059, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=182 in 300 iters (best=157)'), (1060, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=217 in 300 iters (best=188)'), (1061, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=145 in 300 iters (best=144)'), (1064, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=220 in 300 iters (best=194)'), (1069, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=243 in 300 iters (best=231)'), (1076, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=180 in 300 iters (best=158)'), (1077, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=193 in 300 iters (best=181)'), (1081, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=235 in 300 iters (best=183)'), (1084, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=131 in 300 iters (best=128)'), (1086, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=95 in 300 iters (best=80)'), (1088, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=315 in 300 iters (best=313)'), (1089, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=187 in 300 iters (best=161);wing_R:fit_plane RANSAC: no sample reached min_inliers=124 in 300 iters (best=119)'), (1091, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=123 in 300 iters (best=119)'), (1094, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=187 in 300 iters (best=177)'), (1096, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=189 in 300 iters (best=167)'), (1097, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=190 in 300 iters (best=177)'), (1099, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=319 in 300 iters (best=307)'), (1100, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=255 in 300 iters (best=214)'), (1101, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=327 in 300 iters (best=290)'), (1103, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=231 in 300 iters (best=224)'), (1104, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=319 in 300 iters (best=311)'), (1105, 'wing_R:fit_plane RANSAC: no sample reached min_inliers=382 in 300 iters (best=320)'), (1106, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=445 in 300 iters (best=409)'), (1107, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=335 in 300 iters (best=315)'), (1108, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=455 in 300 iters (best=423)'), (1109, 'wing_L:fit_plane RANSAC: no sample reached min_inliers=431 in 300 iters (best=382)')]
+[f0961] csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0961/splatfacto/2026-08-24_172401/gaussian_features_f0961_labeled.csv
+[f0961] reprojection -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics/reprojection/reproj_f0961.png
+[f0998] csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f0998/splatfacto/2026-08-24_173055/gaussian_features_f0998_labeled.csv
+[f0998] reprojection -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics/reprojection/reproj_f0998.png
+[f1037] csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1037/splatfacto/2026-08-24_173737/gaussian_features_f1037_labeled.csv
+[f1037] reprojection -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics/reprojection/reproj_f1037.png
+[f1073] csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1073/splatfacto/2026-08-24_174419/gaussian_features_f1073_labeled.csv
+[f1073] reprojection -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics/reprojection/reproj_f1073.png
+[f1102] csv -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/ratio3_sh0_dense/f1102/splatfacto/2026-08-24_174847/gaussian_features_f1102_labeled.csv
+[f1102] reprojection -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics/reprojection/reproj_f1102.png
+
+============================================================
+5帧请求汇总: 成功 5  失败 0
+  -> /home/computer0/fly_project/fly_gsplat/outputs/ctrl_009_001_ratio3_sh0_dense_valid480_smoketest_wide/kinematics
+
+============================================================
+done: 1/1 ok

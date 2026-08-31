@@ -1,0 +1,13 @@
+=== Phase A: data prep ===
+Traceback (most recent call last):
+  File "/home/computer0/fly_project/fly_gsplat/gpu/schedule/schedule.py", line 228, in <module>
+    main()
+  File "/home/computer0/fly_project/fly_gsplat/gpu/schedule/schedule.py", line 198, in main
+    prepare_all_frames(frames, sparse_dir, base_name)
+  File "/home/computer0/fly_project/fly_gsplat/gpu/schedule/schedule.py", line 108, in prepare_all_frames
+    generate_dataset(str(data_dir), sparse_dir, target_frame=frame_idx,
+  File "/home/computer0/fly_project/fly_gsplat/generate_dataset.py", line 49, in generate_dataset
+    im = reconstruct_frame_image(sparse_file, target_frame, w_full, h_full, white_bg=white_bg)
+  File "/home/computer0/fly_project/fly_gsplat/utils/dataset.py", line 26, in reconstruct_frame_image
+    rows = indIm[:, 0].astype(int) - 1
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed

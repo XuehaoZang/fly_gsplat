@@ -39,7 +39,9 @@ data/{base_name}/f{NNNN}/init_points.ply
 outputs/{name}/{param_set}/f{NNNN}/
 ```
 
-`sparse_dir` (the EasyWand + sparse pixel source) lives on the cloud/NAS drive mounted at `/mnt/x` (`X:\...` from Windows) — it is never copied wholesale. `generate_dataset.py` pulls only the frames it's asked for and writes the processed result locally under `data/{base_name}/f{NNNN}/`, which (together with `outputs/`) is gitignored.
+`sparse_dir` (the EasyWand + sparse pixel source) lives on the cloud/NAS drive mounted at `/mnt/x` (`X:\...` from Windows) — it is never copied wholesale. `generate_dataset.py` pulls only the frames it's asked for and writes the processed result locally under `{base_name}/f{NNNN}/`, which (together with `outputs/`) is gitignored.
+
+`base_name` is a full path relative to the repo root, not just a name under a fixed `data/` folder — e.g. `data/ctrl_009_002` (legacy single-video layout) or `ctrl_009/013` (one top-level dir per session, one subdir per video — see [Data layout](#data-layout)). Pick whatever root keeps a given batch's data out of everything else's way; `data_dir_for()` in `gpu/schedule/common.py` just does `REPO / base_name / f"f{NNNN}"`.
 
 There are three ways to run the pipeline. Pick one:
 - **1. Parallel** (recommended) — full sweeps across both GPUs.
@@ -65,24 +67,85 @@ Multiple sweeps run **sequentially**, one `--config` call at a time (no built-in
 /home/computer0/anaconda3/envs/fly_gsplat/bin/python gpu/schedule/schedule.py --config gpu/schedule/configs/b.json
 ```
 
-**Config schema** (`gpu/schedule/configs/*.json`; see `ctrl_009_002_ratio3_sh0_smoketest.json` for a small sample):
+**Config schema** (`gpu/schedule/configs/sample_config.json` is the only one tracked in git — everything else under `gpu/schedule/configs/` is gitignored, keep real sweep configs organized in one subfolder per batch, e.g. `gpu/schedule/configs/ctrl_009_mid200/`):
 ```json
 {
-  "name": "ctrl_009_002_ratio3_sh0_full",
-  "sparse_dir": "X:\\antenna\\control\\009_25052026\\Sparse\\Expr_009_mov_002",
-  "base_name": "ctrl_009_002",
+  "name": "ctrl_009_013_ratio3_sh0_dense_mid200",
+  "sparse_dir": "X:\\antenna\\control\\009_25052026\\Sparse\\Expr_009_mov_013",
+  "base_name": "ctrl_009/013",
   "max_iters": 2000,
   "param_sets": {
-    "ratio3_sh0": ["--pipeline.model.use-scale-regularization", "True", "--pipeline.model.sh-degree", "0"]
+    "ratio3_sh0_dense": ["--pipeline.model.use-scale-regularization", "True",
+                         "--pipeline.model.max-gauss-ratio", "3.0",
+                         "--pipeline.model.sh-degree", "0",
+                         "--pipeline.model.warmup-length", "50",
+                         "--pipeline.model.stop-split-at", "1800",
+                         "--pipeline.model.densify-grad-thresh", "0.0004",
+                         "--pipeline.model.refine-every", "50"]
   },
-  "frames": {"start": 0, "end": 640}
+  "frames": {"start": 1100, "end": 1300}
 }
 ```
 - `name` → run/sweep identity, output goes to `outputs/{name}/`.
-- `base_name` → input dataset dir, `data/{base_name}/f{NNNN}/`.
+- `base_name` → input dataset dir (full path relative to repo root, see above), `{base_name}/f{NNNN}/`. It must already contain `calibration_easyWandData.mat` (+ `camera_KRX0.mat`) before the run — `generate_dataset.py` reads calibration from `{base_name}/calibration_easyWandData.mat`, it does not fetch it from `sparse_dir`.
 - `frames` → Python range semantics (`end` exclusive).
+- `ratio3_sh0` (no densify overrides) vs `ratio3_sh0_dense` (adds `densify-grad-thresh`/`refine-every`, produces denser point clouds) are two different param sets kept side by side for the `ctrl_009_002` video — **`ratio3_sh0_dense` is the current/production one**, use it for any new run unless there's a specific reason not to.
 - First run writes `outputs/{name}/sweep_meta.json`; rerunning the same `name` with a **different** config hard-errors (field-level diff printed) instead of silently overwriting.
 - ⚠️ `--debug-checkpoint` is a CLI flag using model `splatfacto-checkpoint/`, not part of the config.
+
+**Full run from a sparse path, start to finish** — no manual preprocessing step is needed anywhere in this:
+1. Point `sparse_dir` at the video's `Camera*_sparse.mat` folder (`X:\...`, same drive for every video in a session) and pick a `base_name` — a session gets one top-level dir (e.g. `ctrl_009/`), one subdirectory per video (`ctrl_009/013/`) so `data/` doesn't accumulate one folder per video.
+2. Drop the calibration `.mat` files into `{base_name}/` once (same EasyWand calibration for every video shot in the same session/rig — no need to recalibrate per video).
+3. Write the config (above) and run `python gpu/schedule/schedule.py --config <path>` — Phase A (dataset + hull generation) and Phase B/C (training) all happen inside this one call, per frame, idempotently.
+4. Once training is done, run kinematics on the result (`python -m postprocessing.batch_calc_kinematics --sweep-name <name> --group <param_set>`, see [Postprocessing](#postprocessing--visualization)).
+
+For a whole batch of videos (many configs sharing one calibration), see the worked example below.
+
+#### Worked example: 009_25052026 session, valid-window centered 480 frames per video
+
+**Preprocessing/selection step (do this first, no GPU needed).** A video's sparse mat file has a fixed number of frame *slots* (e.g. 2401), but the fly's real tracked signal usually covers only a fraction of that — the rest is empty/degenerate `indIm`. Naively training the middle N frames of the slot count (the old `ctrl_009_mid200` approach below) risks training on frames with no real detections. `select_frame_window.py` fixes this: per video, per camera it finds contiguous runs of real (non-degenerate) detections, trims `MARGIN_FRAMES` off each run's ends (in/out-of-frame transition, unreliable even when a detection exists), intersects across all 4 cameras, keeps the longest surviving run, and — if that run exceeds `MIN_SIGNAL_FRAMES` — centers a fixed `TRAIN_FRAMES` (480) window inside it. Videos whose longest clean run is too short are filtered out entirely rather than trained on marginal/empty frames.
+
+```bash
+python select_frame_window.py \
+  --sparse-root "X:\antenna\control\009_25052026\Sparse" \
+  --out-csv gpu/schedule/configs/ctrl_009_valid480/frame_selection.csv
+```
+Writes one row per video: raw/trimmed signal length, pass/fail, and (if passed) the exact `[train_start, train_end)` frame range — this csv is the audit trail for which videos were trained and on what frames, and why the rest were dropped. On the 009_25052026 session, **17/29 videos passed** (12 had too little real tracking signal for a 480-frame window — several down to only ~160 raw frame slots total).
+
+Then generate one `schedule.py` config per surviving video and run them:
+```bash
+python gpu/schedule/generate_configs_from_selection.py \
+  --selection-csv gpu/schedule/configs/ctrl_009_valid480/frame_selection.csv \
+  --sparse-root "X:\antenna\control\009_25052026\Sparse" \
+  --data-root data/ctrl_009 \
+  --out-dir gpu/schedule/configs/ctrl_009_valid480 \
+  --name-prefix ctrl_009 \
+  --param-set-name ratio3_sh0_dense
+
+cd /home/computer0/fly_project/fly_gsplat
+nohup ./gpu/schedule/run_valid480_sweep.sh gpu/schedule/configs/ctrl_009_valid480 ratio3_sh0_dense \
+  > gpu/schedule/logs/run_valid480_sweep_master.log 2>&1 &
+disown
+```
+
+`run_valid480_sweep.sh <configs_dir> [param_set_name]` loops over every config in `<configs_dir>` **sequentially** (one `schedule.py --config` call per video, each one using all `WORKERS_PER_GPU`×2 GPU workers until that video's 480 frames are done) and runs `batch_calc_kinematics.py` (T1–T4, including the `eta_unwrap` post-pass on `eta_L`/`eta_R`, see [Postprocessing](#postprocessing--visualization)) for that video immediately after its training finishes, before moving to the next video. `nohup ... & disown` detaches it from the shell so it survives a closed terminal/SSH disconnect. Each video's 480 frames take roughly an hour end-to-end on 2×A5000 — budget accordingly for a full multi-video batch.
+
+Monitor:
+```bash
+tail -f gpu/schedule/logs/run_valid480_sweep_master.log      # overall progress (which video is running)
+tail -f gpu/schedule/logs/ctrl_009_<mov>_ratio3_sh0_dense_valid480.log             # one video's training log
+tail -f gpu/schedule/logs/ctrl_009_<mov>_ratio3_sh0_dense_valid480_kinematics.log  # one video's kinematics log
+nvidia-smi                                                    # confirm both GPUs are busy
+ls outputs/ctrl_009_<mov>_ratio3_sh0_dense_valid480/ratio3_sh0_dense/ | wc -l      # frames trained so far for that video
+```
+
+⚠️ T3 (`postprocessing/labeling/motion/`) accumulates motion evidence over a locked ±36-frame window (73 frames total, see `HALF_WINDOW` in `postprocessing/labeling/motion/density.py`) around each target frame — it degrades gracefully with a partially-covered window (validated down to a ~37/73 one-sided window, i.e. right at a video's first/last 36 trained frames) but needs *some* real neighbor context, not near-total absence of it. Don't smoke-test T3/T4 on an isolated handful of frames — train at least ~150 contiguous frames (covering some fully-windowed frames) or it will spuriously fail with `weighted_pca: sum of weights must be positive`.
+
+<details>
+<summary>Superseded: middle-200-frames approach (<code>ctrl_009_mid200</code>)</summary>
+
+The first pass at batching this session picked the middle 200 frames of each video's total *slot count* (2401), not its real signal — mistaking "how many frame slots exist" for "how many frames have real tracking". `run_mid200_sweep.sh`/`gpu/schedule/configs/ctrl_009_mid200/` are kept for reference but should not be used for new runs; use `select_frame_window.py` + `run_valid480_sweep.sh` above instead.
+</details>
 
 ### 2. Serial batch — `run/serial/`
 
@@ -149,6 +212,13 @@ python -m postprocessing.calc_kinematics [dataset_root]
 
 Output lands in `{dataset_root's parent}/kinematics/`: `kinematics_{name}.csv` + debug `.pkl`, `body_angles.png` (yaw/pitch/roll) + `wing_angles.png` (phi/theta/eta, L/R), a `reprojection/` overlay dir (≤5 frames, evenly sampled), then it launches the Viser splat/point viewer (Ctrl+C to exit).
 
+For batches (many `outputs/{sweep_name}/` dirs, e.g. one per video in a multi-video session), use `postprocessing/batch_calc_kinematics.py` instead — same T1→T4 logic, but it loops over multiple sweeps and skips the interactive viewer at the end (so it can run unattended after/alongside training), and it resolves each sweep's raw-image dir from that sweep's own config `base_name` instead of a single hardcoded path:
+```bash
+python -m postprocessing.batch_calc_kinematics --sweep-name ctrl_009_013_ratio3_sh0_dense_mid200 --group ratio3_sh0_dense
+python -m postprocessing.batch_calc_kinematics --configs-glob "gpu/schedule/configs/ctrl_009_mid200/*.json" --group ratio3_sh0_dense
+```
+`--group` is the `param_sets` key (`outputs/{sweep_name}/{group}/` is the trained dataset root). One sweep failing (exception anywhere in T1–T4) is caught, logged, and doesn't stop the rest of the batch.
+
 ### T1 — Gaussian features
 `utils/gaussian_features.py::compute_gaussian_features` computes a per-point feature table from each frame's `splat.ply` → `gaussian_features_f{NNNN}.csv`. Frames that already have the csv are skipped.
 
@@ -204,16 +274,22 @@ python -m postprocessing.kinematics.diagnostics \
 
 ## Data layout
 
+`{base_name}/` (see `base_name` above) holds calibration at its root and one subdirectory per frame:
 ```
-data/{experiment_name}/
-├── images/                        # Grayscale PNGs (1280×800, fly=visible, background=black)
-│   ├── P{frame}CAM1.png
-│   └── ...
-├── debug/                         # Mask and centroid verification images (auto-generated)
-├── transforms.json                # Camera metadata in Nerfstudio/OpenGL format
-├── init_points.ply                # Visual Hull point cloud for 3DGS initialisation
-└── calibration_easyWandData.mat   # EasyWand MATLAB calibration file
+{base_name}/
+├── calibration_easyWandData.mat   # EasyWand MATLAB calibration file (shared by every frame under base_name)
+├── camera_KRX0.mat
+└── f{NNNN}/
+    ├── images/                    # Grayscale PNGs (1280×800, fly=visible, background=black)
+    │   ├── P{frame}CAM1.png
+    │   └── ...
+    ├── transforms.json            # Camera metadata in Nerfstudio/OpenGL format
+    └── init_points.ply            # Visual Hull point cloud for 3DGS initialisation
 ```
+
+Two layouts in active use:
+- `data/{video_name}/` — one video per top-level dir (legacy/single-video convention, e.g. `data/ctrl_009_002/`).
+- `{session}/{mov}/` — one top-level dir per recording session, one subdir per video, calibration copied into each (all videos in a session share the same EasyWand rig calibration) — e.g. `ctrl_009/013/` for `Expr_009_mov_013`. Use this when a session has many videos, to keep `data/` from accumulating one folder per video.
 
 ---
 

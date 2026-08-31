@@ -1,0 +1,1477 @@
+=== Phase A: data prep ===
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1100
+4 cameras loaded
+Seed: [-0.00167655  0.01345077 -0.00483518]  triangulation residual=0.139 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2026
+After outlier removal: 1945 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1100/init_points.ply
+[prepare] frame 1100 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1101
+4 cameras loaded
+Seed: [-0.00168053  0.01344827 -0.00486833]  triangulation residual=0.136 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2052
+After outlier removal: 1981 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1101/init_points.ply
+[prepare] frame 1101 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1102
+4 cameras loaded
+Seed: [-0.00168828  0.01345159 -0.00490178]  triangulation residual=0.131 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2196
+After outlier removal: 2107 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1102/init_points.ply
+[prepare] frame 1102 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1103
+4 cameras loaded
+Seed: [-0.00170165  0.01345999 -0.00493265]  triangulation residual=0.125 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2098
+After outlier removal: 2016 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1103/init_points.ply
+[prepare] frame 1103 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1104
+4 cameras loaded
+Seed: [-0.00171756  0.01347247 -0.00495367]  triangulation residual=0.126 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2096
+After outlier removal: 2004 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1104/init_points.ply
+[prepare] frame 1104 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1105
+4 cameras loaded
+Seed: [-0.00173493  0.01348852 -0.00497251]  triangulation residual=0.128 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2128
+After outlier removal: 2042 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1105/init_points.ply
+[prepare] frame 1105 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1106
+4 cameras loaded
+Seed: [-0.00175893  0.01351694 -0.00498927]  triangulation residual=0.128 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2186
+After outlier removal: 2101 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1106/init_points.ply
+[prepare] frame 1106 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1107
+4 cameras loaded
+Seed: [-0.00177208  0.01355103 -0.00502071]  triangulation residual=0.131 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2160
+After outlier removal: 2078 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1107/init_points.ply
+[prepare] frame 1107 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1108
+4 cameras loaded
+Seed: [-0.00177963  0.01358375 -0.00506365]  triangulation residual=0.128 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2111
+After outlier removal: 2021 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1108/init_points.ply
+[prepare] frame 1108 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1109
+4 cameras loaded
+Seed: [-0.00176358  0.01361475 -0.00510299]  triangulation residual=0.120 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2181
+After outlier removal: 2081 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1109/init_points.ply
+[prepare] frame 1109 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1110
+4 cameras loaded
+Seed: [-0.00175516  0.01364707 -0.00513709]  triangulation residual=0.123 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2211
+After outlier removal: 2126 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1110/init_points.ply
+[prepare] frame 1110 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1111
+4 cameras loaded
+Seed: [-0.00174348  0.01368632 -0.00515971]  triangulation residual=0.127 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2165
+After outlier removal: 2066 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1111/init_points.ply
+[prepare] frame 1111 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1112
+4 cameras loaded
+Seed: [-0.00174066  0.01370371 -0.00517949]  triangulation residual=0.111 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2210
+After outlier removal: 2121 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1112/init_points.ply
+[prepare] frame 1112 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1113
+4 cameras loaded
+Seed: [-0.00173655  0.01371556 -0.00519692]  triangulation residual=0.094 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2306
+After outlier removal: 2207 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1113/init_points.ply
+[prepare] frame 1113 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1114
+4 cameras loaded
+Seed: [-0.0017434   0.01373589 -0.00519745]  triangulation residual=0.080 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2235
+After outlier removal: 2146 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1114/init_points.ply
+[prepare] frame 1114 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1115
+4 cameras loaded
+Seed: [-0.0017428   0.01374509 -0.00520373]  triangulation residual=0.093 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2253
+After outlier removal: 2155 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1115/init_points.ply
+[prepare] frame 1115 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1116
+4 cameras loaded
+Seed: [-0.00174225  0.01373979 -0.00522177]  triangulation residual=0.090 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2270
+After outlier removal: 2168 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1116/init_points.ply
+[prepare] frame 1116 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1117
+4 cameras loaded
+Seed: [-0.00174482  0.0137366  -0.00523024]  triangulation residual=0.069 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2286
+After outlier removal: 2183 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1117/init_points.ply
+[prepare] frame 1117 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1118
+4 cameras loaded
+Seed: [-0.0017487   0.0137427  -0.00523703]  triangulation residual=0.057 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2479
+After outlier removal: 2374 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1118/init_points.ply
+[prepare] frame 1118 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1119
+4 cameras loaded
+Seed: [-0.00175822  0.0137651  -0.00523196]  triangulation residual=0.053 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2440
+After outlier removal: 2324 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1119/init_points.ply
+[prepare] frame 1119 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1120
+4 cameras loaded
+Seed: [-0.00177121  0.01379259 -0.00522047]  triangulation residual=0.048 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2465
+After outlier removal: 2367 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1120/init_points.ply
+[prepare] frame 1120 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1121
+4 cameras loaded
+Seed: [-0.00178774  0.01382495 -0.0052081 ]  triangulation residual=0.041 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2343
+After outlier removal: 2248 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1121/init_points.ply
+[prepare] frame 1121 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1122
+4 cameras loaded
+Seed: [-0.00180883  0.01386394 -0.00519708]  triangulation residual=0.048 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2295
+After outlier removal: 2201 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1122/init_points.ply
+[prepare] frame 1122 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1123
+4 cameras loaded
+Seed: [-0.00181992  0.01391223 -0.00517918]  triangulation residual=0.058 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2223
+After outlier removal: 2132 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1123/init_points.ply
+[prepare] frame 1123 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1124
+4 cameras loaded
+Seed: [-0.00183939  0.01396517 -0.00517123]  triangulation residual=0.073 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2212
+After outlier removal: 2116 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1124/init_points.ply
+[prepare] frame 1124 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1125
+4 cameras loaded
+Seed: [-0.00185428  0.01401395 -0.00515315]  triangulation residual=0.078 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2120
+After outlier removal: 2040 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1125/init_points.ply
+[prepare] frame 1125 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1126
+4 cameras loaded
+Seed: [-0.00187831  0.01406548 -0.00514448]  triangulation residual=0.080 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2199
+After outlier removal: 2104 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1126/init_points.ply
+[prepare] frame 1126 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1127
+4 cameras loaded
+Seed: [-0.00190389  0.01411396 -0.00512878]  triangulation residual=0.077 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2126
+After outlier removal: 2040 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1127/init_points.ply
+[prepare] frame 1127 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1128
+4 cameras loaded
+Seed: [-0.00193873  0.01416377 -0.0051172 ]  triangulation residual=0.074 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2131
+After outlier removal: 2056 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1128/init_points.ply
+[prepare] frame 1128 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1129
+4 cameras loaded
+Seed: [-0.00197273  0.01421374 -0.00510458]  triangulation residual=0.066 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2192
+After outlier removal: 2095 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1129/init_points.ply
+[prepare] frame 1129 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1130
+4 cameras loaded
+Seed: [-0.00201644  0.01427029 -0.00508444]  triangulation residual=0.058 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2166
+After outlier removal: 2077 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1130/init_points.ply
+[prepare] frame 1130 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1131
+4 cameras loaded
+Seed: [-0.00206266  0.01432276 -0.00506805]  triangulation residual=0.050 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2085
+After outlier removal: 2005 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1131/init_points.ply
+[prepare] frame 1131 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1132
+4 cameras loaded
+Seed: [-0.00210057  0.01438237 -0.005037  ]  triangulation residual=0.040 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2149
+After outlier removal: 2057 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1132/init_points.ply
+[prepare] frame 1132 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1133
+4 cameras loaded
+Seed: [-0.00214463  0.01444047 -0.00501024]  triangulation residual=0.034 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2187
+After outlier removal: 2091 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1133/init_points.ply
+[prepare] frame 1133 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1134
+4 cameras loaded
+Seed: [-0.00219038  0.01449863 -0.00498278]  triangulation residual=0.033 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2262
+After outlier removal: 2173 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1134/init_points.ply
+[prepare] frame 1134 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1135
+4 cameras loaded
+Seed: [-0.00223475  0.01454655 -0.00496122]  triangulation residual=0.046 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2245
+After outlier removal: 2153 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1135/init_points.ply
+[prepare] frame 1135 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1136
+4 cameras loaded
+Seed: [-0.00227887  0.01459987 -0.00493908]  triangulation residual=0.071 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2221
+After outlier removal: 2125 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1136/init_points.ply
+[prepare] frame 1136 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1137
+4 cameras loaded
+Seed: [-0.00231871  0.01464385 -0.00492515]  triangulation residual=0.096 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2296
+After outlier removal: 2210 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1137/init_points.ply
+[prepare] frame 1137 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1138
+4 cameras loaded
+Seed: [-0.00235018  0.01469299 -0.0049155 ]  triangulation residual=0.121 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2223
+After outlier removal: 2134 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1138/init_points.ply
+[prepare] frame 1138 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1139
+4 cameras loaded
+Seed: [-0.00236541  0.01474227 -0.00491878]  triangulation residual=0.145 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2167
+After outlier removal: 2077 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1139/init_points.ply
+[prepare] frame 1139 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1140
+4 cameras loaded
+Seed: [-0.00238725  0.01478492 -0.00491664]  triangulation residual=0.162 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2158
+After outlier removal: 2065 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1140/init_points.ply
+[prepare] frame 1140 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1141
+4 cameras loaded
+Seed: [-0.00240525  0.01482444 -0.00491275]  triangulation residual=0.182 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2103
+After outlier removal: 2019 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1141/init_points.ply
+[prepare] frame 1141 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1142
+4 cameras loaded
+Seed: [-0.0024268   0.01486313 -0.00492458]  triangulation residual=0.183 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 2081
+After outlier removal: 2001 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1142/init_points.ply
+[prepare] frame 1142 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1143
+4 cameras loaded
+Seed: [-0.00244243  0.01491096 -0.00494937]  triangulation residual=0.188 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1994
+After outlier removal: 1912 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1143/init_points.ply
+[prepare] frame 1143 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1144
+4 cameras loaded
+Seed: [-0.00245022  0.01495768 -0.00497431]  triangulation residual=0.191 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1958
+After outlier removal: 1876 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1144/init_points.ply
+[prepare] frame 1144 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1145
+4 cameras loaded
+Seed: [-0.00245087  0.01499998 -0.0049985 ]  triangulation residual=0.195 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1917
+After outlier removal: 1835 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1145/init_points.ply
+[prepare] frame 1145 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1146
+4 cameras loaded
+Seed: [-0.00245723  0.01503637 -0.0050187 ]  triangulation residual=0.200 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1890
+After outlier removal: 1818 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1146/init_points.ply
+[prepare] frame 1146 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1147
+4 cameras loaded
+Seed: [-0.00245497  0.01507001 -0.00504561]  triangulation residual=0.207 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1946
+After outlier removal: 1874 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1147/init_points.ply
+[prepare] frame 1147 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1148
+4 cameras loaded
+Seed: [-0.00244766  0.01510121 -0.00506746]  triangulation residual=0.221 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1799
+After outlier removal: 1724 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1148/init_points.ply
+[prepare] frame 1148 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1149
+4 cameras loaded
+Seed: [-0.00244808  0.01512245 -0.00507673]  triangulation residual=0.230 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1790
+After outlier removal: 1719 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1149/init_points.ply
+[prepare] frame 1149 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1150
+4 cameras loaded
+Seed: [-0.00247648  0.01514314 -0.00508792]  triangulation residual=0.231 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1738
+After outlier removal: 1676 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1150/init_points.ply
+[prepare] frame 1150 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1151
+4 cameras loaded
+Seed: [-0.00249273  0.0151641  -0.00509824]  triangulation residual=0.231 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1793
+After outlier removal: 1713 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1151/init_points.ply
+[prepare] frame 1151 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1152
+4 cameras loaded
+Seed: [-0.00249595  0.01517824 -0.00511531]  triangulation residual=0.221 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1770
+After outlier removal: 1706 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1152/init_points.ply
+[prepare] frame 1152 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1153
+4 cameras loaded
+Seed: [-0.00250397  0.01519215 -0.00513018]  triangulation residual=0.221 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1783
+After outlier removal: 1712 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1153/init_points.ply
+[prepare] frame 1153 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1154
+4 cameras loaded
+Seed: [-0.00251575  0.01519419 -0.00514503]  triangulation residual=0.225 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1805
+After outlier removal: 1731 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1154/init_points.ply
+[prepare] frame 1154 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1155
+4 cameras loaded
+Seed: [-0.00253603  0.01519309 -0.00514824]  triangulation residual=0.225 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1791
+After outlier removal: 1722 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1155/init_points.ply
+[prepare] frame 1155 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1156
+4 cameras loaded
+Seed: [-0.00255876  0.01519635 -0.00512287]  triangulation residual=0.222 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1742
+After outlier removal: 1680 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1156/init_points.ply
+[prepare] frame 1156 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1157
+4 cameras loaded
+Seed: [-0.00257452  0.01518724 -0.00509238]  triangulation residual=0.225 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1781
+After outlier removal: 1711 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1157/init_points.ply
+[prepare] frame 1157 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1158
+4 cameras loaded
+Seed: [-0.00258176  0.01516611 -0.005065  ]  triangulation residual=0.228 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1784
+After outlier removal: 1716 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1158/init_points.ply
+[prepare] frame 1158 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1159
+4 cameras loaded
+Seed: [-0.00257831  0.01514447 -0.00504758]  triangulation residual=0.227 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1904
+After outlier removal: 1822 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1159/init_points.ply
+[prepare] frame 1159 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1160
+4 cameras loaded
+Seed: [-0.00256544  0.01511544 -0.00503776]  triangulation residual=0.218 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1761
+After outlier removal: 1699 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1160/init_points.ply
+[prepare] frame 1160 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1161
+4 cameras loaded
+Seed: [-0.00255987  0.01507915 -0.00503292]  triangulation residual=0.208 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1755
+After outlier removal: 1678 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1161/init_points.ply
+[prepare] frame 1161 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1162
+4 cameras loaded
+Seed: [-0.00256633  0.01505257 -0.00503609]  triangulation residual=0.200 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1763
+After outlier removal: 1706 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1162/init_points.ply
+[prepare] frame 1162 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1163
+4 cameras loaded
+Seed: [-0.0025278   0.01503694 -0.00504935]  triangulation residual=0.187 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1687
+After outlier removal: 1615 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1163/init_points.ply
+[prepare] frame 1163 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1164
+4 cameras loaded
+Seed: [-0.00249175  0.01501767 -0.00506467]  triangulation residual=0.167 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1716
+After outlier removal: 1647 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1164/init_points.ply
+[prepare] frame 1164 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1165
+4 cameras loaded
+Seed: [-0.0024595   0.01499744 -0.00508523]  triangulation residual=0.141 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1786
+After outlier removal: 1702 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1165/init_points.ply
+[prepare] frame 1165 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1166
+4 cameras loaded
+Seed: [-0.00242434  0.01498576 -0.00510791]  triangulation residual=0.119 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1683
+After outlier removal: 1611 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1166/init_points.ply
+[prepare] frame 1166 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1167
+4 cameras loaded
+Seed: [-0.00238572  0.01497464 -0.00513946]  triangulation residual=0.121 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1733
+After outlier removal: 1656 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1167/init_points.ply
+[prepare] frame 1167 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1168
+4 cameras loaded
+Seed: [-0.0023533   0.0149584  -0.00515716]  triangulation residual=0.129 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1707
+After outlier removal: 1630 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1168/init_points.ply
+[prepare] frame 1168 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1169
+4 cameras loaded
+Seed: [-0.00234668  0.01493177 -0.00518271]  triangulation residual=0.148 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1663
+After outlier removal: 1598 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1169/init_points.ply
+[prepare] frame 1169 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1170
+4 cameras loaded
+Seed: [-0.00232981  0.01490939 -0.00521008]  triangulation residual=0.153 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1658
+After outlier removal: 1601 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1170/init_points.ply
+[prepare] frame 1170 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1171
+4 cameras loaded
+Seed: [-0.00232025  0.01487944 -0.00524088]  triangulation residual=0.157 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1675
+After outlier removal: 1608 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1171/init_points.ply
+[prepare] frame 1171 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1172
+4 cameras loaded
+Seed: [-0.00231782  0.01485291 -0.00528164]  triangulation residual=0.157 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1670
+After outlier removal: 1598 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1172/init_points.ply
+[prepare] frame 1172 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1173
+4 cameras loaded
+Seed: [-0.00230911  0.01483223 -0.00532246]  triangulation residual=0.159 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1649
+After outlier removal: 1582 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1173/init_points.ply
+[prepare] frame 1173 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1174
+4 cameras loaded
+Seed: [-0.00230752  0.01481514 -0.00536101]  triangulation residual=0.160 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1717
+After outlier removal: 1655 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1174/init_points.ply
+[prepare] frame 1174 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1175
+4 cameras loaded
+Seed: [-0.00230985  0.0148002  -0.00539364]  triangulation residual=0.158 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1686
+After outlier removal: 1601 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1175/init_points.ply
+[prepare] frame 1175 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1176
+4 cameras loaded
+Seed: [-0.00231466  0.01479351 -0.0054326 ]  triangulation residual=0.154 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1720
+After outlier removal: 1654 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1176/init_points.ply
+[prepare] frame 1176 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1177
+4 cameras loaded
+Seed: [-0.00231716  0.01479247 -0.00545667]  triangulation residual=0.156 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1642
+After outlier removal: 1580 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1177/init_points.ply
+[prepare] frame 1177 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1178
+4 cameras loaded
+Seed: [-0.00232989  0.01479039 -0.00549381]  triangulation residual=0.151 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1697
+After outlier removal: 1626 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1178/init_points.ply
+[prepare] frame 1178 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1179
+4 cameras loaded
+Seed: [-0.00233914  0.01479292 -0.00552041]  triangulation residual=0.143 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1750
+After outlier removal: 1676 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1179/init_points.ply
+[prepare] frame 1179 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1180
+4 cameras loaded
+Seed: [-0.00235623  0.01480461 -0.00554372]  triangulation residual=0.138 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1722
+After outlier removal: 1652 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1180/init_points.ply
+[prepare] frame 1180 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1181
+4 cameras loaded
+Seed: [-0.00237408  0.01481826 -0.00555893]  triangulation residual=0.132 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1727
+After outlier removal: 1649 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1181/init_points.ply
+[prepare] frame 1181 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1182
+4 cameras loaded
+Seed: [-0.00239897  0.01484167 -0.00558264]  triangulation residual=0.119 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1626
+After outlier removal: 1562 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1182/init_points.ply
+[prepare] frame 1182 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1183
+4 cameras loaded
+Seed: [-0.002408    0.0148708  -0.00562181]  triangulation residual=0.104 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1721
+After outlier removal: 1651 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1183/init_points.ply
+[prepare] frame 1183 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1184
+4 cameras loaded
+Seed: [-0.00240448  0.01490526 -0.00565839]  triangulation residual=0.081 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1676
+After outlier removal: 1605 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1184/init_points.ply
+[prepare] frame 1184 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1185
+4 cameras loaded
+Seed: [-0.00238138  0.01494335 -0.00569193]  triangulation residual=0.062 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1664
+After outlier removal: 1584 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1185/init_points.ply
+[prepare] frame 1185 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1186
+4 cameras loaded
+Seed: [-0.00235745  0.01498254 -0.00572634]  triangulation residual=0.056 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1642
+After outlier removal: 1570 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1186/init_points.ply
+[prepare] frame 1186 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1187
+4 cameras loaded
+Seed: [-0.00234279  0.01499261 -0.00575525]  triangulation residual=0.083 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1686
+After outlier removal: 1615 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1187/init_points.ply
+[prepare] frame 1187 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1188
+4 cameras loaded
+Seed: [-0.00233724  0.01500665 -0.00577435]  triangulation residual=0.120 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1781
+After outlier removal: 1710 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1188/init_points.ply
+[prepare] frame 1188 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1189
+4 cameras loaded
+Seed: [-0.00233817  0.01503008 -0.00578123]  triangulation residual=0.157 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1813
+After outlier removal: 1745 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1189/init_points.ply
+[prepare] frame 1189 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1190
+4 cameras loaded
+Seed: [-0.00234874  0.01504643 -0.00579336]  triangulation residual=0.182 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1680
+After outlier removal: 1602 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1190/init_points.ply
+[prepare] frame 1190 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1191
+4 cameras loaded
+Seed: [-0.00235132  0.01503554 -0.00580476]  triangulation residual=0.190 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1752
+After outlier removal: 1681 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1191/init_points.ply
+[prepare] frame 1191 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1192
+4 cameras loaded
+Seed: [-0.00235681  0.01503217 -0.00581759]  triangulation residual=0.188 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1841
+After outlier removal: 1765 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1192/init_points.ply
+[prepare] frame 1192 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1193
+4 cameras loaded
+Seed: [-0.00236212  0.01503836 -0.00581849]  triangulation residual=0.180 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1924
+After outlier removal: 1847 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1193/init_points.ply
+[prepare] frame 1193 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1194
+4 cameras loaded
+Seed: [-0.00236578  0.01505797 -0.00581424]  triangulation residual=0.180 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1920
+After outlier removal: 1831 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1194/init_points.ply
+[prepare] frame 1194 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1195
+4 cameras loaded
+Seed: [-0.00238078  0.01509354 -0.00580258]  triangulation residual=0.180 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1874
+After outlier removal: 1792 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1195/init_points.ply
+[prepare] frame 1195 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1196
+4 cameras loaded
+Seed: [-0.00239558  0.01512436 -0.00579196]  triangulation residual=0.183 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1682
+After outlier removal: 1613 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1196/init_points.ply
+[prepare] frame 1196 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1197
+4 cameras loaded
+Seed: [-0.00240954  0.01516163 -0.00577473]  triangulation residual=0.190 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1649
+After outlier removal: 1580 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1197/init_points.ply
+[prepare] frame 1197 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1198
+4 cameras loaded
+Seed: [-0.00242478  0.0152088  -0.0057612 ]  triangulation residual=0.197 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1555
+After outlier removal: 1500 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1198/init_points.ply
+[prepare] frame 1198 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1199
+4 cameras loaded
+Seed: [-0.00244173  0.01525427 -0.0057382 ]  triangulation residual=0.202 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1466
+After outlier removal: 1413 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1199/init_points.ply
+[prepare] frame 1199 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1200
+4 cameras loaded
+Seed: [-0.00246111  0.01529286 -0.00572893]  triangulation residual=0.206 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1459
+After outlier removal: 1412 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1200/init_points.ply
+[prepare] frame 1200 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1201
+4 cameras loaded
+Seed: [-0.00249434  0.01533108 -0.0057129 ]  triangulation residual=0.210 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1311
+After outlier removal: 1266 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1201/init_points.ply
+[prepare] frame 1201 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1202
+4 cameras loaded
+Seed: [-0.00254094  0.01536801 -0.00570429]  triangulation residual=0.214 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1290
+After outlier removal: 1239 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1202/init_points.ply
+[prepare] frame 1202 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1203
+4 cameras loaded
+Seed: [-0.00260147  0.01540032 -0.00569321]  triangulation residual=0.228 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1200
+After outlier removal: 1158 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1203/init_points.ply
+[prepare] frame 1203 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1204
+4 cameras loaded
+Seed: [-0.00268203  0.015434   -0.00567983]  triangulation residual=0.252 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1125
+After outlier removal: 1076 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1204/init_points.ply
+[prepare] frame 1204 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1205
+4 cameras loaded
+Seed: [-0.00277749  0.01547172 -0.00565566]  triangulation residual=0.291 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1029
+After outlier removal: 991 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1205/init_points.ply
+[prepare] frame 1205 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1206
+4 cameras loaded
+Seed: [-0.00287784  0.01550481 -0.00563972]  triangulation residual=0.338 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 1014
+After outlier removal: 974 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1206/init_points.ply
+[prepare] frame 1206 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1207
+4 cameras loaded
+Seed: [-0.00297254  0.0155484  -0.00562162]  triangulation residual=0.387 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 990
+After outlier removal: 957 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1207/init_points.ply
+[prepare] frame 1207 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1208
+4 cameras loaded
+Seed: [-0.00306515  0.01559382 -0.00559567]  triangulation residual=0.440 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 932
+After outlier removal: 901 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1208/init_points.ply
+[prepare] frame 1208 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1209
+4 cameras loaded
+Seed: [-0.00310955  0.01565446 -0.00557483]  triangulation residual=0.439 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 976
+After outlier removal: 934 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1209/init_points.ply
+[prepare] frame 1209 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1210
+4 cameras loaded
+Seed: [-0.00314711  0.01571857 -0.00555678]  triangulation residual=0.439 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 948
+After outlier removal: 911 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1210/init_points.ply
+[prepare] frame 1210 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1211
+4 cameras loaded
+Seed: [-0.00318188  0.01578605 -0.00553971]  triangulation residual=0.445 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 894
+After outlier removal: 856 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1211/init_points.ply
+[prepare] frame 1211 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1212
+4 cameras loaded
+Seed: [-0.00319756  0.01584814 -0.00551911]  triangulation residual=0.443 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 869
+After outlier removal: 837 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1212/init_points.ply
+[prepare] frame 1212 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1213
+4 cameras loaded
+Seed: [-0.00320179  0.01589541 -0.00550609]  triangulation residual=0.427 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 743
+After outlier removal: 708 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1213/init_points.ply
+[prepare] frame 1213 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1214
+4 cameras loaded
+Seed: [-0.00318907  0.0159371  -0.00549786]  triangulation residual=0.405 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 716
+After outlier removal: 692 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1214/init_points.ply
+[prepare] frame 1214 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1215
+4 cameras loaded
+Seed: [-0.00316201  0.0159767  -0.00549452]  triangulation residual=0.381 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 622
+After outlier removal: 596 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1215/init_points.ply
+[prepare] frame 1215 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1216
+4 cameras loaded
+Seed: [-0.00312112  0.01601687 -0.00550312]  triangulation residual=0.362 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 588
+After outlier removal: 566 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1216/init_points.ply
+[prepare] frame 1216 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1217
+4 cameras loaded
+Seed: [-0.00307763  0.01605043 -0.00550601]  triangulation residual=0.364 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 493
+After outlier removal: 473 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1217/init_points.ply
+[prepare] frame 1217 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1218
+4 cameras loaded
+Seed: [-0.00305043  0.01608058 -0.00551496]  triangulation residual=0.369 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 517
+After outlier removal: 496 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1218/init_points.ply
+[prepare] frame 1218 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1219
+4 cameras loaded
+Seed: [-0.00302698  0.01611562 -0.005535  ]  triangulation residual=0.385 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 451
+After outlier removal: 433 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1219/init_points.ply
+[prepare] frame 1219 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1220
+4 cameras loaded
+Seed: [-0.00296563  0.01614042 -0.00556379]  triangulation residual=0.423 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 327
+After outlier removal: 316 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1220/init_points.ply
+[prepare] frame 1220 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1221
+4 cameras loaded
+Seed: [-0.00297411  0.01618408 -0.0055888 ]  triangulation residual=0.440 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 320
+After outlier removal: 308 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1221/init_points.ply
+[prepare] frame 1221 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1222
+4 cameras loaded
+Seed: [-0.00299026  0.01622047 -0.00561686]  triangulation residual=0.456 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 306
+After outlier removal: 295 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1222/init_points.ply
+[prepare] frame 1222 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1223
+4 cameras loaded
+Seed: [-0.00299459  0.01625853 -0.00563884]  triangulation residual=0.474 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 267
+After outlier removal: 254 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1223/init_points.ply
+[prepare] frame 1223 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1224
+4 cameras loaded
+Seed: [-0.00300307  0.01629314 -0.00566409]  triangulation residual=0.487 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 291
+After outlier removal: 280 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1224/init_points.ply
+[prepare] frame 1224 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1225
+4 cameras loaded
+Seed: [-0.00301186  0.01631768 -0.00568352]  triangulation residual=0.498 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 246
+After outlier removal: 231 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1225/init_points.ply
+[prepare] frame 1225 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1226
+4 cameras loaded
+Seed: [-0.00301377  0.01633488 -0.00569124]  triangulation residual=0.507 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 274
+After outlier removal: 262 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1226/init_points.ply
+[prepare] frame 1226 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1227
+4 cameras loaded
+Seed: [-0.00301795  0.01635006 -0.00569892]  triangulation residual=0.506 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 259
+After outlier removal: 246 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1227/init_points.ply
+[prepare] frame 1227 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1228
+4 cameras loaded
+Seed: [-0.00301155  0.01635858 -0.00571848]  triangulation residual=0.499 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 201
+After outlier removal: 195 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1228/init_points.ply
+[prepare] frame 1228 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1229
+4 cameras loaded
+Seed: [-0.00300077  0.0163607  -0.00573259]  triangulation residual=0.477 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 237
+After outlier removal: 225 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1229/init_points.ply
+[prepare] frame 1229 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1230
+4 cameras loaded
+Seed: [-0.00300361  0.01635953 -0.00574581]  triangulation residual=0.463 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 236
+After outlier removal: 225 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1230/init_points.ply
+[prepare] frame 1230 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1231
+4 cameras loaded
+Seed: [-0.00301369  0.0163644  -0.0057437 ]  triangulation residual=0.458 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 181
+After outlier removal: 173 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1231/init_points.ply
+[prepare] frame 1231 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1232
+4 cameras loaded
+Seed: [-0.0030316   0.01636332 -0.00572672]  triangulation residual=0.453 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 176
+After outlier removal: 165 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1232/init_points.ply
+[prepare] frame 1232 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1233
+4 cameras loaded
+Seed: [-0.00304298  0.01635907 -0.00570238]  triangulation residual=0.443 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 203
+After outlier removal: 190 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1233/init_points.ply
+[prepare] frame 1233 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1234
+4 cameras loaded
+Seed: [-0.00305734  0.01634152 -0.00567939]  triangulation residual=0.429 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 184
+After outlier removal: 175 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1234/init_points.ply
+[prepare] frame 1234 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1235
+4 cameras loaded
+Seed: [-0.00306286  0.016322   -0.00566019]  triangulation residual=0.414 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 163
+After outlier removal: 157 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1235/init_points.ply
+[prepare] frame 1235 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1236
+4 cameras loaded
+Seed: [-0.00329412  0.01631355 -0.00564342]  triangulation residual=0.466 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 196
+After outlier removal: 183 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1236/init_points.ply
+[prepare] frame 1236 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1237
+4 cameras loaded
+Seed: [-0.00341162  0.0162842  -0.00562873]  triangulation residual=0.535 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 228
+After outlier removal: 218 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1237/init_points.ply
+[prepare] frame 1237 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1238
+4 cameras loaded
+Seed: [-0.00348267  0.01624995 -0.00562989]  triangulation residual=0.586 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 288
+After outlier removal: 276 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1238/init_points.ply
+[prepare] frame 1238 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1239
+4 cameras loaded
+Seed: [-0.00347898  0.01621824 -0.00564616]  triangulation residual=0.615 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 279
+After outlier removal: 265 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1239/init_points.ply
+[prepare] frame 1239 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1240
+4 cameras loaded
+Seed: [-0.00351536  0.01616933 -0.00566448]  triangulation residual=0.679 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 235
+After outlier removal: 223 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1240/init_points.ply
+[prepare] frame 1240 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1241
+4 cameras loaded
+Seed: [-0.00347801  0.01612576 -0.00569142]  triangulation residual=0.667 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 248
+After outlier removal: 237 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1241/init_points.ply
+[prepare] frame 1241 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1242
+4 cameras loaded
+Seed: [-0.00344213  0.01608813 -0.00571218]  triangulation residual=0.661 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 288
+After outlier removal: 277 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1242/init_points.ply
+[prepare] frame 1242 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1243
+4 cameras loaded
+Seed: [-0.00341441  0.01604949 -0.00572449]  triangulation residual=0.660 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 243
+After outlier removal: 233 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1243/init_points.ply
+[prepare] frame 1243 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1244
+4 cameras loaded
+Seed: [-0.0033893   0.01600793 -0.00574023]  triangulation residual=0.667 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 253
+After outlier removal: 242 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1244/init_points.ply
+[prepare] frame 1244 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1245
+4 cameras loaded
+Seed: [-0.00336174  0.01596631 -0.00576279]  triangulation residual=0.672 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 223
+After outlier removal: 213 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1245/init_points.ply
+[prepare] frame 1245 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1246
+4 cameras loaded
+Seed: [-0.00332276  0.01593648 -0.00579926]  triangulation residual=0.654 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 238
+After outlier removal: 223 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1246/init_points.ply
+[prepare] frame 1246 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1247
+4 cameras loaded
+Seed: [-0.00328964  0.01590895 -0.00582846]  triangulation residual=0.636 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 247
+After outlier removal: 230 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1247/init_points.ply
+[prepare] frame 1247 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1248
+4 cameras loaded
+Seed: [-0.00326545  0.01588925 -0.00586607]  triangulation residual=0.614 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 262
+After outlier removal: 249 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1248/init_points.ply
+[prepare] frame 1248 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1249
+4 cameras loaded
+Seed: [-0.00323853  0.01587627 -0.0058956 ]  triangulation residual=0.592 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 269
+After outlier removal: 260 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1249/init_points.ply
+[prepare] frame 1249 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1250
+4 cameras loaded
+Seed: [-0.00321392  0.01586818 -0.00592723]  triangulation residual=0.564 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 265
+After outlier removal: 252 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1250/init_points.ply
+[prepare] frame 1250 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1251
+4 cameras loaded
+Seed: [-0.00319548  0.01586675 -0.00595619]  triangulation residual=0.550 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 262
+After outlier removal: 249 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1251/init_points.ply
+[prepare] frame 1251 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1252
+4 cameras loaded
+Seed: [-0.00308078  0.01588854 -0.00598664]  triangulation residual=0.461 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 270
+After outlier removal: 246 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1252/init_points.ply
+[prepare] frame 1252 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1253
+4 cameras loaded
+Seed: [-0.00303004  0.01590725 -0.00601647]  triangulation residual=0.432 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 344
+After outlier removal: 334 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1253/init_points.ply
+[prepare] frame 1253 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1254
+4 cameras loaded
+Seed: [-0.00301114  0.01592018 -0.00604135]  triangulation residual=0.415 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 393
+After outlier removal: 382 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1254/init_points.ply
+[prepare] frame 1254 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1255
+4 cameras loaded
+Seed: [-0.00299506  0.01592935 -0.00606176]  triangulation residual=0.411 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 384
+After outlier removal: 377 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1255/init_points.ply
+[prepare] frame 1255 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1256
+4 cameras loaded
+Seed: [-0.00298402  0.01593828 -0.00607891]  triangulation residual=0.414 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 385
+After outlier removal: 379 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1256/init_points.ply
+[prepare] frame 1256 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1257
+4 cameras loaded
+Seed: [-0.00298279  0.01595077 -0.00609912]  triangulation residual=0.414 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 389
+After outlier removal: 378 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1257/init_points.ply
+[prepare] frame 1257 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1258
+4 cameras loaded
+Seed: [-0.00298595  0.0159657  -0.00613321]  triangulation residual=0.412 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 391
+After outlier removal: 378 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1258/init_points.ply
+[prepare] frame 1258 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1259
+4 cameras loaded
+Seed: [-0.00298722  0.01598516 -0.00617078]  triangulation residual=0.416 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 356
+After outlier removal: 343 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1259/init_points.ply
+[prepare] frame 1259 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1260
+4 cameras loaded
+Seed: [-0.00294233  0.01601723 -0.00620359]  triangulation residual=0.411 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 303
+After outlier removal: 290 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1260/init_points.ply
+[prepare] frame 1260 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1261
+4 cameras loaded
+Seed: [-0.00287814  0.01605753 -0.00623112]  triangulation residual=0.422 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 265
+After outlier removal: 254 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1261/init_points.ply
+[prepare] frame 1261 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1262
+4 cameras loaded
+Seed: [-0.00281649  0.01610636 -0.00625799]  triangulation residual=0.435 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 254
+After outlier removal: 244 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1262/init_points.ply
+[prepare] frame 1262 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1263
+4 cameras loaded
+Seed: [-0.00285293  0.01612913 -0.00628373]  triangulation residual=0.436 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 290
+After outlier removal: 282 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1263/init_points.ply
+[prepare] frame 1263 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1264
+4 cameras loaded
+Seed: [-0.00288943  0.01615849 -0.00629398]  triangulation residual=0.439 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 292
+After outlier removal: 278 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1264/init_points.ply
+[prepare] frame 1264 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1265
+4 cameras loaded
+Seed: [-0.00293104  0.0161863  -0.00629461]  triangulation residual=0.454 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 218
+After outlier removal: 209 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1265/init_points.ply
+[prepare] frame 1265 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1266
+4 cameras loaded
+Seed: [-0.0029667   0.01620353 -0.00629899]  triangulation residual=0.457 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 196
+After outlier removal: 186 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1266/init_points.ply
+[prepare] frame 1266 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1267
+4 cameras loaded
+Seed: [-0.00300523  0.0161978  -0.00631081]  triangulation residual=0.451 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 234
+After outlier removal: 224 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1267/init_points.ply
+[prepare] frame 1267 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1268
+4 cameras loaded
+Seed: [-0.00305097  0.01619094 -0.00631887]  triangulation residual=0.452 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 309
+After outlier removal: 296 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1268/init_points.ply
+[prepare] frame 1268 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1269
+4 cameras loaded
+Seed: [-0.00316936  0.01618039 -0.00631854]  triangulation residual=0.515 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 318
+After outlier removal: 303 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1269/init_points.ply
+[prepare] frame 1269 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1270
+4 cameras loaded
+Seed: [-0.00320203  0.01619984 -0.00631018]  triangulation residual=0.540 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 272
+After outlier removal: 262 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1270/init_points.ply
+[prepare] frame 1270 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1271
+4 cameras loaded
+Seed: [-0.00324677  0.01622943 -0.00629677]  triangulation residual=0.575 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 292
+After outlier removal: 277 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1271/init_points.ply
+[prepare] frame 1271 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1272
+4 cameras loaded
+Seed: [-0.00328311  0.01625741 -0.00628386]  triangulation residual=0.602 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 235
+After outlier removal: 223 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1272/init_points.ply
+[prepare] frame 1272 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1273
+4 cameras loaded
+Seed: [-0.00333069  0.01629489 -0.00626168]  triangulation residual=0.637 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 236
+After outlier removal: 224 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1273/init_points.ply
+[prepare] frame 1273 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1274
+4 cameras loaded
+Seed: [-0.00338474  0.0163331  -0.00624377]  triangulation residual=0.670 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 238
+After outlier removal: 231 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1274/init_points.ply
+[prepare] frame 1274 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1275
+4 cameras loaded
+Seed: [-0.0034484   0.01637435 -0.00622453]  triangulation residual=0.702 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 169
+After outlier removal: 160 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1275/init_points.ply
+[prepare] frame 1275 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1276
+4 cameras loaded
+Seed: [-0.00350649  0.01641482 -0.00621377]  triangulation residual=0.732 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 149
+After outlier removal: 142 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1276/init_points.ply
+[prepare] frame 1276 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1277
+4 cameras loaded
+Seed: [-0.00357129  0.0164626  -0.00619821]  triangulation residual=0.760 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 120
+After outlier removal: 113 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1277/init_points.ply
+[prepare] frame 1277 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1278
+4 cameras loaded
+Seed: [-0.00363525  0.01650951 -0.00618771]  triangulation residual=0.786 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 130
+After outlier removal: 125 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1278/init_points.ply
+[prepare] frame 1278 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1279
+4 cameras loaded
+Seed: [-0.00370192  0.01656068 -0.00617176]  triangulation residual=0.808 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 111
+After outlier removal: 103 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1279/init_points.ply
+[prepare] frame 1279 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1280
+4 cameras loaded
+Seed: [-0.00377758  0.01660975 -0.00615433]  triangulation residual=0.831 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 93
+After outlier removal: 88 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1280/init_points.ply
+[prepare] frame 1280 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1281
+4 cameras loaded
+Seed: [-0.00386553  0.01666332 -0.0061425 ]  triangulation residual=0.850 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 33
+After outlier removal: 31 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1281/init_points.ply
+[prepare] frame 1281 data ready
+Dataset generated successfully at: /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1282
+4 cameras loaded
+Seed: [-0.00394998  0.01671539 -0.00612109]  triangulation residual=0.870 mm
+Sampled 10000 points in 2mm sphere
+Surviving points (all 4 cameras): 37
+After outlier removal: 35 points
+Saved -> /home/computer0/fly_project/fly_gsplat/ctrl_009/028/f1282/init_points.ply
+[prepare] frame 1282 data ready
+Traceback (most recent call last):
+  File "/home/computer0/fly_project/fly_gsplat/gpu/schedule/schedule.py", line 228, in <module>
+    main()
+  File "/home/computer0/fly_project/fly_gsplat/gpu/schedule/schedule.py", line 198, in main
+    prepare_all_frames(frames, sparse_dir, base_name)
+  File "/home/computer0/fly_project/fly_gsplat/gpu/schedule/schedule.py", line 108, in prepare_all_frames
+    generate_dataset(str(data_dir), sparse_dir, target_frame=frame_idx,
+  File "/home/computer0/fly_project/fly_gsplat/generate_dataset.py", line 49, in generate_dataset
+    im = reconstruct_frame_image(sparse_file, target_frame, w_full, h_full, white_bg=white_bg)
+  File "/home/computer0/fly_project/fly_gsplat/utils/dataset.py", line 26, in reconstruct_frame_image
+    rows = indIm[:, 0].astype(int) - 1
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed

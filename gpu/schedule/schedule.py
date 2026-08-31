@@ -31,12 +31,15 @@ config schema:
   {
     "name": "ctrl_009_002_ratio3_sh0_full",
     "sparse_dir": "X:\\antenna\\control\\009_25052026\\Sparse\\Expr_009_mov_002",
-    "base_name": "ctrl_009_002",
+    "base_name": "data/ctrl_009_002",
     "max_iters": 2000,
     "param_sets": {"ratio3_sh0": ["--pipeline.model.use-scale-regularization", "True", ...]},
     "frames": {"start": 0, "end": 640}
   }
   frames按Python range语义处理(list(range(start, end))，end不包含在内)。
+  base_name是相对仓库根目录的完整路径(不再固定挂在data/下)，每帧数据落在
+  <base_name>/f####/，calibration_easyWandData.mat/camera_KRX0.mat也从<base_name>/
+  下读取(见common.data_dir_for、本文件prepare_all_frames里的calib_dir)。
 """
 import argparse
 import json
@@ -104,7 +107,7 @@ def prepare_all_frames(frames: list, sparse_dir: str, base_name: str) -> None:
         data_dir.mkdir(parents=True, exist_ok=True)
         generate_dataset(str(data_dir), sparse_dir, target_frame=frame_idx,
                           if_crop=False, white_bg=True, if_mask=False,
-                          calib_dir=str(common.REPO / "data" / base_name))
+                          calib_dir=str(common.REPO / base_name))
         generate_hull(str(data_dir), if_viser=False)
         print(f"[prepare] frame {frame_idx} data ready")
 
