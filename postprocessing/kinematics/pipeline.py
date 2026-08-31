@@ -39,6 +39,7 @@ import pandas as pd
 
 from . import body_frame as bf
 from . import chord as ch
+from . import chord_matlab as chm
 from . import io_schema
 from . import wing_angles as wa
 
@@ -405,3 +406,141 @@ def run_dataset_with_eta_unwrap_dp(
     df.to_csv(output_dir / f"kinematics_{dataset_name}.csv", index=False)
 
     return df
+
+
+def run_dataset_matlab_chord_eta(
+    dataset_root: str | Path, config: PipelineConfig | None = None, use_velocity: bool = False,
+) -> pd.DataFrame:
+    """Experimental alternative to `run_dataset_with_eta_unwrap`: `eta_L`/
+    `eta_R`/`chord_conf_L`/`chord_conf_R` come from `chord_matlab.
+    estimate_chord_matlab` (MATLAB `find_chords_quad.m`-style diagonal
+    selection, see that module's docstring) instead of `chord.py`'s
+    leading-edge-winner-based chord. Everything else (`yaw`/`pitch`/`roll`,
+    `phi`/`theta`, `status`, `sequence_x_body`) is computed exactly as
+    `run_dataset_with_sequence_correction` does -- this function re-walks the
+    same frame files itself (rather than post-processing that function's
+    output) only because the new chord needs each frame's raw wing point
+    cloud, not just the already-collapsed `eta` column `eta_unwrap.py`'s
+    functions post-process.
+
+    No `resolve_180_flip`/`unwrap` pass is applied here -- `chord_matlab`'s
+    output is dramatically more stable frame-to-frame (step 14: wrap-crossing
+    count ~160-177 -> ~17-19 per side on the real `valid480` dataset this was
+    developed against) but not perfectly clean; a caller wanting a fully
+    unwrapped column should still run the result through `eta_unwrap.
+    process_eta` (or a variant re-tuned for this method's much-lower-noise
+    residual failure mode -- step 14 found the *old* `process_eta`, tuned
+    against `chord.py`'s noisier output, does not uniformly help this one).
+
+    `use_velocity=False` (default) matches step 14's finding that enabling
+    the velocity fallback (once its threshold-scale bug was fixed) did not
+    improve on the length-ratio-only result on real data -- see
+    `chord_matlab.estimate_chord_matlab`'s own docstring.
+
+    Status: experimental (see `chord_matlab.py` module docstring) -- not
+    wired into `calc_kinematics.py`'s default T4 path.
+    """
+    from .correct_body_axis.sequence_axis import compute_sequence_x_body
+
+    config = config if config is not None else PipelineConfig()
+    dataset_root = Path(dataset_root)
+
+    x_body_table, _audit_df = compute_sequence_x_body(dataset_root, up=config.up)
+    config = replace(config, sequence_x_body=x_body_table)
+
+    prev_signed_chord = {"wing_L": None, "wing_R": None}
+    prev_span_tip = {"wing_L": None, "wing_R": None}
+    prev_body_cm = {"wing_L": None, "wing_R": None}
+
+    rows = []
+    for frame_id, _frame_id_str, csv_path in _discover_frame_files(dataset_root, config.frame_glob):
+        try:
+            df_frame = io_schema.load_frame(csv_path)
+        except Exception as e:  # noqa: BLE001
+            msg = str(e)
+            msg = msg.split(": ", 1)[1] if ": " in msg else msg
+            row = io_schema.empty_output_row(frame_id).to_dict()
+            row["status"] = f"load:{msg}"
+            rows.append(row)
+            continue
+
+        row = io_schema.empty_output_row(frame_id).to_dict()
+        try:
+            body_xyz = io_schema.get_part(df_frame, "body", apply_if_keep=True)
+            wingL_xyz = io_schema.get_part(df_frame, "wing_L", apply_if_keep=True)
+            wingR_xyz = io_schema.get_part(df_frame, "wing_R", apply_if_keep=True)
+        except Exception as e:  # noqa: BLE001
+            row["status"] = f"parts:{e}"
+            rows.append(row)
+            continue
+
+        too_few = False
+        for label, xyz in (("body", body_xyz), ("wing_L", wingL_xyz), ("wing_R", wingR_xyz)):
+            if xyz.shape[0] < config.min_points:
+                row["status"] = f"{label}:too_few_points"
+                rows.append(row)
+                too_few = True
+                break
+        if too_few:
+            continue
+
+        try:
+            x_body = None if config.sequence_x_body is None else config.sequence_x_body.get(frame_id)
+            frame = bf.estimate_body_frame(
+                body_xyz, wingL_xyz, wingR_xyz,
+                up=config.up, stroke_plane_pitch_deg=config.stroke_plane_pitch_deg,
+                stroke_plane_normal=config.stroke_plane_normal, root_mode=config.root_mode, x_body=x_body,
+            )
+            if not _all_finite(frame.x_body, frame.y_body, frame.z_body, frame.n_sp,
+                                frame.yaw, frame.pitch, frame.roll):
+                raise ValueError("non-finite result (degenerate hinge/PCA geometry)")
+        except Exception as e:  # noqa: BLE001
+            row["status"] = f"body:{e}"
+            rows.append(row)
+            continue
+
+        row["yaw"], row["pitch"], row["roll"] = frame.yaw, frame.pitch, frame.roll
+        row["sp_normal_x"], row["sp_normal_y"], row["sp_normal_z"] = (
+            float(frame.n_sp[0]), float(frame.n_sp[1]), float(frame.n_sp[2])
+        )
+
+        wing_statuses = []
+        for side, wing_xyz, suffix in (("wing_L", wingL_xyz, "L"), ("wing_R", wingR_xyz, "R")):
+            try:
+                sweep = wa.stroke_deviation(wing_xyz, frame, side)
+                mc_result = chm.estimate_chord_matlab(
+                    wing_xyz, frame, side, sweep.span_dir,
+                    prev_signed_chord=prev_signed_chord[side],
+                    prev_span_tip=prev_span_tip[side], prev_body_cm=prev_body_cm[side],
+                    use_velocity=use_velocity,
+                )
+                if not _all_finite(sweep.phi, sweep.theta, mc_result.eta, mc_result.chord_conf, sweep.span_dir):
+                    raise ValueError("non-finite result")
+            except Exception as e:  # noqa: BLE001
+                wing_statuses.append(f"{side}:{e}")
+                continue
+
+            row[f"phi_{suffix}"] = sweep.phi
+            row[f"theta_{suffix}"] = sweep.theta
+            row[f"eta_{suffix}"] = mc_result.eta
+            row[f"chord_conf_{suffix}"] = mc_result.chord_conf
+            row[f"span_{suffix}_x"], row[f"span_{suffix}_y"], row[f"span_{suffix}_z"] = (
+                float(sweep.span_dir[0]), float(sweep.span_dir[1]), float(sweep.span_dir[2])
+            )
+            prev_signed_chord[side] = mc_result.chord.copy()
+            prev_span_tip[side] = mc_result.span_tip.copy()
+            prev_body_cm[side] = np.asarray(frame.body_cm, dtype=float).copy()
+
+        row["status"] = "ok" if not wing_statuses else ";".join(wing_statuses)
+        rows.append(row)
+
+    columns = io_schema.OUTPUT_COLUMNS + ["status"]
+    out_df = pd.DataFrame(rows, columns=columns)
+    out_df = out_df.sort_values("frame_id").reset_index(drop=True)
+
+    dataset_name = dataset_root.name
+    output_dir = Path(config.output_dir) if config.output_dir is not None else dataset_root
+    output_dir.mkdir(parents=True, exist_ok=True)
+    out_df.to_csv(output_dir / f"kinematics_{dataset_name}.csv", index=False)
+
+    return out_df
