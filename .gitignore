@@ -10,6 +10,8 @@ postprocessing/kinematics/diagnostics_output
 postprocessing/kinematics/correct_body_axis/diag
 postprocessing/kinematics/correct_wing_pitch/diag
 postprocessing/kinematics/simulate_gt/diag
+postprocessing/kinematics/simulate_gt/real_appearance_reference.csv
+gpu/schedule/logs/
 
 # Python
 __pycache__/
