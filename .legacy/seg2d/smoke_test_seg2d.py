@@ -4,21 +4,25 @@ intensity兜底)，输出overlay png（灰度底图，body绿/wing红/label=3黄
 + 打印每相机统计（含body_source/fallback_reason，用于评估motion法成功率）。
 数据路径未知，通过命令行参数传入，不在此处硬编码/探索 data/ 目录。
 
-用法示例:
-    python -m postprocessing.reference.seg2d.smoke_test_seg2d \
+用法示例(archived under .legacy/, see .legacy/seg2d/seg2d.py):
+    python .legacy/seg2d/smoke_test_seg2d.py \
         --sparse-dir "X:\\antenna\\control\\009_25052026\\Sparse\\Expr_009_mov_002" \
         --frame-idx 100 \
-        --out-dir postprocessing/reference/seg2d/overlays
+        --out-dir .legacy/seg2d/overlays
 """
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
 import cv2
 import numpy as np
 
-from postprocessing.reference.seg2d.seg2d import load_sparse_frame, segment_body_wing
+LEGACY_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(LEGACY_ROOT))
+
+from seg2d.seg2d import load_sparse_frame, segment_body_wing  # noqa: E402
 
 # BGR (cv2约定)
 LABEL_COLORS_BGR = {
@@ -77,7 +81,7 @@ def main():
                         help="包含 Camera*_sparse.mat 的目录 (按文件名sorted后第i个对应cam i，同generate_dataset.py)")
     parser.add_argument("--frame-idx", type=int, default=10)
     parser.add_argument("--cams", type=int, nargs="+", default=[1, 2, 3, 4])
-    parser.add_argument("--out-dir", type=str, default="postprocessing/reference/seg2d/overlays")
+    parser.add_argument("--out-dir", type=str, default=".legacy/seg2d/overlays")
     parser.add_argument("--leg-th", type=int, default=100)
     parser.add_argument("--open-radius", type=int, default=5)
     parser.add_argument("--delta", type=int, default=36)

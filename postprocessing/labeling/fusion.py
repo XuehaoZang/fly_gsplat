@@ -30,7 +30,7 @@ layer beyond motion's own `HALF_WINDOW` cross-frame evidence is implemented
 here.
 
 Reused, not reimplemented: kmeans primitives from
-`postprocessing/labeling/kmeans/kmeans_split.py`, motion voxel primitives
+`.legacy/kmeans/kmeans_split.py`, motion voxel primitives
 from `postprocessing/labeling/motion/density.py`. This module only adds (a)
 the veto step itself (`motion_body_veto`, genuinely new -- reassigning a
 vetoed body point to its nearest surviving wing cluster didn't exist

@@ -20,12 +20,16 @@ T3 第一步: body/wing 二分类，规则阈值法(不做无监督聚类)。
 在 if_keep=True(排除floater)的点里计算，避免floater尾部把分位数拉偏。
 
 默认分位数 DEFAULT_PLANARITY_Q / DEFAULT_AXIS_DIST_Q 是在
-postprocessing/labeling/select_dev_frames.DEV_FRAMES 6帧上跑网格搜索
+.legacy/kmeans/diag/select_dev_frames.DEV_FRAMES 6帧上跑网格搜索
 (见 scan_thresholds())，结合 eda_outputs/ 下的多视角散点图目测选定的一版，
 不代表理论最优。
 
 TODO: 无监督聚类(KMeans/GMM k=2)作为对照方法，本阶段不实现，
 待规则阈值法验证后再评估是否需要
+
+Archived under .legacy/ -- superseded by postprocessing/labeling/motion/ as the T3 default,
+kept for reference only (still imported by postprocessing/kinematics/simulate_gt/segment.py
+for comparison). See the repo README for the current status.
 """
 import sys
 from pathlib import Path
@@ -33,8 +37,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
+LEGACY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(LEGACY_ROOT))
 
 # 网格搜索 + 目测eda_outputs/图后选定的默认分位数，见模块docstring。
 DEFAULT_PLANARITY_Q = 0.82
@@ -86,7 +92,7 @@ def print_color_diagnostics(df: pd.DataFrame, is_wing: pd.Series) -> None:
 # ---------------------------------------------------------------------------
 
 def scan_thresholds(q_candidates: list[float] = (0.70, 0.75, 0.80, 0.82, 0.85, 0.90, 0.95)) -> None:
-    from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR
+    from kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR
     from postprocessing.cleaning.viz_floater_check import find_features_csv
 
     data_root = DATASET_DIR

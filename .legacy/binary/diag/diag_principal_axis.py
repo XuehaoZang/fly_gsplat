@@ -30,8 +30,8 @@ T3诊断: 检验"dist_to_principal_axis假设反了"的疑虑。
 核心证据是图，其余(is_wing组延展对比、eigval占比)只是辅助支撑，最终判断以肉眼看
 本目录eda_outputs/axis_diag_*.png为准。
 
-用法:
-    python -m postprocessing.labeling.binary.diag.diag_principal_axis
+用法(archived under .legacy/, see .legacy/binary/binary_split.py):
+    python .legacy/binary/diag/diag_principal_axis.py
 """
 import sys
 from pathlib import Path
@@ -44,14 +44,16 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+LEGACY_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(LEGACY_ROOT))
 
 from postprocessing.cleaning.floater_census_100frames import latest_checkpoint_dir  # noqa: E402
-from postprocessing.labeling.binary.binary_split import (  # noqa: E402
+from binary.binary_split import (  # noqa: E402
     classify_body_wing_quantile, DEFAULT_AXIS_DIST_Q,
 )
-from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
+from kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
 
 OUT_DIR = Path(__file__).resolve().parent / "eda_outputs"
 

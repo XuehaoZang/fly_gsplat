@@ -25,8 +25,8 @@ binary/diag/diag_principal_axis.py 的 plot_axis_diag 同款风格
 
 图存到 eda_outputs/color_by_feature/ 子目录。
 
-用法:
-    python -m postprocessing.labeling.kmeans.diag.diag_color_by_feature
+用法(archived under .legacy/, see .legacy/kmeans/kmeans_split.py):
+    python .legacy/kmeans/diag/diag_color_by_feature.py
 """
 import sys
 from pathlib import Path
@@ -38,11 +38,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+LEGACY_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(LEGACY_ROOT))
 
-from postprocessing.labeling.kmeans.kmeans_split import load_kept  # noqa: E402
-from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
+from kmeans.kmeans_split import load_kept  # noqa: E402
+from kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
 
 OUT_DIR = Path(__file__).resolve().parent / "eda_outputs" / "color_by_feature"
 
