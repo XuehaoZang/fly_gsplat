@@ -1,11 +1,11 @@
 """
 generate_configs_from_selection.py
 
-把 select_frame_window.py 的输出(frame_selection.csv，每个视频一行，含是否通过筛选
+把 preprocessing/select_frame_window.py 的输出(frame_selection.csv，每个视频一行，含是否通过筛选
 + 最终训练帧范围)转成 schedule.py 能吃的per-视频config，是"有效帧选择"接入实际部署
 pipeline的胶水脚本：
 
-    select_frame_window.py --out-csv frame_selection.csv
+    preprocessing/select_frame_window.py --out-csv frame_selection.csv
         -> generate_configs_from_selection.py --selection-csv frame_selection.csv
         -> 每个通过筛选的视频一个 configs/<out-subdir>/<name>.json
         -> schedule.py --config <name>.json (逐个顺序跑)

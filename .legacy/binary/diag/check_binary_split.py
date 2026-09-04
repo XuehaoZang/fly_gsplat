@@ -9,11 +9,12 @@ T3 第一步 binary_split.classify_body_wing 的内部自查脚本(非最终重�
   wing另一种颜色
 - 打印颜色诊断(仅供参考，不参与判据)
 
-图存到 postprocessing/labeling/binary/diag/eda_outputs/ 下。
+图存到 .legacy/binary/diag/eda_outputs/ 下。
 
-用法:
-    python -m postprocessing.labeling.binary.diag.check_binary_split
+用法(archived under .legacy/, see .legacy/binary/binary_split.py):
+    python .legacy/binary/diag/check_binary_split.py
 """
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -25,12 +26,17 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgb
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  (registers 3d projection)
 
-from postprocessing.cleaning.viz_floater_check import find_features_csv
-from postprocessing.labeling.binary.binary_split import (
+REPO_ROOT = Path(__file__).resolve().parents[3]
+LEGACY_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(LEGACY_ROOT))
+
+from postprocessing.cleaning.viz_floater_check import find_features_csv  # noqa: E402
+from binary.binary_split import (  # noqa: E402
     classify_body_wing_quantile, print_color_diagnostics,
     DEFAULT_PLANARITY_Q, DEFAULT_AXIS_DIST_Q,
 )
-from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR
+from kmeans.diag.select_dev_frames import DEV_FRAMES, DATASET_DIR  # noqa: E402
 
 OUT_DIR = Path(__file__).resolve().parent / "eda_outputs"
 

@@ -5,7 +5,9 @@ outputs/
 gpu/schedule/configs/*
 !gpu/schedule/configs/sample_config.json
 postprocessing/labeling/**/eda_outputs/
-postprocessing/labeling/kmeans/k_means_results/
+.legacy/kmeans/**/eda_outputs/
+.legacy/kmeans/k_means_results/
+.legacy/binary/**/eda_outputs/
 postprocessing/kinematics/diagnostics_output
 postprocessing/kinematics/correct_body_axis/diag
 postprocessing/kinematics/correct_wing_pitch/diag
@@ -19,7 +21,7 @@ __pycache__/
 *.egg-info/
 
 # Env setup test
-env_setup/test_env
+.legacy/env_setup/test_env
 
 # VS Code
 .vscode/

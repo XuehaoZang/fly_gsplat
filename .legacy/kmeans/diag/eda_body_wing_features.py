@@ -25,12 +25,12 @@ kmeans_split.load_kept() 已有的 if_keep=True 点集。
    kNN距离计算逻辑)，两者接近说明可能是同一结构被硬切，明显更大说明是真正分开
    的结构。
 
-输出落在 postprocessing/labeling/kmeans/diag/eda_outputs/(文件名前缀 bw_ 以区分
-kmeans_split.py 自己的 kmeans_split_*.png，那份存在 postprocessing/labeling/
-kmeans/eda_outputs/)，汇总成 postprocessing/labeling/kmeans/diag/eda_outputs/Label_EDA.md。
+输出落在 .legacy/kmeans/diag/eda_outputs/(文件名前缀 bw_ 以区分
+kmeans_split.py 自己的 kmeans_split_*.png，那份存在 .legacy/
+kmeans/eda_outputs/)，汇总成 .legacy/kmeans/diag/eda_outputs/Label_EDA.md。
 
-用法:
-    python -m postprocessing.labeling.kmeans.diag.eda_body_wing_features
+用法(archived under .legacy/, see .legacy/kmeans/kmeans_split.py):
+    python .legacy/kmeans/diag/eda_body_wing_features.py
 """
 import sys
 from itertools import combinations
@@ -47,13 +47,15 @@ from scipy.spatial import cKDTree
 from sklearn.metrics import adjusted_rand_score
 from sklearn.preprocessing import StandardScaler
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+LEGACY_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(LEGACY_ROOT))
 
-from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
+from kmeans.kmeans_split import (  # noqa: E402
     FEATURES, MAIN_RANDOM_STATE, K, load_kept, run_kmeans, standardize,
 )
-from postprocessing.labeling.kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
+from kmeans.diag.select_dev_frames import DEV_FRAMES  # noqa: E402
 
 OUT_DIR = Path(__file__).resolve().parent / "eda_outputs"
 

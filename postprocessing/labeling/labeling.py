@@ -32,18 +32,24 @@ import pandas as pd
 from scipy.spatial import cKDTree
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+LEGACY_ROOT = REPO_ROOT / ".legacy"
 sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(LEGACY_ROOT))
 
 from postprocessing.cleaning.viz_floater_check import load_marked  # noqa: E402
 from postprocessing.kinematics.geometry import orient_to_reference, weighted_pca  # noqa: E402
 from postprocessing.kinematics.io_schema import PART_LABELS  # noqa: E402
 from postprocessing.labeling.fusion import motion_body_veto, motion_is_body_for_frame_idx  # noqa: E402
-from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
+# kmeans_split.py now lives under .legacy/ (superseded by motion/ as the T3 default) --
+# this module still uses its clustering primitives for process_frame()/main() below, while
+# UP/compute_body_axes/finalize_part_labels etc. further down are shared production code
+# imported BY postprocessing/labeling/motion/label.py, not the other way around.
+from kmeans.kmeans_split import (  # noqa: E402
     K, MAIN_RANDOM_STATE, build_seed_init, cluster_sizes, cross_vs_intra_table,
     label_by_rule_a, n_hardcut_pairs, run_kmeans, run_kmeans_v2, secondary_axis,
     seed_mask, stability_check, stability_check_with_init, standardize_v2,
 )
-from postprocessing.labeling.kmeans.diag.select_dev_frames import DATASET_DIR, DEV_FRAMES  # noqa: E402
+from kmeans.diag.select_dev_frames import DATASET_DIR, DEV_FRAMES  # noqa: E402
 from postprocessing.viz._colors import PART_COLORS  # noqa: E402
 from postprocessing.viz.reprojection_viewer import plot_reprojection_overlay  # noqa: E402
 from utils.ply import connected_component_labels  # noqa: E402

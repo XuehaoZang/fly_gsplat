@@ -28,7 +28,7 @@ boundary has no valid window and this function will raise.
 
 `segment_frame_binary_threshold` is the earlier, much weaker placeholder
 this module used before comparing against real data
-(`postprocessing.labeling.binary.binary_split.classify_body_wing_quantile`,
+(`.legacy/binary/binary_split.py::classify_body_wing_quantile`,
 a single planarity/dist_to_principal_axis threshold) -- kept only for
 reference/comparison, not used by `evaluate.py` anymore. Real data showed
 `planarity` barely separates body from wing at all (`kmeans_split.py`'s own
@@ -48,13 +48,16 @@ import pandas as pd
 from scipy.spatial import cKDTree
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
+LEGACY_ROOT = REPO_ROOT / ".legacy"
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
+if str(LEGACY_ROOT) not in sys.path:
+    sys.path.insert(0, str(LEGACY_ROOT))
 
 from postprocessing.kinematics.geometry import orient_to_reference, weighted_pca  # noqa: E402
-from postprocessing.labeling.binary.binary_split import classify_body_wing_quantile  # noqa: E402
+from binary.binary_split import classify_body_wing_quantile  # noqa: E402
 from postprocessing.labeling.fusion import motion_body_veto, motion_is_body_for_window  # noqa: E402
-from postprocessing.labeling.kmeans.kmeans_split import (  # noqa: E402
+from kmeans.kmeans_split import (  # noqa: E402
     label_by_rule_a, run_kmeans, run_kmeans_v2, secondary_axis, seed_mask, standardize_v2,
 )
 from postprocessing.labeling.motion import density as motion_density  # noqa: E402

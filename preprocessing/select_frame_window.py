@@ -23,7 +23,7 @@ select_frame_window.py
   5. 通过的视频，从这段里居中取TRAIN_FRAMES帧，作为该视频最终的GS训练窗口。
 
 用法:
-    python select_frame_window.py \\
+    python preprocessing/select_frame_window.py \\
         --sparse-root "X:\\antenna\\control\\009_25052026\\Sparse" \\
         --out-csv gpu/schedule/configs/ctrl_009_valid480/frame_selection.csv
 """
