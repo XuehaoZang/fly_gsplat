@@ -1,9 +1,63 @@
 # Data and output
-data/
+data/*
 ctrl_009/
-outputs/
+outputs/*
 gpu/schedule/configs/*
 !gpu/schedule/configs/sample_config.json
+
+# Sample fixture: ctrl_009_002 frames 200-399, the repo's one full T1-T4 example.
+# data/* and outputs/* above only ignore *direct* children, so each nesting level
+# below needs its own explicit un-ignore -- see the .gitignore docs on "it is not
+# possible to re-include a file if a parent directory is excluded".
+!data/ctrl_009_002/
+data/ctrl_009_002/*
+!data/ctrl_009_002/calibration_easyWandData.mat
+!data/ctrl_009_002/camera_KRX0.mat
+!data/ctrl_009_002/f02[0-9][0-9]
+!data/ctrl_009_002/f03[0-9][0-9]
+
+!outputs/ctrl_009_002_ratio3_sh0_dense/
+outputs/ctrl_009_002_ratio3_sh0_dense/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/
+!outputs/ctrl_009_002_ratio3_sh0_dense/kinematics_motion/
+
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]
+
+# f{NNNN}/splatfacto/{timestamp}/ -- {timestamp} is a variable single path
+# segment, so this is spelled out one level at a time with single "*" (never
+# "**"): a "**/*"-style pattern here would also match the *directory* entries
+# themselves (splatfacto/, {timestamp}/) as zero-segment matches, and once a
+# directory is excluded, nothing inside it can be re-included by ANY later
+# "!" pattern, however specific -- see the .gitignore docs' "it is not
+# possible to re-include a file if a parent directory is excluded".
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/*
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto
+
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*
+
+# only ship the final artifacts per frame (splat.ply, T3 output, training config,
+# dataparser rescale transform) -- not the raw/marked T1/T2 intermediate csvs
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*/*
+outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*/*.ply
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*/*.ply
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*/*_labeled.csv
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*/*_labeled.csv
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*/config.yml
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*/config.yml
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f02[0-9][0-9]/splatfacto/*/dataparser_transforms.json
+!outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense/f03[0-9][0-9]/splatfacto/*/dataparser_transforms.json
+
+outputs/ctrl_009_002_ratio3_sh0_dense/kinematics_motion/*
+!outputs/ctrl_009_002_ratio3_sh0_dense/kinematics_motion/body_angles.png
+!outputs/ctrl_009_002_ratio3_sh0_dense/kinematics_motion/wing_angles.png
 postprocessing/labeling/**/eda_outputs/
 .legacy/kmeans/**/eda_outputs/
 .legacy/kmeans/k_means_results/
@@ -13,6 +67,8 @@ postprocessing/kinematics/correct_body_axis/diag
 postprocessing/kinematics/correct_wing_pitch/diag
 postprocessing/kinematics/simulate_gt/diag
 postprocessing/kinematics/simulate_gt/real_appearance_reference.csv
+preprocessing/hull/outputs/
+preprocessing/calib/outputs/
 gpu/schedule/logs/
 
 # Python
