@@ -21,7 +21,7 @@ import open3d as o3d
 
 from utils.camera import CameraConfig
 from utils.calib  import backproj, triangulate, mask_centroid
-from utils.image  import binarize_mask, dilate_mask
+from utils.image  import binarize_mask, dilate_mask, erode_appendages
 from utils.viz    import (cam_colors, start_viser, add_camera_axes,
                            add_point_cloud, stop_viser)
 
@@ -73,7 +73,9 @@ def visual_hull_vote(points: np.ndarray,
 
 # -------------------------------------------------------------------- main --
 def generate_hull(data_dir: str, if_viser: bool = True,
-                   n_samples: int = 10_000, out_name: str = "init_points.ply") -> dict:
+                   n_samples: int = 10_000, out_name: str = "init_points.ply",
+                   mask_threshold: int = 1,
+                   remove_appendages: bool = False, appendage_kernel_size: int = 9) -> dict:
     base_dir  = Path(data_dir)
     json_path = base_dir / "transforms.json"
     ply_path  = base_dir / out_name
@@ -93,7 +95,9 @@ def generate_hull(data_dir: str, if_viser: bool = True,
         cam = CameraConfig.from_opengl(frame)
         cam.cam_idx = idx + 1
 
-        binary  = binarize_mask(im, threshold=1, dark_bg=False)     # TODO need to input as param
+        binary  = binarize_mask(im, threshold=mask_threshold, dark_bg=False)
+        if remove_appendages:
+            binary = erode_appendages(binary, kernel_size=appendage_kernel_size)
         dilated = dilate_mask(binary, kernel_size=3, iterations=2)
 
         u, v = mask_centroid(binary)

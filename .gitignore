@@ -1,6 +1,5 @@
 # Data and output
 data/
-ctrl_009/
 outputs/
 gpu/schedule/configs/*
 !gpu/schedule/configs/sample_config.json

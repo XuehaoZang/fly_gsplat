@@ -194,10 +194,17 @@ def points_to_voxel_keys(xyz: np.ndarray, voxel_size: float = VOXEL_SIZE_M) -> n
     return np.floor(xyz / voxel_size).astype(np.int64)
 
 
-def compute_body_voxels_for_frame(frame_idx: int, dataset_dir: Path = DATASET_DIR) -> dict:
+def compute_body_voxels_for_frame(frame_idx: int, dataset_dir: Path = DATASET_DIR,
+                                   half_window: int = HALF_WINDOW) -> dict:
     """给定测试帧号，跑完整的"累加窗口 -> 体素帧计数 -> body候选体素 -> 最大连通分量"流程，
-    返回诊断+结果dict，供label.py单帧分类和diag/出图复用，避免重复计算。"""
-    window_df, used_indices = load_window_points(frame_idx, dataset_dir)
+    返回诊断+结果dict，供label.py单帧分类和diag/出图复用，避免重复计算。
+
+    half_window默认=HALF_WINDOW(36帧，按ctrl_009_002数据集16000fps锁定的任务规格值)，
+    对应的是"累加窗口覆盖的物理时长"，不是帧数本身——按比例换算到别的拍摄fps时应显式传入
+    (例如3相机数据集拍摄fps=8000，是这里16000fps的一半，对应half_window应为18而非36，
+    否则窗口覆盖的物理时长会变成2倍，跨帧累加进比原设计更多个振翅周期，稀释/混淆body体素
+    判据)，不要依赖这个默认值。"""
+    window_df, used_indices = load_window_points(frame_idx, dataset_dir, half_window=half_window)
     voxel_counts = compute_voxel_frame_counts(window_df)
     body_voxels = extract_body_voxels(voxel_counts)
 

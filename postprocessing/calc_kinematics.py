@@ -23,13 +23,18 @@ T4 = kinematics最终csv(`postprocessing.kinematics.pipeline.run_dataset`，输�
 后自动拉起，Ctrl+C退出。
 
 用法:
-    python -m postprocessing.calc_kinematics [dataset_root]
+    python -m postprocessing.calc_kinematics [dataset_root] [--half-window N]
     python -m postprocessing.calc_kinematics outputs/ctrl_009_002_ratio3_sh0_dense/ratio3_sh0_dense
 
-不传`dataset_root`则用本文件里的`DEFAULT_DATASET_ROOT`；不支持其它命令行参数。
+不传`dataset_root`则用本文件里的`DEFAULT_DATASET_ROOT`。`--half-window`只在从raw
+splat.ply现跑T1-T3时生效(已有`_labeled.csv`或kinematics结果时T3不会重跑，这个参数
+不起作用)，默认按`DEFAULT_DATASET_ROOT`(ctrl_009_002, 16000fps)锁定=36帧，见
+`postprocessing.labeling.motion.density.HALF_WINDOW`的docstring——别的拍摄fps数据集
+必须显式按比例换算传入(例如8000fps的3相机数据集应传`--half-window 18`)，不能依赖默认值。
 """
 from __future__ import annotations
 
+import argparse
 import subprocess
 import sys
 from pathlib import Path
@@ -48,6 +53,7 @@ from postprocessing.cleaning import mark_floaters  # noqa: E402
 from postprocessing.kinematics import pipeline  # noqa: E402
 from postprocessing.kinematics.diagnostics import plot_body_angles  # noqa: E402
 from postprocessing.labeling.motion import label as labeling  # noqa: E402
+from postprocessing.labeling.motion import density as motion_density  # noqa: E402
 from postprocessing.viz import reprojection_viewer  # noqa: E402
 from postprocessing.viz.reprojection_viewer import RAW_DATA_DIR  # noqa: E402
 from utils.gaussian_features import compute_gaussian_features  # noqa: E402
@@ -149,13 +155,19 @@ def detect_splat_method(dataset_root: Path) -> str:
     return "splatfacto"
 
 
-def run_cleaning_and_labeling(dataset_root: Path, start: int, end: int) -> None:
+def run_cleaning_and_labeling(dataset_root: Path, start: int, end: int,
+                               half_window: int = motion_density.HALF_WINDOW) -> None:
     """把raw splat.ply变成T4 pipeline能读的`_labeled.csv`:
       T1 逐点特征表(ensure_gaussian_features，已存在的帧跳过) ->
       T2 `mark_floaters.run_batch` 清洗(标if_keep，产出`_marked.csv`) ->
       T3 `labeling.run_batch` kmeans聚类得body/wing_L/wing_R(产出`_labeled.csv`)。
     T2/T3两步任何一帧失败都只跳过该帧、打印警告，不中断整个批处理(沿用两个模块自己
-    run_batch里"单帧异常catch住"的约定)。"""
+    run_batch里"单帧异常catch住"的约定)。
+
+    half_window透传给T3的`labeling.run_batch`，默认=motion_density.HALF_WINDOW(36帧，
+    按ctrl_009_002数据集16000fps锁定)——别的拍摄fps数据集(比如8000fps的3相机数据集)
+    调用方必须显式按比例传入换算后的值(见density.compute_body_voxels_for_frame
+    docstring)，不要依赖这个默认值。"""
     print("  [T1] gaussian_features (跳过已算过的帧) ...")
     ensure_gaussian_features(dataset_root, start, end)
 
@@ -164,15 +176,24 @@ def run_cleaning_and_labeling(dataset_root: Path, start: int, end: int) -> None:
     if t2_failures:
         print(f"  [WARN][T2] 失败帧: {[f['frame'] for f in t2_failures]}")
 
-    print(f"\n  [T3] motion accumulation labeling ...")
+    print(f"\n  [T3] motion accumulation labeling (half_window={half_window}) ...")
     frames = [f"f{i:04d}" for i in range(start, end + 1)]
-    _, t3_failures = labeling.run_batch(frames, data_root=dataset_root, save_reprojection=False)
+    _, t3_failures = labeling.run_batch(frames, data_root=dataset_root, save_reprojection=False,
+                                         half_window=half_window)
     if t3_failures:
         print(f"  [WARN][T3] 失败帧: {[f['frame'] for f in t3_failures]}")
 
 
 def main() -> None:
-    dataset_root = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_DATASET_ROOT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("dataset_root", type=Path, nargs="?", default=DEFAULT_DATASET_ROOT)
+    ap.add_argument("--half-window", type=int, default=motion_density.HALF_WINDOW,
+                     help="T3 motion累加窗口半宽(帧)，只在从raw splat.ply现跑T1-T3时生效"
+                          "(已有_labeled.csv或kinematics结果时不起作用)。默认按16000fps"
+                          "锁定=36，别的拍摄fps数据集需要按比例换算显式传入，例如8000fps"
+                          "的3相机数据集应传18，见density.HALF_WINDOW的docstring。")
+    args = ap.parse_args()
+    dataset_root = args.dataset_root
     raw_data_dir = RAW_DATA_DIR
     out_dir = dataset_root.parent / "kinematics"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -189,7 +210,7 @@ def main() -> None:
         else:
             print("== 未检测到T3标注，从raw splat.ply开始跑T1-T3 ==")
             start, end = discover_frame_range(dataset_root)
-            run_cleaning_and_labeling(dataset_root, start, end)
+            run_cleaning_and_labeling(dataset_root, start, end, half_window=args.half_window)
 
         print(f"\n== T4 kinematics pipeline: {dataset_root} (frame_glob={LABELED_FRAME_GLOB!r}) ==")
         config = pipeline.PipelineConfig(output_dir=out_dir, write_debug=True, frame_glob=LABELED_FRAME_GLOB)

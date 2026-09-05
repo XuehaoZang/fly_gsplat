@@ -34,6 +34,7 @@ sys.path.insert(0, str(REPO_ROOT))
 from postprocessing import calc_kinematics as ck  # noqa: E402
 from postprocessing.kinematics import pipeline  # noqa: E402
 from postprocessing.kinematics.diagnostics import plot_body_angles  # noqa: E402
+from postprocessing.labeling.motion import density as motion_density  # noqa: E402
 from postprocessing.viz import reprojection_viewer  # noqa: E402
 
 
@@ -46,9 +47,12 @@ def find_config(sweep_name: str) -> dict:
     return json.loads(matches[0].read_text())
 
 
-def run_one(sweep_name: str, group: str) -> None:
+def run_one(sweep_name: str, group: str, half_window: int = motion_density.HALF_WINDOW) -> None:
     """跟calc_kinematics.main()同一套T1-T4+画图逻辑，唯一区别: raw_data_dir从
-    该sweep自己的config.base_name动态解析，且跑完不拉起交互式viewer。"""
+    该sweep自己的config.base_name动态解析，且跑完不拉起交互式viewer。
+
+    half_window透传给T3(见calc_kinematics.run_cleaning_and_labeling的docstring)，
+    默认按16000fps锁定=36，别的拍摄fps数据集需要按比例换算显式传入。"""
     cfg = find_config(sweep_name)
     dataset_root = REPO_ROOT / "outputs" / sweep_name / group
     raw_data_dir = REPO_ROOT / cfg["base_name"]
@@ -67,7 +71,7 @@ def run_one(sweep_name: str, group: str) -> None:
         else:
             print("== 未检测到T3标注，从raw splat.ply开始跑T1-T3 ==")
             start, end = ck.discover_frame_range(dataset_root)
-            ck.run_cleaning_and_labeling(dataset_root, start, end)
+            ck.run_cleaning_and_labeling(dataset_root, start, end, half_window=half_window)
 
         print(f"\n== T4 kinematics pipeline: {dataset_root} ==")
         config = pipeline.PipelineConfig(output_dir=out_dir, write_debug=True,
@@ -104,6 +108,10 @@ def main() -> None:
                           ' "gpu/schedule/configs/ctrl_009_mid200/*.json"')
     ap.add_argument("--group", type=str, required=True,
                      help="dataset_root = outputs/<sweep_name>/<group>，通常是param_sets里的那个key")
+    ap.add_argument("--half-window", type=int, default=motion_density.HALF_WINDOW,
+                     help="T3 motion累加窗口半宽(帧)，只在从raw splat.ply现跑T1-T3时生效。"
+                          "默认按16000fps锁定=36，别的拍摄fps数据集需要按比例换算显式传入，"
+                          "例如8000fps的3相机数据集应传18，见density.HALF_WINDOW的docstring。")
     args = ap.parse_args()
 
     if bool(args.sweep_name) == bool(args.configs_glob):
@@ -120,7 +128,7 @@ def main() -> None:
     failures = []
     for name in sweep_names:
         try:
-            run_one(name, args.group)
+            run_one(name, args.group, half_window=args.half_window)
         except Exception as e:
             print(f"[ERROR] {name}: {e}")
             failures.append((name, str(e)))

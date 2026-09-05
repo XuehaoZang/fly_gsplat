@@ -67,8 +67,29 @@ def dilate_mask(im: np.ndarray, kernel_size: int = 3, iterations: int = 2) -> np
     """
     # 1. Generate elliptical kernel for smoother, natural edges
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
-    
+
     # 2. Execute dilation
     dilated = cv2.dilate(im, kernel, iterations=iterations)
-    
+
     return dilated
+
+
+def erode_appendages(mask: np.ndarray, kernel_size: int = 9, min_component_area: int = 50) -> np.ndarray:
+    """
+    Remove thin appendage-like structures (e.g. fly legs) from a binary mask via
+    morphological opening (erode then dilate): structures thinner than kernel_size
+    are eroded away entirely, while the thicker body/wing mass survives and is
+    restored to its original extent by the closing dilation. A surviving-component
+    area filter is applied afterwards as a safety net against small opening debris.
+
+    mask: binary mask (0/255 or 0/1), foreground > 0.
+    """
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
+    opened = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+
+    n_labels, labels, stats, _ = cv2.connectedComponentsWithStats(opened, connectivity=8)
+    cleaned = np.zeros_like(opened)
+    for label in range(1, n_labels):  # label 0 is background
+        if stats[label, cv2.CC_STAT_AREA] >= min_component_area:
+            cleaned[labels == label] = 255
+    return cleaned

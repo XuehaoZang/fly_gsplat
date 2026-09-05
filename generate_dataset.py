@@ -5,15 +5,17 @@ import scipy.io as sio
 import cv2
 from utils.camera import CameraConfig
 from utils.dataset import generate_frame_dict, reconstruct_frame_image
-from utils.image import binarize_mask, crop_image, gray_to_rgba
+from utils.image import binarize_mask, crop_image, gray_to_rgba, erode_appendages
 from utils.calib import mask_centroid
 
 def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
-                      if_crop: bool = False, 
-                      crop_size: int = 160, 
-                      white_bg: bool = False, 
+                      if_crop: bool = False,
+                      crop_size: int = 160,
+                      white_bg: bool = False,
                       if_mask: bool = False,
-                      calib_dir: str = None) -> None:
+                      calib_dir: str = None,
+                      remove_appendages: bool = False,
+                      appendage_kernel_size: int = 9) -> None:
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
     """
@@ -47,6 +49,15 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
 
         # Reconstruct image from sparse pixel data
         im = reconstruct_frame_image(sparse_file, target_frame, w_full, h_full, white_bg=white_bg)
+
+        # P8: paint thin appendages (legs) out of the actual supervision image, not just
+        # the hull-voting mask -- if only the hull excluded them, densification would
+        # regrow points there anyway to satisfy the photometric loss against this image.
+        if remove_appendages:
+            fg_mask = binarize_mask(im, threshold=1, dark_bg=not white_bg)
+            cleaned_mask = erode_appendages(fg_mask, kernel_size=appendage_kernel_size)
+            bg_value = 255 if white_bg else 0
+            im = np.where(cleaned_mask > 0, im, bg_value).astype(im.dtype)
 
         # calibration: RQ decomposition of EasyWand DLT coefs
         cam = CameraConfig.easywand_dlt(ew_data, i)
