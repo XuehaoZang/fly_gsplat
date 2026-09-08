@@ -75,7 +75,8 @@ def visual_hull_vote(points: np.ndarray,
 def generate_hull(data_dir: str, if_viser: bool = True,
                    n_samples: int = 10_000, out_name: str = "init_points.ply",
                    mask_threshold: int = 1,
-                   remove_appendages: bool = False, appendage_kernel_size: int = 9) -> dict:
+                   remove_appendages: bool = False, appendage_kernel_size: int = 9,
+                   appendage_min_area_ratio: float = 0.0) -> dict:
     base_dir  = Path(data_dir)
     json_path = base_dir / "transforms.json"
     ply_path  = base_dir / out_name
@@ -97,7 +98,8 @@ def generate_hull(data_dir: str, if_viser: bool = True,
 
         binary  = binarize_mask(im, threshold=mask_threshold, dark_bg=False)
         if remove_appendages:
-            binary = erode_appendages(binary, kernel_size=appendage_kernel_size)
+            binary = erode_appendages(binary, kernel_size=appendage_kernel_size,
+                                       min_area_ratio=appendage_min_area_ratio)
         dilated = dilate_mask(binary, kernel_size=3, iterations=2)
 
         u, v = mask_centroid(binary)

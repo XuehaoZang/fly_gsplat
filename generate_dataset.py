@@ -15,7 +15,8 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
                       if_mask: bool = False,
                       calib_dir: str = None,
                       remove_appendages: bool = False,
-                      appendage_kernel_size: int = 9) -> None:
+                      appendage_kernel_size: int = 9,
+                      appendage_min_area_ratio: float = 0.0) -> None:
     """
     Generate a Nerfstudio-compatible dataset from EasyWand calibration and sparse frame data.
     """
@@ -55,7 +56,8 @@ def generate_dataset(_data_dir: str, _sparse_dir: str, target_frame: int,
         # regrow points there anyway to satisfy the photometric loss against this image.
         if remove_appendages:
             fg_mask = binarize_mask(im, threshold=1, dark_bg=not white_bg)
-            cleaned_mask = erode_appendages(fg_mask, kernel_size=appendage_kernel_size)
+            cleaned_mask = erode_appendages(fg_mask, kernel_size=appendage_kernel_size,
+                                            min_area_ratio=appendage_min_area_ratio)
             bg_value = 255 if white_bg else 0
             im = np.where(cleaned_mask > 0, im, bg_value).astype(im.dtype)
 

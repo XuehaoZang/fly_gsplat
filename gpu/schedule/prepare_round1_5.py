@@ -32,12 +32,13 @@ VIDEOS = {
     "004": {
         "orig_base": "data/ctrl_119_3cam/004",
         "sparse_dir": "data/tests/ctrl_3cam_test/Sparse/Expr_119_mov_004",
-        "frames": (730, 830),  # [start, end)
+        "frames": (730, 880),  # [start, end) -- widened 100->150 for Round 2 (kinematics needs
+                                # >=150 contiguous frames, see sweep_hyper_params.md Round 2 notes)
     },
     "010": {
         "orig_base": "data/ctrl_119_3cam/010",
         "sparse_dir": "data/tests/ctrl_3cam_test/Sparse/Expr_119_mov_010",
-        "frames": (373, 473),
+        "frames": (373, 523),
     },
 }
 

@@ -86,19 +86,51 @@ def check_sweep_meta(out_base_dir: Path, meta: dict) -> None:
         sys.exit(1)
 
 
+def _param_set_extra_args(value) -> list:
+    """param_sets的value既可以是纯list(旧格式，沿用config顶层base_name)，也可以是
+    {"extra_args": [...], "base_name": "..."}(新格式，本组单独指向一个预先准备好的
+    数据变体目录，比如去腿/mask阈值/hull采样数这类改数据而非改训练参数的sweep)。"""
+    return value["extra_args"] if isinstance(value, dict) else value
+
+
+def _param_set_base_name(value, default_base_name: str) -> str:
+    if isinstance(value, dict) and "base_name" in value:
+        return value["base_name"]
+    return default_base_name
+
+
 def enumerate_tasks(param_sets: dict, frames: list, base_name: str, max_iters: int,
                      use_checkpoint_model: bool) -> list:
-    return [{"param_set": ps, "frame": f, "extra_args": extra_args,
-              "base_name": base_name, "max_iters": max_iters,
+    return [{"param_set": ps, "frame": f, "extra_args": _param_set_extra_args(value),
+              "base_name": _param_set_base_name(value, base_name), "max_iters": max_iters,
               "use_checkpoint_model": use_checkpoint_model}
-            for ps, extra_args in param_sets.items() for f in frames]
+            for ps, value in param_sets.items() for f in frames]
 
 
-def prepare_all_frames(frames: list, sparse_dir: str, base_name: str) -> None:
+def prepare_all_frames(frames: list, sparse_dir: str, base_name: str, param_sets: dict) -> None:
     """Phase A: 数据准备按frame去重、在主进程里串行执行，避免worker并发写同一个
-    data_dir产生竞态。已存在的帧(transforms.json+init_points.ply都在)直接跳过。"""
+    data_dir产生竞态。已存在的帧(transforms.json+init_points.ply都在)直接跳过。
+
+    只有config顶层默认的base_name会在这里自动调用generate_dataset/generate_hull
+    (用默认参数)——param_sets里override出来的base_name(数据变体，如去腿/mask阈值/
+    hull采样数)必须由专门的准备脚本(如prepare_round1_5.py的模式)提前生成好，这里只
+    做存在性检查，绝不用默认参数静默补一份"看起来能跑但其实是错数据"的目录，那样会
+    让整组sweep的结果悄悄失去意义且难以察觉。"""
     from generate_dataset import generate_dataset
     from generate_hull import generate_hull
+
+    override_base_names = sorted({
+        v["base_name"] for v in param_sets.values()
+        if isinstance(v, dict) and "base_name" in v and v["base_name"] != base_name
+    })
+    for override_base_name in override_base_names:
+        missing = [f for f in frames
+                   if not (common.data_dir_for(override_base_name, f) / "transforms.json").exists()
+                   or not (common.data_dir_for(override_base_name, f) / "init_points.ply").exists()]
+        if missing:
+            raise RuntimeError(
+                f"base_name override {override_base_name!r} 缺少 {len(missing)} 帧数据"
+                f"(如 f{missing[0]:04d})，必须先用专门的准备脚本生成，不会在这里用默认参数自动补齐")
 
     for frame_idx in frames:
         data_dir = common.data_dir_for(base_name, frame_idx)
@@ -195,7 +227,7 @@ def main():
     check_sweep_meta(out_base_dir, meta)
 
     print("=== Phase A: data prep ===")
-    prepare_all_frames(frames, sparse_dir, base_name)
+    prepare_all_frames(frames, sparse_dir, base_name, param_sets)
 
     print("=== Phase B: build queue ===")
     tasks = enumerate_tasks(param_sets, frames, base_name, max_iters, args.debug_checkpoint)

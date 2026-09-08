@@ -74,13 +74,25 @@ def dilate_mask(im: np.ndarray, kernel_size: int = 3, iterations: int = 2) -> np
     return dilated
 
 
-def erode_appendages(mask: np.ndarray, kernel_size: int = 9, min_component_area: int = 50) -> np.ndarray:
+def erode_appendages(mask: np.ndarray, kernel_size: int = 9, min_component_area: int = 50,
+                      min_area_ratio: float = 0.0) -> np.ndarray:
     """
     Remove thin appendage-like structures (e.g. fly legs) from a binary mask via
     morphological opening (erode then dilate): structures thinner than kernel_size
     are eroded away entirely, while the thicker body/wing mass survives and is
     restored to its original extent by the closing dilation. A surviving-component
     area filter is applied afterwards as a safety net against small opening debris.
+
+    min_area_ratio: per-image safety net against catastrophic erosion. A single
+    kernel_size calibrated on a broadside view can eat into the body itself on a
+    foreshortened/end-on view of the same subject (observed: kernel_size=9 wiped
+    out most of one camera's silhouette on a real 3-cam frame even though the same
+    kernel was fine on the other two cameras). If the surviving foreground area is
+    below min_area_ratio of the pre-erosion mask's area, this image's erosion is
+    considered to have failed and the ORIGINAL (un-eroded) mask is returned instead
+    -- better to keep a few extra leg pixels in one view than to silently starve
+    photometric supervision of most of the body in that view. Default 0.0 keeps
+    prior behavior unchanged (never triggers).
 
     mask: binary mask (0/255 or 0/1), foreground > 0.
     """
@@ -92,4 +104,9 @@ def erode_appendages(mask: np.ndarray, kernel_size: int = 9, min_component_area:
     for label in range(1, n_labels):  # label 0 is background
         if stats[label, cv2.CC_STAT_AREA] >= min_component_area:
             cleaned[labels == label] = 255
+
+    if min_area_ratio > 0.0:
+        orig_area = float((mask > 0).sum())
+        if orig_area > 0 and (cleaned > 0).sum() / orig_area < min_area_ratio:
+            return mask
     return cleaned
