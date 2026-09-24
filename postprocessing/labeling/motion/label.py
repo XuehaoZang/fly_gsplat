@@ -60,11 +60,15 @@ BODY_FRAC_MAX = 0.9
 异常"判据风格给的粗略下限/上限，不是从这个数据集专门标定的精确值。"""
 
 
-def classify_body_candidate(df_kept: pd.DataFrame, frame_idx: int, dataset_dir: Path) -> tuple[np.ndarray, dict]:
+def classify_body_candidate(df_kept: pd.DataFrame, frame_idx: int, dataset_dir: Path,
+                             half_window: int = d.HALF_WINDOW) -> tuple[np.ndarray, dict]:
     """单帧body/wing候选点判定: 该帧每个if_keep点，查其所在体素是否属于
     density.compute_body_voxels_for_frame算出的body体素集合 -> body候选点；其余
-    -> wing候选点。返回(is_body布尔数组, density诊断dict)。"""
-    info = d.compute_body_voxels_for_frame(frame_idx, dataset_dir)
+    -> wing候选点。返回(is_body布尔数组, density诊断dict)。
+
+    half_window见density.compute_body_voxels_for_frame的docstring：默认值是按
+    16000fps锁定的，别的拍摄fps数据集要显式传入按比例换算后的值。"""
+    info = d.compute_body_voxels_for_frame(frame_idx, dataset_dir, half_window=half_window)
     xyz_kept = df_kept[["x", "y", "z"]].to_numpy()
     voxel_keys = d.points_to_voxel_keys(xyz_kept)
     body_voxels = info["body_voxels"]
@@ -159,7 +163,8 @@ def compute_confidence(n_body_candidate: int, n_kept: int, is_wing_merged: bool)
     return "high"
 
 
-def process_frame(frame_idx: int, dataset_dir: Path = d.DATASET_DIR) -> dict:
+def process_frame(frame_idx: int, dataset_dir: Path = d.DATASET_DIR,
+                   half_window: int = d.HALF_WINDOW) -> dict:
     frame = f"f{frame_idx:04d}"
     df_full, marked_csv = load_marked(frame, data_root=dataset_dir)
     kept_mask = df_full["if_keep"].astype(bool).to_numpy()
@@ -167,7 +172,7 @@ def process_frame(frame_idx: int, dataset_dir: Path = d.DATASET_DIR) -> dict:
     n_total, n_kept = len(df_full), len(df_kept)
     xyz_kept = df_kept[["x", "y", "z"]].to_numpy()
 
-    is_body, density_info = classify_body_candidate(df_kept, frame_idx, dataset_dir)
+    is_body, density_info = classify_body_candidate(df_kept, frame_idx, dataset_dir, half_window=half_window)
     n_body_candidate = int(is_body.sum())
 
     semantic, comp_sizes, split_diag = split_wing_candidates(xyz_kept, is_body)
@@ -231,7 +236,8 @@ def plot_labeled_reprojection(frame: str, df_out: pd.DataFrame, confidence: str,
 
 
 def run_batch(frames: list[str], data_root: Path = d.DATASET_DIR,
-              save_reprojection: bool = True) -> tuple[list[dict], list[dict]]:
+              save_reprojection: bool = True,
+              half_window: int = d.HALF_WINDOW) -> tuple[list[dict], list[dict]]:
     """逐帧处理，单帧异常catch住、跳过、记录帧号，不中断整个批处理(同
     postprocessing/labeling/labeling.py::run_batch的约定)。frames/data_root命名和签名
     对齐labeling.py::run_batch，供calc_kinematics.py直接替换导入使用。
@@ -239,13 +245,17 @@ def run_batch(frames: list[str], data_root: Path = d.DATASET_DIR,
     save_reprojection=False时跳过每帧一张的重投影图落盘(eda_outputs/reprojection)——
     calc_kinematics.py跑整个数据集的T3时帧数可能上百，不需要每帧一张诊断图，最终验收
     图已由calc_kinematics.py自己在kinematics/reprojection/下等距挑N_FRAMES张画。
-    默认True保留独立调本模块(如本文件main()的开发用途)时逐帧出图诊断的行为。"""
+    默认True保留独立调本模块(如本文件main()的开发用途)时逐帧出图诊断的行为。
+
+    half_window见density.compute_body_voxels_for_frame的docstring：默认值按16000fps
+    锁定，别的拍摄fps数据集(比如8000fps的3相机数据集)调用方必须显式按比例传入换算后的值
+    (8000fps -> half_window=18)，不能依赖这里的默认值。"""
     results = []
     failures = []
     for frame in frames:
         frame_idx = int(frame[1:])
         try:
-            r = process_frame(frame_idx, data_root)
+            r = process_frame(frame_idx, data_root, half_window=half_window)
             if save_reprojection:
                 reproj_path = REPROJ_DIR / f"motion_labeled_reproj_{frame}.png"
                 plot_labeled_reprojection(frame, r["df_out"], r["confidence"], reproj_path)
