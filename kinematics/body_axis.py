@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from . import geometry as geo
+from utils import geometry as geo
 from .body import UP, end_centroids
 from .io import FrameParts
 

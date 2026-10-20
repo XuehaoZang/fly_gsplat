@@ -56,9 +56,11 @@
 
 ## 4. segment — 基于运动的 3D 点分割
 
-- 输入：**一段连续帧**（至少约 150 帧）。按 ±36 帧运动累积的密度，把高斯分成 body 和 wing，再按翅根和体轴分出左右。
-- 输出：在 `_marked.csv` 基础上新增 `part_label ∈ {body, wing_L, wing_R}` 和 `confidence` 两列 → `_labeled.csv`。
-- `if_keep=0` 的点不参与分割（关闭去 floater 时，所有点都保留）。
+- 入口 `segment/run.py`，算法在 `segment/motion.py`。输入：一段连续帧的 `_marked.csv`，帧率 `--fps`（必填）。输出：同目录下的 `_labeled.csv`，在输入表后面新增两列：`part_label ∈ {body, wing_L, wing_R}` 和 `confidence ∈ {high, low}`。
+- body：取 ±round(36 × fps / 16000) 帧的窗口，统计每个体素（2.5e-4 m）被多少帧命中。身体几乎不动，命中超过 19 帧的体素作为 body 候选，只保留其中最大的连通分量。
+- 翅：其余点做 kNN 连通分量，最大的两个分量是两只翅，碎块按最近邻归入。如果两翅贴在一起，就按 x_body × up 方向的投影中位数强行切开，confidence 记为 low。左右由两翅在 x_body × up 上的投影决定。
+- `if_keep=0` 的点不参与分割，最后按最近邻传播标签。
+- 段首段尾的帧窗口较短。阈值 19 是按 16000 fps（73 帧窗口）定的，其他帧率下还没有重新校准。
 
 ## 5. kinematics — 坐标系与角度
 
@@ -87,7 +89,7 @@ python -m dataset.make_transforms   --calib <easyWand.mat> --out data/<run>
 python -m dataset.make_hull         --data data/<run>
 python -m train.run                 --config train/configs/<run>.json
 python -m gaussians.run             --run <recon_dir> [--remove-floaters]
-python -m segment.run               --run <recon_dir>
+python -m segment.run               --run <recon_dir> --fps 16000
 python -m kinematics.run            --run <recon_dir>
 python -m viz.view                  --run <recon_dir>
 python -m eval.synth                --trial LOW

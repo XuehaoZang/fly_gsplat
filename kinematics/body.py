@@ -16,7 +16,7 @@ from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 from scipy.spatial import cKDTree
 
-from . import geometry as geo
+from utils import geometry as geo
 
 UP = np.array([0.0, 0.0, 1.0])
 """实验室坐标系的向上方向。"""

@@ -1,4 +1,4 @@
-"""几何原语：归一化、加权 PCA、RANSAC 平面、投影、旋转。所有长度单位为米。"""
+"""几何原语：归一化、加权 PCA、RANSAC 平面、投影、旋转。各模块共用；长度单位为米。"""
 from __future__ import annotations
 
 import numpy as np

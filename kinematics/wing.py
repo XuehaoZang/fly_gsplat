@@ -15,7 +15,7 @@ import numpy as np
 from scipy.spatial import cKDTree
 from scipy.spatial.distance import pdist, squareform
 
-from . import geometry as geo
+from utils import geometry as geo
 from .body import BodyFrame
 
 SIGN_LEFT = {"wing_L": -1.0, "wing_R": 1.0}
