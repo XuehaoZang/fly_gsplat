@@ -48,11 +48,13 @@
 
 ## 3. gaussians — 预处理点云
 
-- `extract_features.py`：读 `splat.ply` + `dataparser_transforms.json`，换算回实验室坐标系的物理单位（米），得到每个高斯一行：
-  `x,y,z, R,G,B, opacity, scale_phys_0..2, scale_ratio, linearity, planarity, sphericity, orientation_xyz, local_density, …`
-  → `gaussian_features_f####.csv`
-- `remove_floaters.py`（可选）：用 k-NN 连通分量判断，新增 `if_keep` 列 → `_marked.csv`。
-- 公共读取函数：`utils.load_gaussians(frame_dir)`，可视化和后续模块都用它。
+- 入口 `gaussians/run.py`。输入：每帧最新时间戳目录下的 `splat.ply` + `dataparser_transforms.json`。输出：同目录下的 `gaussian_features_f####.csv`；加 `--remove-floaters` 时另写 `_marked.csv`。
+- `extract_features.py`：把高斯换算回实验室坐标系的物理单位（米），每个高斯一行，不删点：
+  `x,y,z, dist_to_centroid, dist_to_principal_axis, R,G,B, color_oob, opacity, scale_phys_0..2, scale_ratio, linearity, planarity, sphericity, orientation_x/y/z, local_density`
+  - 换算：nerfstudio 坐标 x_ns = s·(R x + t)。位置用 x = Rᵀ(x_ns/s − t)，方向向量用 v = Rᵀ v_ns，尺度用 exp(log_scale)/s。
+  - `orientation_xyz` 是高斯最短轴的方向，已经转到实验室坐标系。**2026-10-20 之前盘上所有 CSV 的这一列都还在 nerfstudio 坐标系里，是错的**；其他列都正确。
+- `remove_floaters.py`：在 k=10 近邻图上做连通分量（只保留邻距不超过 75 分位数的边），所在分量不超过 10 个点的高斯记为 floater，结果写入 `if_keep` 列。
+- 后续步骤目前只用 `x,y,z` 和 `if_keep`。
 
 ## 4. segment — 基于运动的 3D 点分割
 
