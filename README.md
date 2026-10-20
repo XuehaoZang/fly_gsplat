@@ -62,9 +62,13 @@
 
 ## 5. kinematics — 坐标系与角度
 
-- 输入：一段连续帧的 `_labeled.csv`，以及该段的 `fps`（真实 4 相机 16000，合成数据 5000）。
-- 步骤：体坐标系（带序列连续性修正）→ 翅展、翅平面 → φ, θ, η → η 解缠 → 平滑。
-- 输出：`angles.csv`，每帧一行：`frame_id, yaw, pitch, roll, phi_L, theta_L, eta_L, phi_R, theta_R, eta_R, status`，原始值和平滑值各一份。
+- 入口 `kinematics/run.py`。输入：`<run>/<param_set>/` 下一段连续帧的 `_labeled.csv`。输出：`<run>/kinematics/angles.csv`。
+- 步骤：
+  1. 体长轴 x_body（`body_axis.py`）：先找锚点帧（两翅展开、体点云细长），再用上一帧的轴作引导逐帧取体点云的头/尾端点质心，最后用锚点校验并整段翻转。
+  2. 体坐标系（`body.py`）：y_body 由左右翅根确定（远端点 + 连通分量），拍动平面法向是 x_body 绕 y_body 转 -45°，由此得到 yaw / pitch / roll。
+  3. 翅角（`wing.py`）：翅展为翅平面内点的 PCA 主轴，得到 φ、θ；弦向用 MATLAB `find_chords_quad.m` 的对角线法，符号按逐帧连续性确定，得到 η。
+- `angles.csv` 每帧一行：`frame_id, yaw, pitch, roll, phi_L, theta_L, eta_L, phi_R, theta_R, eta_R, sp_normal_*, chord_conf_L/R, span_L_*, span_R_*, status`（角度单位为度，均为原始值）。失败帧的角度为 NaN，原因写在 `status`。
+- 目前不做平滑、不做 η 解缠，所以 fps 暂时用不到。加入平滑时再增加 `--fps` 参数（真实 4 相机 16000，合成数据 5000）。
 - 目前只用了高斯中心。用大小、颜色等其他属性，或者用模型拟合，是以后的研究方向，不改变这一步的输入和输出。
 
 ---
@@ -72,7 +76,7 @@
 ## 数据（`data/`，gitignore，详见 `data/MANIFEST.md`）
 
 - `data/ctrl_009/<mov>/f####/`：真实数据，第 1 步的输出。
-- `data/recon_valid480/<run>/`：16 段真实视频，已经跑完第 2–4 步，可以直接用于第 5 步和可视化。
+- `outputs/ctrl_009/<run>/`：16 段真实视频（valid480），已经跑完第 2–4 步，可以直接用于第 5 步和可视化。
 - `data/synth/{LOW,MID,HIGH}/`：合成数据，包括 GT（`gt.h5`）、渲染图、自重建结果、L2 标签，用于 `eval/` 打分。
 
 ## 运行
@@ -84,7 +88,7 @@ python -m dataset.make_hull         --data data/<run>
 python -m train.run                 --config train/configs/<run>.json
 python -m gaussians.run             --run <recon_dir> [--remove-floaters]
 python -m segment.run               --run <recon_dir>
-python -m kinematics.run            --run <recon_dir> --fps 16000
+python -m kinematics.run            --run <recon_dir>
 python -m viz.view                  --run <recon_dir>
 python -m eval.synth                --trial LOW
 ```
