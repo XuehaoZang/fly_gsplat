@@ -1,0 +1,94 @@
+# fly_gsplat
+
+用 4 相机高速录像，经逐帧 3D 高斯重建，得到果蝇的飞行运动学角度。
+
+**交付物是角度**：身体 yaw / pitch / roll，左右翅 φ（stroke）/ θ（deviation）/ η（pitch）。
+点云只是中间产物。所有角度都由本流程从高斯得到（不与旧 MATLAB 外壳流程混用）。当前的研究重点是 η。
+
+## 流程
+
+```
+原始数据 ──► 1 dataset ──► 2 train ──► 3 gaussians ──► 4 segment ──► 5 kinematics ──► angles.csv
+(sparse.mat,   图像+相机+hull   splat.ply    物理单位高斯表    body/wing 标签     角度
+ easyWand.mat)                              (可选去 floater)
+```
+
+| # | 模块 | 粒度 | 输入 | 输出 |
+|---|---|---|---|---|
+| 1 | `dataset/` | 逐帧 | `Camera{1-4}_sparse.mat`、`calibration_easyWandData.mat` | `f####/images/*.png`、`f####/transforms.json`、`f####/init_points.ply` |
+| 2 | `train/` | 逐帧（2 个 GPU 并行） | `f####/` | `splat.ply`、`dataparser_transforms.json` |
+| 3 | `gaussians/` | 逐帧 | `splat.ply` + `dataparser_transforms.json` | `gaussian_features_f####.csv`（去 floater 时为 `_marked.csv`） |
+| 4 | `segment/` | **整段** | 一段连续帧的 `_marked.csv` | `gaussian_features_f####_labeled.csv` |
+| 5 | `kinematics/` | **整段** | 一段连续帧的 `_labeled.csv` | `kinematics/angles.csv` |
+
+横跨各模块的部分：`viz/`（任意模块的输出都能直接查看）、`eval/`（合成数据 GT 打分）、`utils/`（公共函数）。
+
+---
+
+## 1. dataset — 预处理 + 相机 + 外壳
+
+三个脚本，按依赖关系依次运行：
+
+| 脚本 | 输入 | 输出 |
+|---|---|---|
+| `sparse_to_images.py` | `Camera{c}_sparse.mat`（c = 1..4） | `f####/images/P{f}CAM{c}.png`（PNG 无损） |
+| `make_transforms.py` | `calibration_easyWandData.mat` | `f####/transforms.json` |
+| `make_hull.py` | 图像 + `transforms.json` | `f####/init_points.ply`（可视外壳，作为训练初始化） |
+
+- 相机约定：EasyWand DLT → OpenCV（R_w2c, X0）→ OpenGL c2w（Y 朝上，Z 朝后）。转换在 `utils/camera.py` 的 `CameraConfig` 里。
+- `transforms.json`：`camera_model="OPENCV"`；`frames[]` 里每个相机一项，字段为 `file_path, fl_x, fl_y, cx, cy, w, h, transform_matrix`；`ply_file_path="init_points.ply"`。nerfstudio 可以直接读取。
+- TODO：裁剪（同时修改 cx/cy）、去腿。
+
+## 2. train — 逐帧高斯训练
+
+- 输入：一个 `f####/` 帧目录。输出：`<run>/<param_set>/f####/splatfacto/<时间戳>/{splat.ply, dataparser_transforms.json, config.yml}`。
+- 一个 JSON 配置描述一次运行：数据目录、帧范围、参数组。生产参数组是 `ratio3_sh0_dense`。
+- 两个 GPU 并行，按帧派发，可以断点续跑。
+- `splat.ply` 的字段：`x,y,z`、`scale_0..2`（log）、`rot_0..3`（四元数 wxyz）、`opacity`（logit）、`f_dc_0..2`（颜色）。坐标在 nerfstudio 归一化空间里，**不能直接用**，要经过第 3 步换算。
+
+## 3. gaussians — 预处理点云
+
+- `extract_features.py`：读 `splat.ply` + `dataparser_transforms.json`，换算回实验室坐标系的物理单位（米），得到每个高斯一行：
+  `x,y,z, R,G,B, opacity, scale_phys_0..2, scale_ratio, linearity, planarity, sphericity, orientation_xyz, local_density, …`
+  → `gaussian_features_f####.csv`
+- `remove_floaters.py`（可选）：用 k-NN 连通分量判断，新增 `if_keep` 列 → `_marked.csv`。
+- 公共读取函数：`utils.load_gaussians(frame_dir)`，可视化和后续模块都用它。
+
+## 4. segment — 基于运动的 3D 点分割
+
+- 输入：**一段连续帧**（至少约 150 帧）。按 ±36 帧运动累积的密度，把高斯分成 body 和 wing，再按翅根和体轴分出左右。
+- 输出：在 `_marked.csv` 基础上新增 `part_label ∈ {body, wing_L, wing_R}` 和 `confidence` 两列 → `_labeled.csv`。
+- `if_keep=0` 的点不参与分割（关闭去 floater 时，所有点都保留）。
+
+## 5. kinematics — 坐标系与角度
+
+- 输入：一段连续帧的 `_labeled.csv`，以及该段的 `fps`（真实 4 相机 16000，合成数据 5000）。
+- 步骤：体坐标系（带序列连续性修正）→ 翅展、翅平面 → φ, θ, η → η 解缠 → 平滑。
+- 输出：`angles.csv`，每帧一行：`frame_id, yaw, pitch, roll, phi_L, theta_L, eta_L, phi_R, theta_R, eta_R, status`，原始值和平滑值各一份。
+- 目前只用了高斯中心。用大小、颜色等其他属性，或者用模型拟合，是以后的研究方向，不改变这一步的输入和输出。
+
+---
+
+## 数据（`data/`，gitignore，详见 `data/MANIFEST.md`）
+
+- `data/ctrl_009/<mov>/f####/`：真实数据，第 1 步的输出。
+- `data/recon_valid480/<run>/`：16 段真实视频，已经跑完第 2–4 步，可以直接用于第 5 步和可视化。
+- `data/synth/{LOW,MID,HIGH}/`：合成数据，包括 GT（`gt.h5`）、渲染图、自重建结果、L2 标签，用于 `eval/` 打分。
+
+## 运行
+
+```bash
+python -m dataset.sparse_to_images  --sparse <dir> --out data/<run> --frames 425-905
+python -m dataset.make_transforms   --calib <easyWand.mat> --out data/<run>
+python -m dataset.make_hull         --data data/<run>
+python -m train.run                 --config train/configs/<run>.json
+python -m gaussians.run             --run <recon_dir> [--remove-floaters]
+python -m segment.run               --run <recon_dir>
+python -m kinematics.run            --run <recon_dir> --fps 16000
+python -m viz.view                  --run <recon_dir>
+python -m eval.synth                --trial LOW
+```
+
+## 环境
+Python 3.10、PyTorch 2.1.2、CUDA 11.8、gsplat 1.4.0、nerfstudio 1.1.5（conda 环境 `fly_gsplat`，WSL2）。
+NAS：`X:` 挂载在 `/mnt/x`（原始 sparse 数据）。

@@ -1,0 +1,13 @@
+# data and results never go into git (see data/MANIFEST.md)
+data/
+outputs/
+
+# local tool / editor state
+.claude/
+.vscode/
+logs/
+
+# python
+__pycache__/
+*.egg-info/
+.pytest_cache/
