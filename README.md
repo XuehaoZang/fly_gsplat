@@ -27,16 +27,18 @@
 
 ## 1. dataset — 预处理 + 相机 + 外壳
 
-三个脚本，按依赖关系依次运行：
+三个脚本，按依赖关系依次运行（`--frames a-b` 含 a 不含 b，与 train 配置一致）：
 
 | 脚本 | 输入 | 输出 |
 |---|---|---|
-| `sparse_to_images.py` | `Camera{c}_sparse.mat`（c = 1..4） | `f####/images/P{f}CAM{c}.png`（PNG 无损） |
-| `make_transforms.py` | `calibration_easyWandData.mat` | `f####/transforms.json` |
+| `sparse_to_images.py` | `--sparse <dir>`（`Camera{c}*_sparse.mat`，按文件名排序对应相机 1..N）、`--calib`（取图像尺寸） | `f####/images/P{f}CAM{c}.png`（白底 255、整幅、PNG 无损） |
+| `make_transforms.py` | `--calib calibration_easyWandData.mat` | 每个含 `images/` 的帧目录写 `f####/transforms.json` |
 | `make_hull.py` | 图像 + `transforms.json` | `f####/init_points.ply`（可视外壳，作为训练初始化） |
 
-- 相机约定：EasyWand DLT → OpenCV（R_w2c, X0）→ OpenGL c2w（Y 朝上，Z 朝后）。转换在 `utils/camera.py` 的 `CameraConfig` 里。
-- `transforms.json`：`camera_model="OPENCV"`；`frames[]` 里每个相机一项，字段为 `file_path, fl_x, fl_y, cx, cy, w, h, transform_matrix`；`ply_file_path="init_points.ply"`。nerfstudio 可以直接读取。
+- 相机约定：EasyWand DLT → OpenCV（K, R_w2c, X0）→ OpenGL c2w（Y 朝上，Z 朝后），在 `utils/camera.py` 的 `CameraConfig`。世界坐标系就是 easyWand 标定坐标系（米；真实装置里 −z 朝上，见第 5 步）。
+- `transforms.json`：`camera_model="OPENCV"`；`frames[]` 里每个相机一项，字段为 `file_path, fl_x, fl_y, cx, cy, w, h, transform_matrix`；`ply_file_path="init_points.ply"`。各帧相机相同，只有图片名不同。
+- 外壳：前景 = 白底上灰度 < 255 的像素（膨胀两次）；四台相机掩码质心射线三角化出中心；在半径 2 mm 的球里撒 10000 个点（固定随机种子），保留四台相机都落在掩码内的点；统计去离群（20 近邻，2σ）。
+- NAS 原始数据：`X:` 挂到 `/mnt/x`（`sudo mount -t drvfs X: /mnt/x`），`--sparse` 传 Linux 路径。
 - TODO：裁剪（同时修改 cx/cy）、去腿。
 
 ## 2. train — 逐帧高斯训练
@@ -91,9 +93,9 @@
 ## 运行
 
 ```bash
-python -m dataset.sparse_to_images  --sparse <dir> --out data/<run> --frames 425-905
+python -m dataset.sparse_to_images  --sparse /mnt/x/<...>/Expr_009_mov_003 --calib <easyWand.mat> --out data/<run> --frames 425-905
 python -m dataset.make_transforms   --calib <easyWand.mat> --out data/<run>
-python -m dataset.make_hull         --data data/<run>
+python -m dataset.make_hull         --data data/<run> [--frames 425-905]
 python -m train.run                 --config train/configs/<run>.json
 python -m gaussians.run             --run <recon_dir>
 python -m segment.run               --run <recon_dir> --fps 16000
