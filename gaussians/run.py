@@ -3,8 +3,9 @@
     python -m gaussians.run --run <recon_dir> [--param-set ratio3_sh0_dense] [--remove-floaters]
 
 输入：<recon_dir>/<param_set>/f####/<method>/<时间戳>/{splat.ply, dataparser_transforms.json}
-输出：同目录下的 gaussian_features_f####.csv；加 --remove-floaters 时另写 gaussian_features_f####_marked.csv
-     （在特征表后面加 if_keep 列）。同一帧有多个时间戳目录时只处理最新的那个。
+输出：同目录下的 gaussian_features_f####.csv 和 gaussian_features_f####_marked.csv（在特征表后面加 if_keep 列）。
+     默认保留所有点（if_keep 全为 True）；加 --remove-floaters 才按连通分量标记 floater。
+     同一帧有多个时间戳目录时只处理最新的那个。
 """
 from __future__ import annotations
 
@@ -44,16 +45,13 @@ def main() -> None:
     for fid, d in dirs.items():
         df = compute_features(d / "splat.ply", d / "dataparser_transforms.json")
         df.to_csv(d / f"gaussian_features_f{fid:04d}.csv", index=False)
-        if args.remove_floaters:
-            marked = mark_floaters(df)
-            marked.to_csv(d / f"gaussian_features_f{fid:04d}_marked.csv", index=False)
-            n_floater += int((~marked["if_keep"]).sum())
+        marked = mark_floaters(df) if args.remove_floaters else df.assign(if_keep=True)
+        marked.to_csv(d / f"gaussian_features_f{fid:04d}_marked.csv", index=False)
+        n_floater += int((~marked["if_keep"]).sum())
         n_total += len(df)
 
-    msg = f"[gaussians] {n_total} gaussians"
-    if args.remove_floaters:
-        msg += f", floaters {n_floater} ({100 * n_floater / n_total:.1f}%)"
-    print(msg)
+    print(f"[gaussians] {n_total} gaussians, floaters {n_floater} ({100 * n_floater / n_total:.1f}%)"
+          + ("" if args.remove_floaters else " (floater removal off: all kept)"))
 
 
 if __name__ == "__main__":

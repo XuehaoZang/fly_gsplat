@@ -10,14 +10,14 @@
 ```
 原始数据 ──► 1 dataset ──► 2 train ──► 3 gaussians ──► 4 segment ──► 5 kinematics ──► angles.csv
 (sparse.mat,   图像+相机+hull   splat.ply    物理单位高斯表    body/wing 标签     角度
- easyWand.mat)                              (可选去 floater)
+ easyWand.mat)                              (默认不去 floater)
 ```
 
 | # | 模块 | 粒度 | 输入 | 输出 |
 |---|---|---|---|---|
 | 1 | `dataset/` | 逐帧 | `Camera{1-4}_sparse.mat`、`calibration_easyWandData.mat` | `f####/images/*.png`、`f####/transforms.json`、`f####/init_points.ply` |
 | 2 | `train/` | 逐帧（2 个 GPU 并行） | `f####/` | `splat.ply`、`dataparser_transforms.json` |
-| 3 | `gaussians/` | 逐帧 | `splat.ply` + `dataparser_transforms.json` | `gaussian_features_f####.csv`（去 floater 时为 `_marked.csv`） |
+| 3 | `gaussians/` | 逐帧 | `splat.ply` + `dataparser_transforms.json` | `gaussian_features_f####.csv` 和 `_marked.csv`（多一列 `if_keep`，默认全保留） |
 | 4 | `segment/` | **整段** | 一段连续帧的 `_marked.csv` | `gaussian_features_f####_labeled.csv` |
 | 5 | `kinematics/` | **整段** | 一段连续帧的 `_labeled.csv` | `kinematics/angles.csv` |
 
@@ -48,12 +48,12 @@
 
 ## 3. gaussians — 预处理点云
 
-- 入口 `gaussians/run.py`。输入：每帧最新时间戳目录下的 `splat.ply` + `dataparser_transforms.json`。输出：同目录下的 `gaussian_features_f####.csv`；加 `--remove-floaters` 时另写 `_marked.csv`。
-- `extract_features.py`：把高斯换算回实验室坐标系的物理单位（米），每个高斯一行，不删点：
+- 入口 `gaussians/run.py`。输入：每帧最新时间戳目录下的 `splat.ply` + `dataparser_transforms.json`。输出：同目录下的 `gaussian_features_f####.csv` 和 `_marked.csv`（多一列 `if_keep`）。**默认不去 floater（if_keep 全为 True）**，因为去 floater 会删掉不少有用的点；加 `--remove-floaters` 才标记。
+- `extract_features.py`：把高斯换算回标定坐标系（easyWand，真实数据里 −z 朝上）的物理单位（米），每个高斯一行，不删点：
   `x,y,z, dist_to_centroid, dist_to_principal_axis, R,G,B, color_oob, opacity, scale_phys_0..2, scale_ratio, linearity, planarity, sphericity, orientation_x/y/z, local_density`
   - 换算：nerfstudio 坐标 x_ns = s·(R x + t)。位置用 x = Rᵀ(x_ns/s − t)，方向向量用 v = Rᵀ v_ns，尺度用 exp(log_scale)/s。
   - `orientation_xyz` 是高斯最短轴的方向，已经转到实验室坐标系。**2026-10-20 之前盘上所有 CSV 的这一列都还在 nerfstudio 坐标系里，是错的**；其他列都正确。
-- `remove_floaters.py`：在 k=10 近邻图上做连通分量（只保留邻距不超过 75 分位数的边），所在分量不超过 10 个点的高斯记为 floater，结果写入 `if_keep` 列。
+- `remove_floaters.py`（可选）：在 k=10 近邻图上做连通分量（只保留邻距不超过 75 分位数的边），所在分量不超过 10 个点的高斯记为 floater，结果写入 `if_keep` 列。
 - 后续步骤目前只用 `x,y,z` 和 `if_keep`。
 
 ## 4. segment — 基于运动的 3D 点分割
@@ -90,7 +90,7 @@ python -m dataset.sparse_to_images  --sparse <dir> --out data/<run> --frames 425
 python -m dataset.make_transforms   --calib <easyWand.mat> --out data/<run>
 python -m dataset.make_hull         --data data/<run>
 python -m train.run                 --config train/configs/<run>.json
-python -m gaussians.run             --run <recon_dir> [--remove-floaters]
+python -m gaussians.run             --run <recon_dir>
 python -m segment.run               --run <recon_dir> --fps 16000
 python -m kinematics.run            --run <recon_dir>
 python -m viz.view                  --run <recon_dir>
