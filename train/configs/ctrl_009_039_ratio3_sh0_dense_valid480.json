@@ -1,0 +1,11 @@
+{
+  "name": "ctrl_009_039_ratio3_sh0_dense_valid480",
+  "data_dir": "data/ctrl_009/039",
+  "out_root": "outputs/ctrl_009",
+  "frames": {
+    "start": 535,
+    "end": 1015
+  },
+  "param_set": "ratio3_sh0_dense",
+  "max_iters": 2000
+}

@@ -41,9 +41,13 @@
 
 ## 2. train — 逐帧高斯训练
 
-- 输入：一个 `f####/` 帧目录。输出：`<run>/<param_set>/f####/splatfacto/<时间戳>/{splat.ply, dataparser_transforms.json, config.yml}`。
-- 一个 JSON 配置描述一次运行：数据目录、帧范围、参数组。生产参数组是 `ratio3_sh0_dense`。
-- 两个 GPU 并行，按帧派发，可以断点续跑。
+- 入口 `train/run.py`：`python -m train.run --config train/configs/<run>.json [--gpus 0,1] [--workers-per-gpu 6]`。GPU 长任务用 `nohup setsid` 放到后台。
+- 配置（`train/configs/`，每段视频一个）：`name, data_dir, out_root, frames{start,end(不含)}, param_set, max_iters`。参数组只在 `train/param_sets.json` 定义一份，生产用 `ratio3_sh0_dense`。
+- 输入：`<data_dir>/f####/{images, transforms.json, init_points.ply}`（第 1 步的输出；缺了就报错，train 不再顺手生成）。
+- 每帧：`ns-train splatfacto`（`--vis tensorboard`、白背景、`--eval-mode all`）→ `ns-export gaussian-splat` → 记录高斯数、scale_ratio 中位数、耗时 → 删掉 checkpoint 和 tfevents。
+- 输出：`<out_root>/<name>/<param_set>/f####/splatfacto/<时间戳>/{splat.ply, dataparser_transforms.json, config.yml}`；`<out_root>/<name>/_progress/*.jsonl`、`train_summary.json`、`train_meta.json`（参数组和迭代数，换参数必须换 name）。
+- 多 GPU：每张卡起若干 worker，worker 通过原子重命名从 `_queue/pending/` 认领帧。已有 `splat.ply` 的帧会跳过，所以可以断点续跑。
+- 训练不是确定性的：同一帧训两次，高斯中心的双向平均最近距离约 0.06 mm，高斯数相差可达 ~10%。
 - `splat.ply` 的字段：`x,y,z`、`scale_0..2`（log）、`rot_0..3`（四元数 wxyz）、`opacity`（logit）、`f_dc_0..2`（颜色）。坐标在 nerfstudio 归一化空间里，**不能直接用**，要经过第 3 步换算。
 
 ## 3. gaussians — 预处理点云

@@ -1,0 +1,11 @@
+{
+  "ratio3_sh0_dense": [
+    "--pipeline.model.use-scale-regularization", "True",
+    "--pipeline.model.max-gauss-ratio", "3.0",
+    "--pipeline.model.sh-degree", "0",
+    "--pipeline.model.warmup-length", "50",
+    "--pipeline.model.stop-split-at", "1800",
+    "--pipeline.model.densify-grad-thresh", "0.0004",
+    "--pipeline.model.refine-every", "50"
+  ]
+}
