@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fly_gsplat viewer</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uplot@1.6.30/dist/uPlot.min.css">
+<style>
+  :root { --bg:#ffffff; --panel:#f5f6f8; --fg:#1f2328; --mute:#5d6470; --line:#d8dbe0; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:13px/1.4 system-ui, sans-serif;
+         display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+  #bar { display:flex; flex-wrap:wrap; gap:14px; align-items:center; padding:8px 12px;
+         background:var(--panel); border-bottom:1px solid var(--line); }
+  #bar label { color:var(--mute); }
+  select, button, input { background:#fff; color:var(--fg); border:1px solid var(--line); border-radius:4px; padding:3px 6px; font:inherit; }
+  button { cursor:pointer; }
+  .grp { display:flex; gap:6px; align-items:center; }
+  #view { position:relative; flex:1 1 55%; min-height:200px; }
+  #view canvas { display:block; width:100%; height:100%; position:relative; z-index:1; }
+  #imgs > div { position:absolute; top:0; overflow:hidden; z-index:0; }
+  #imgs img { position:absolute; image-rendering:pixelated; }
+  .pane-title { position:absolute; top:6px; color:var(--mute); font-size:12px; pointer-events:none; }
+  #legend { position:absolute; right:10px; bottom:8px; font-size:12px; color:var(--mute); pointer-events:none; text-align:right; }
+  #legend span { display:inline-block; width:10px; height:10px; margin:0 4px 0 10px; vertical-align:-1px; border-radius:2px; }
+  #frameinfo { position:absolute; left:10px; bottom:8px; font-size:12px; color:var(--mute); pointer-events:none; white-space:pre; }
+  #timeline { display:flex; gap:10px; align-items:center; padding:6px 12px; background:var(--panel); border-top:1px solid var(--line); }
+  #slider { flex:1; }
+  #curves { flex:0 0 auto; display:flex; gap:4px; padding:4px 8px 8px; background:var(--bg); }
+  #curves > div { flex:1; min-width:0; }
+  .uplot { font-family:inherit; color:var(--fg); }
+  .u-title { font-size:12px !important; font-weight:500 !important; color:var(--mute); }
+  .u-legend { font-size:11px; }
+  #nodata { color:var(--mute); padding:20px; }
+  /* ?shot=1: bare 3D view only, for headless screenshots */
+  body.shot #bar, body.shot #timeline, body.shot #curves, body.shot #titles,
+  body.shot #frameinfo, body.shot #legend { display:none; }
+  body.shot #view { flex:1 1 100%; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <div class="grp"><label>Dataset</label><select id="dataset"></select></div>
+  <div class="grp" id="methods"><label>Methods</label></div>
+  <div class="grp"><label>Stage</label>
+    <select id="stage">
+      <option value="raw">1 raw</option>
+      <option value="floater">2 floaters (red = removed)</option>
+      <option value="seg" selected>3 segmented</option>
+    </select></div>
+  <div class="grp"><label>Render</label>
+    <select id="render"><option value="centers">centers</option><option value="ellipsoids">ellipsoids</option>
+      <option value="splats">splats (gsplat classic)</option></select></div>
+  <div class="grp"><label>Color</label>
+    <select id="color"><option value="label">label</option><option value="rgb">gaussian RGB</option></select></div>
+  <div class="grp"><label>View</label><select id="viewsel"><option value="free">free</option></select></div>
+  <div class="grp" id="g_cam"><input type="checkbox" id="overlay" checked><label for="overlay">Image</label>
+    <label>Render opacity</label><input type="range" id="ropac" min="0" max="1" step="0.05" value="0.6">
+    <label>Zoom</label><input type="range" id="zoom" min="1" max="40" step="0.5" value="1"><span id="zoom_v">1×</span></div>
+  <div class="grp"><label>Up</label>
+    <select id="up"><option value="-z">−z (lab up)</option><option value="+z">+z</option><option value="+y">+y</option></select></div>
+  <div class="grp"><input type="checkbox" id="vectors" checked><label for="vectors">Vectors</label></div>
+  <div class="grp"><input type="checkbox" id="follow" checked><label for="follow">Follow body</label></div>
+  <div class="grp" id="g_psize"><label>Point size</label><input type="range" id="psize" min="1" max="10" value="4"></div>
+  <div class="grp" id="g_sigma"><label>Size</label>
+    <select id="sigma"><option value="1">1σ</option><option value="2" selected>2σ</option><option value="3">3σ</option></select></div>
+  <div class="grp" id="g_alpha"><input type="checkbox" id="alpha" checked><label for="alpha">Alpha = opacity</label></div>
+  <div class="grp" id="g_minop"><label>Min opacity</label><input type="range" id="minop" min="0" max="0.9" step="0.05" value="0.1"><span id="minop_v">0.10</span></div>
+</div>
+
+<div id="view">
+  <div id="imgs"></div>
+  <canvas id="gl"></canvas>
+  <div id="titles"></div>
+  <div id="frameinfo"></div>
+  <div id="legend"></div>
+</div>
+
+<div id="timeline">
+  <button id="play">▶</button>
+  <button id="prev">◀</button><button id="next">▶|</button>
+  <input type="range" id="slider" min="0" max="0" value="0">
+  <span id="flabel" style="min-width:90px"></span>
+</div>
+<div id="curves"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/uplot@1.6.30/dist/uPlot.iife.min.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const MM = 1000;                       // bundle units are metres; display in mm
+const LABEL_COLORS = [[0.62,0.62,0.62],[0.22,0.42,0.85],[0.93,0.5,0.1],[0.13,0.62,0.3]];
+const LABEL_NAMES  = ['unlabeled','body','wing_L','wing_R'];
+const GREY = [0.45,0.47,0.5], RED = [0.85,0.15,0.15];
+const VEC = { span_L:0xee7f1a, span_R:0x22a04c };
+const VEC_LEN = 2.0;                   // mm, display only
+const $ = id => document.getElementById(id);
+const URLP = new URLSearchParams(location.search);
+const SHOT = URLP.has('shot');
+if (SHOT) document.body.classList.add('shot');
+for (const id of ['stage', 'render', 'color', 'up', 'sigma']) if (URLP.has(id)) $(id).value = URLP.get(id);
+
+// ---------- state ----------
+let index = {}, ds = null, methods = {}, active = [], frames = [], fi = 0, playing = false, cameras = null;
+
+// ---------- three ----------
+const canvas = $('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, preserveDrawingBuffer: SHOT });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setScissorTest(true);
+const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 1000);
+camera.up.set(0,0,-1); camera.position.set(8, -8, -5);
+const controls = new OrbitControls(camera, canvas);
+controls.addEventListener('change', render);
+
+// Splats: one screen-space quad per Gaussian, same maths as gsplat "classic":
+// 2D cov = J W Σ Wᵀ Jᵀ + 0.3·I (px²), extent 3σ of the largest eigenvalue,
+// α = min(0.999, o·exp(-½ dᵀ Σ2d⁻¹ d)), α < 1/255 discarded, composited back-to-front.
+const SPLAT_VS = `
+uniform vec2 viewport;
+attribute vec3 iCenter; attribute vec3 iCovA; attribute vec3 iCovB; attribute vec3 iColor; attribute float iOpacity;
+varying vec3 vColor; varying float vOpacity; varying vec2 vOff; varying vec3 vConic;
+void main() {
+  vec4 t = modelViewMatrix * vec4(iCenter, 1.0);
+  float z = -t.z;
+  if (z <= 0.0) { gl_Position = vec4(0.0, 0.0, 2.0, 1.0); return; }
+  float fx = projectionMatrix[0][0] * viewport.x * 0.5;
+  float fy = projectionMatrix[1][1] * viewport.y * 0.5;
+  mat3 V = mat3(iCovA.x, iCovA.y, iCovA.z,  iCovA.y, iCovB.x, iCovB.y,  iCovA.z, iCovB.y, iCovB.z);
+  mat3 J = mat3(fx / z, 0.0, 0.0,  0.0, fy / z, 0.0,  fx * t.x / (z*z), fy * t.y / (z*z), 0.0);
+  mat3 T = J * mat3(modelViewMatrix);
+  mat3 C = T * V * transpose(T);
+  float a = C[0][0] + 0.3, b = C[0][1], c = C[1][1] + 0.3;
+  float det = a * c - b * b;
+  if (det <= 0.0) { gl_Position = vec4(0.0, 0.0, 2.0, 1.0); return; }
+  vConic = vec3(c, -b, a) / det;
+  float mid = 0.5 * (a + c);
+  float radius = ceil(3.0 * sqrt(mid + sqrt(max(0.01, mid * mid - det))));
+  vOff = position.xy * radius;
+  vec4 clip = projectionMatrix * t;
+  clip.xy += vOff * 2.0 / viewport * clip.w;
+  gl_Position = clip;
+  vColor = iColor; vOpacity = iOpacity;
+}`;
+const SPLAT_FS = `
+varying vec3 vColor; varying float vOpacity; varying vec2 vOff; varying vec3 vConic;
+void main() {
+  float s = 0.5 * (vConic.x * vOff.x * vOff.x + vConic.z * vOff.y * vOff.y) + vConic.y * vOff.x * vOff.y;
+  if (s < 0.0) discard;
+  float alpha = min(0.999, vOpacity * exp(-s));
+  if (alpha < 1.0 / 255.0) discard;
+  gl_FragColor = vec4(vColor * alpha, alpha);   // premultiplied; colours written as-is like gsplat
+}`;
+
+// Instanced objects keep staging buffers in Gaussian order; render() copies them back-to-front.
+function instances(capacity, attrs) {
+  const stage = Object.fromEntries(Object.entries(attrs).map(([n, a]) => [n, new Float32Array(capacity * a.itemSize)]));
+  return { attrs, stage, ctr: new Float32Array(capacity * 3), k: 0 };
+}
+
+function makeScene(capacity) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xffffff);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x888888, 1.4));
+  const light = new THREE.DirectionalLight(0xffffff, 1.2); scene.add(light);
+
+  // ellipsoids: unit sphere per Gaussian, scaled by k·σ along its axes and rotated by its quaternion;
+  // per-instance alpha = opacity (uniform over the ellipsoid; not the Gaussian falloff)
+  const egeo = new THREE.IcosahedronGeometry(1, 2);
+  egeo.setAttribute('instanceOpacity', new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1));
+  const emat = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, depthWrite: false });
+  emat.onBeforeCompile = sh => {
+    sh.vertexShader = 'attribute float instanceOpacity;\nvarying float vOp;\n' +
+      sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvOp = instanceOpacity;');
+    sh.fragmentShader = 'varying float vOp;\n' +
+      sh.fragmentShader.replace('vec4 diffuseColor = vec4( diffuse, opacity );', 'vec4 diffuseColor = vec4( diffuse, opacity * vOp );');
+  };
+  const ell = new THREE.InstancedMesh(egeo, emat, capacity);
+  ell.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(capacity*3), 3);
+  ell.count = 0; ell.frustumCulled = false; scene.add(ell);
+  ell.userData.inst = instances(capacity, { mat: ell.instanceMatrix, col: ell.instanceColor,
+                                            op: egeo.attributes.instanceOpacity });
+
+  const sgeo = new THREE.InstancedBufferGeometry();
+  sgeo.setAttribute('position', new THREE.Float32BufferAttribute([-1,-1,0, 1,-1,0, 1,1,0, -1,1,0], 3));
+  sgeo.setIndex([0,1,2, 0,2,3]);
+  const sattr = {};
+  for (const [n, sz] of [['iCenter',3],['iCovA',3],['iCovB',3],['iColor',3],['iOpacity',1]]) {
+    sattr[n] = new THREE.InstancedBufferAttribute(new Float32Array(capacity*sz), sz);
+    sgeo.setAttribute(n, sattr[n]);
+  }
+  sgeo.instanceCount = 0;
+  const smat = new THREE.ShaderMaterial({
+    uniforms: { viewport: { value: new THREE.Vector2(1, 1) } }, vertexShader: SPLAT_VS, fragmentShader: SPLAT_FS,
+    transparent: true, depthTest: false, depthWrite: false, blending: THREE.CustomBlending,
+    blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor,
+    blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor });
+  const spl = new THREE.Mesh(sgeo, smat); spl.frustumCulled = false; scene.add(spl);
+  spl.userData.inst = instances(capacity, sattr);
+
+  const geom = new THREE.BufferGeometry();
+  const mat = new THREE.PointsMaterial({ size: 0.06, vertexColors: true, sizeAttenuation: true });
+  const cloud = new THREE.Points(geom, mat);
+  scene.add(cloud);
+  const axes = new THREE.AxesHelper(1.0); axes.material.transparent = true; axes.material.opacity = 0.5;
+  scene.add(axes);
+  const arrows = {};
+  for (const [k, c] of Object.entries(VEC)) {
+    const a = new THREE.ArrowHelper(new THREE.Vector3(1,0,0), new THREE.Vector3(), VEC_LEN, c, 0.35, 0.18);
+    a.visible = false; scene.add(a); arrows[k] = a;
+  }
+  return { scene, geom, cloud, arrows, ell, spl, light, axes };
+}
+
+// ---------- loading ----------
+async function loadIndex() {
+  index = await (await fetch('index.json')).json();
+  const sel = $('dataset');
+  sel.innerHTML = Object.keys(index).map(d => `<option>${d}</option>`).join('');
+  const want = URLP.get('ds');
+  if (want && index[want]) sel.value = want;
+  await loadDataset(sel.value);
+}
+
+async function loadMethod(d, m) {
+  const base = `${d}/${m}/`;
+  const meta = await (await fetch(base + 'meta.json')).json();
+  const buf = await (await fetch(base + 'points.bin')).arrayBuffer();
+  const pts = new Float32Array(buf);
+  const angles = meta.has_angles ? await (await fetch(base + 'angles.json')).json() : null;
+  const cams = meta.has_cameras ? (await (await fetch(base + 'cameras.json')).json()).cameras : null;
+  const nf = meta.fields.length;
+  const byFrame = new Map();
+  meta.frames.forEach((f, i) => byFrame.set(f, [meta.offsets[i], meta.offsets[i+1]]));
+  const angleRow = new Map();
+  if (angles) angles.frame_id.forEach((f, i) => angleRow.set(f, i));
+  // body centroid per frame (kept body points; fallback kept points) for follow + arrow origin
+  const centroid = new Map();
+  for (const [f, [s, e]] of byFrame) {
+    let c = [0,0,0,0], ck = [0,0,0,0];
+    for (let r = s; r < e; r++) {
+      const o = r*nf, keep = pts[o+4] > 0.5, lab = pts[o+5];
+      if (!keep) continue;
+      ck[0]+=pts[o]; ck[1]+=pts[o+1]; ck[2]+=pts[o+2]; ck[3]++;
+      if (lab === 1) { c[0]+=pts[o]; c[1]+=pts[o+1]; c[2]+=pts[o+2]; c[3]++; }
+    }
+    const u = c[3] ? c : ck;
+    centroid.set(f, u[3] ? [u[0]/u[3], u[1]/u[3], u[2]/u[3]] : [0,0,0]);
+  }
+  const all = [...centroid.values()];
+  const med = [0,1,2].map(k => all.map(v => v[k]).sort((a,b)=>a-b)[all.length>>1]);
+  const ix = Object.fromEntries(meta.fields.map((n, i) => [n, i]));
+  const capacity = Math.max(...meta.offsets.slice(1).map((e, i) => e - meta.offsets[i]));
+  return { name:m, meta, pts, nf, ix, byFrame, angles, angleRow, cams, centroid, med, ...makeScene(capacity) };
+}
+
+async function loadDataset(d) {
+  ds = d;
+  $('frameinfo').textContent = 'Loading…';
+  methods = {};
+  for (const m of index[d]) methods[m] = await loadMethod(d, m);
+  const box = $('methods');
+  box.innerHTML = '<label>Methods</label>' + index[d].map(m =>
+    `<input type="checkbox" class="mchk" value="${m}" checked id="m_${m}"><label for="m_${m}">${m}</label>`).join(' ');
+  box.querySelectorAll('.mchk').forEach(c => c.onchange = () => { setActive(); });
+  const fs = new Set(); Object.values(methods).forEach(M => M.meta.frames.forEach(f => fs.add(f)));
+  frames = [...fs].sort((a,b)=>a-b);
+  $('slider').max = frames.length - 1;
+  fi = Math.max(0, URLP.has('frame') && ds === URLP.get('ds') ? frames.indexOf(+URLP.get('frame')) : 0);
+  $('slider').value = fi;
+  cameras = (Object.values(methods).find(M => M.cams) || {}).cams || null;
+  const vs = $('viewsel');
+  vs.innerHTML = '<option value="free">free</option>' +
+    (cameras || []).map((c, i) => `<option value="${i}">cam${c.name}</option>`).join('');
+  if (URLP.has('cam') && cameras) vs.value = String(cameras.findIndex(c => c.name === URLP.get('cam')));
+  syncControls();
+  // shot mode: pane = exact camera resolution, so pixels line up 1:1 with the training image
+  if (SHOT && cameras && vs.value !== 'free') {
+    const cam = cameras[+vs.value];
+    $('view').style.cssText = `flex:none; width:${cam.w}px; height:${cam.h}px`;
+  }
+  history.replaceState(null, '', `?ds=${encodeURIComponent(d)}`);
+  setActive();
+  buildCurves();
+  if (vs.value === 'free') frameCamera(); else autoZoom();
+  update();
+  if (SHOT) document.title = `ready ${$('view').clientWidth}x${$('view').clientHeight} dpr${devicePixelRatio}`;
+}
+
+function setActive() {
+  active = [...document.querySelectorAll('.mchk')].filter(c => c.checked).map(c => methods[c.value]);
+  layout(); update();
+}
+
+// display offset: free view follows the body (optional); camera views stay in the fixed run frame
+function centerOf(M, f) {
+  return $('viewsel').value === 'free' && $('follow').checked ? (M.centroid.get(f) || M.med) : M.med;
+}
+
+function frameCamera() {
+  const M = active[0]; if (!M) return;
+  const [s, e] = M.byFrame.get(frames[fi]) || [0,0];
+  let r = 0;
+  const c = centerOf(M, frames[fi]);
+  for (let i = s; i < e; i++) { const o = i*M.nf;
+    r = Math.max(r, Math.hypot(M.pts[o]-c[0], M.pts[o+1]-c[1], M.pts[o+2]-c[2])); }
+  r = Math.max(r*MM, 1.5);
+  controls.target.set(0,0,0);
+  // EasyWand z points down in the lab, so lab up = -z
+  const [upv, dir] = { '-z':[[0,0,-1],[1,-1,-0.6]], '+z':[[0,0,1],[1,-1,0.6]], '+y':[[0,1,0],[1,0.6,1]] }[$('up').value];
+  camera.up.set(...upv);
+  const n = Math.hypot(...dir);
+  camera.position.set(...dir.map(v => v/n * r * 3.2));
+  controls.update();
+}
+
+// lab point (metres) -> training-image pixel (u right, v down), via the OpenGL c2w
+function projectLab(cam, X) {
+  const m = cam.c2w, d = [0,1,2].map(i => X[i] - m[i][3]);
+  const xc = [0,1,2].map(j => m[0][j]*d[0] + m[1][j]*d[1] + m[2][j]*d[2]);   // Rᵀ (X - t)
+  const z = -xc[2];
+  return [cam.fl_x * xc[0] / z + cam.cx, -cam.fl_y * xc[1] / z + cam.cy];
+}
+
+// zoom so the fly's projected extent fills about half the pane
+function autoZoom() {
+  const cam = cameras && cameras[+$('viewsel').value], M = active[0];
+  if (!cam || !M || SHOT) return;
+  const [s, e] = M.byFrame.get(frames[fi]) || [0, 0];
+  let u = [Infinity, -Infinity], v = [Infinity, -Infinity];
+  for (let r = s; r < e; r++) {
+    const o = r*M.nf; if (M.pts[o+4] < 0.5) continue;
+    const [a, b] = projectLab(cam, [M.pts[o], M.pts[o+1], M.pts[o+2]]);
+    u = [Math.min(u[0], a), Math.max(u[1], a)]; v = [Math.min(v[0], b), Math.max(v[1], b)];
+  }
+  const pw = $('view').clientWidth / Math.max(active.length, 1), ph = $('view').clientHeight;
+  const k0 = Math.min(pw / cam.w, ph / cam.h);
+  const z = 0.5 * Math.min(pw / ((u[1]-u[0]) * k0), ph / ((v[1]-v[0]) * k0));
+  $('zoom').value = Math.max(1, Math.min(40, isFinite(z) ? z : 1));
+  $('zoom_v').textContent = `${(+$('zoom').value).toFixed(1)}×`;
+}
+
+// training camera: OpenGL c2w (lab metres) + OpenCV intrinsics, scaled by zoom about the fly
+let camView = null;   // {k, u0, v0, cam}: image pixel (u0,v0) sits at the pane centre, scaled by k
+function applyCamView(paneW, paneH) {
+  const cam = cameras[+$('viewsel').value], M = active[0];
+  if (!cam || !M) return;
+  const c = M.med, m = cam.c2w;
+  const mat = new THREE.Matrix4().set(
+    m[0][0], m[0][1], m[0][2], (m[0][3]-c[0])*MM,
+    m[1][0], m[1][1], m[1][2], (m[1][3]-c[1])*MM,
+    m[2][0], m[2][1], m[2][2], (m[2][3]-c[2])*MM, 0, 0, 0, 1);
+  mat.decompose(camera.position, camera.quaternion, camera.scale);
+  camera.updateMatrixWorld();
+  const Z = SHOT ? 1 : +$('zoom').value;
+  const focus = $('follow').checked ? (M.centroid.get(frames[fi]) || M.med) : M.med;
+  const [u0, v0] = SHOT ? [cam.w/2, cam.h/2] : projectLab(cam, focus);
+  const k = Math.min(paneW / cam.w, paneH / cam.h) * Z;
+  const fx = cam.fl_x*k, fy = cam.fl_y*k, cx = (cam.cx - u0)*k + paneW/2, cy = (cam.cy - v0)*k + paneH/2;
+  camView = { k, u0, v0, cam };
+  const n = 1, f = 1e5;  // mm
+  camera.projectionMatrix.set(
+    2*fx/paneW, 0, 1 - 2*cx/paneW, 0,
+    0, 2*fy/paneH, 2*cy/paneH - 1, 0,
+    0, 0, -(f+n)/(f-n), -2*f*n/(f-n),
+    0, 0, -1, 0);
+  camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+}
+
+// ---------- per-frame update ----------
+function update() {
+  const f = frames[fi];
+  $('flabel').textContent = `f${String(f).padStart(4,'0')}  (${fi+1}/${frames.length})`;
+  const stage = $('stage').value, showVec = $('vectors').checked;
+  const mode = $('render').value, useRgb = $('color').value === 'rgb';
+  const sigma = +$('sigma').value, minop = +$('minop').value, alpha = $('alpha').checked;
+  const mat4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sv = new THREE.Vector3(), pv = new THREE.Vector3();
+  const R = new THREE.Matrix3(), tc = new THREE.Color();
+  let info = [];
+  for (const M of active) {
+    const rng = M.byFrame.get(f);
+    const n = rng ? rng[1]-rng[0] : 0;
+    const pos = new Float32Array(n*3), col = new Float32Array(n*3);
+    const c = centerOf(M, f);
+    const E = M.ell.userData.inst, S = M.spl.userData.inst;
+    let k = 0, ke = 0, nKeep = 0, counts = [0,0,0,0];
+    for (let r = 0; r < n; r++) {
+      const o = (rng[0]+r)*M.nf, keep = M.pts[o+4] > 0.5, lab = M.pts[o+5] | 0;
+      if (keep) { nKeep++; counts[lab]++; }
+      let rgb;
+      if (stage === 'raw') rgb = GREY;
+      else if (stage === 'floater') rgb = keep ? GREY : RED;
+      else { if (!keep) continue; rgb = LABEL_COLORS[lab]; }
+      if (useRgb && stage !== 'floater') rgb = [M.pts[o+M.ix.R], M.pts[o+M.ix.G], M.pts[o+M.ix.B]];
+      pv.set((M.pts[o]-c[0])*MM, (M.pts[o+1]-c[1])*MM, (M.pts[o+2]-c[2])*MM);
+      pv.toArray(pos, k*3);
+      tc.setRGB(...rgb, THREE.SRGBColorSpace).toArray(col, k*3);
+      q.set(M.pts[o+M.ix.qx], M.pts[o+M.ix.qy], M.pts[o+M.ix.qz], M.pts[o+M.ix.qw]);
+      sv.set(M.pts[o+M.ix.scale_0], M.pts[o+M.ix.scale_1], M.pts[o+M.ix.scale_2]).multiplyScalar(MM);
+      if (mode === 'ellipsoids' && M.pts[o+M.ix.opacity] >= minop) {
+        mat4.compose(pv, q, sv.clone().multiplyScalar(sigma)).toArray(E.stage.mat, ke*16);
+        tc.toArray(E.stage.col, ke*3);
+        E.stage.op[ke] = alpha ? M.pts[o+M.ix.opacity] : 1;
+        pv.toArray(E.ctr, ke*3); ke++;
+      }
+      if (mode === 'splats') {
+        // Σ = (R S)(R S)ᵀ in mm²; colour written raw (no sRGB conversion), as gsplat does
+        const e = R.setFromMatrix4(mat4.makeRotationFromQuaternion(q)).elements;  // column-major
+        const m = [0,1,2].map(i => [0,1,2].map(j => e[j*3+i] * sv.getComponent(j)));   // (R S)[i][j]
+        const cov = (i, j) => m[i][0]*m[j][0] + m[i][1]*m[j][1] + m[i][2]*m[j][2];
+        S.stage.iCenter.set([pv.x, pv.y, pv.z], k*3);
+        S.stage.iCovA.set([cov(0,0), cov(0,1), cov(0,2)], k*3);
+        S.stage.iCovB.set([cov(1,1), cov(1,2), cov(2,2)], k*3);
+        S.stage.iColor.set(rgb, k*3);
+        S.stage.iOpacity[k] = M.pts[o+M.ix.opacity];
+        pv.toArray(S.ctr, k*3);
+      }
+      k++;
+    }
+    M.cloud.visible = mode === 'centers'; M.ell.visible = mode === 'ellipsoids'; M.spl.visible = mode === 'splats';
+    E.k = M.ell.count = mode === 'ellipsoids' ? ke : 0;
+    S.k = M.spl.geometry.instanceCount = mode === 'splats' ? k : 0;
+    M.axes.visible = !SHOT;
+    M.geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    M.geom.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    M.geom.setDrawRange(0, k);
+    M.geom.computeBoundingSphere();
+    // vectors: from body centroid (display origin only — not the hinge)
+    const row = M.angleRow.get(f);
+    const origin = M.centroid.get(f) || M.med;
+    const o3 = new THREE.Vector3(...origin.map((v, i) => (v - c[i])*MM));
+    for (const [key, a] of Object.entries(M.arrows)) {
+      let ok = showVec && !SHOT && row !== undefined && stage === 'seg';
+      if (ok) {
+        const v = ['x','y','z'].map(ax => M.angles[`${key}_${ax}`]?.[row]);
+        ok = v.every(x => x !== null && x !== undefined);
+        if (ok) { a.position.copy(o3); a.setDirection(new THREE.Vector3(...v).normalize()); }
+      }
+      a.visible = ok;
+    }
+    const st = row !== undefined ? M.angles.status[row] : (M.angles ? 'no angles for frame' : 'no angles');
+    info.push(`${M.name}: ${n} gaussians, ${nKeep} kept | body ${counts[1]}  L ${counts[2]}  R ${counts[3]}  unlabeled ${counts[0]} | ${st}`);
+  }
+  $('frameinfo').textContent = info.join('\n');
+  const sw = c => `<span style="background:rgb(${c.map(v=>v*255|0)})"></span>`;
+  $('legend').innerHTML = $('color').value === 'rgb' && stage !== 'floater' ? ''
+    : stage === 'seg'
+    ? LABEL_NAMES.map((n,i)=>sw(LABEL_COLORS[i]) + n).join('')
+      + ($('vectors').checked ? '<br>' + Object.entries(VEC).map(([k,c])=>`<span style="background:#${c.toString(16).padStart(6,'0')}"></span>${k}`).join('') + '  (drawn from body centroid)' : '')
+    : stage === 'floater' ? `${sw(GREY)}kept${sw(RED)}floater` : '';
+  if ($('viewsel').value !== 'free') layout();
+  for (const u of plots) u.redraw(false, false);
+  render();
+}
+
+// ---------- layout / render ----------
+function layout() {
+  const v = $('view'), w = v.clientWidth, h = v.clientHeight, n = Math.max(active.length, 1);
+  renderer.setSize(w, h, false);
+  controls.enabled = $('viewsel').value === 'free';
+  if (controls.enabled) { camera.aspect = (w / n) / h; camera.updateProjectionMatrix(); camView = null; }
+  else applyCamView(Math.floor(w / n), h);
+  placeImages(Math.floor(w / n), h);
+  $('titles').innerHTML = active.map((M, i) =>
+    `<div class="pane-title" style="left:${i*w/n + 10}px">${M.name}</div>`).join('');
+  render();
+}
+
+// raw training image under each pane, placed with the same zoom/offset as the camera projection
+function placeImages(pw, h) {
+  const box = $('imgs'), show = camView && $('overlay').checked && camView.cam.image && !SHOT;
+  const transparent = !!show;
+  renderer.setClearColor(0xffffff, transparent ? 0 : 1);
+  for (const M of Object.values(methods)) M.scene.background = transparent ? null : new THREE.Color(0xffffff);
+  canvas.style.opacity = transparent ? $('ropac').value : 1;
+  if (!show) { box.innerHTML = ''; return; }
+  while (box.children.length > active.length) box.lastChild.remove();
+  while (box.children.length < active.length) box.appendChild(document.createElement('div')).appendChild(new Image());
+  const { k, u0, v0, cam } = camView, f = frames[fi];
+  active.forEach((M, i) => {
+    const div = box.children[i], img = div.firstChild;
+    Object.assign(div.style, { left: `${i*pw}px`, width: `${pw}px`, height: `${h}px` });
+    const src = `img/${encodeURIComponent(ds)}/${M.name}/f${String(f).padStart(4,'0')}/${cam.image.replace('{frame}', f)}`;
+    if (img.getAttribute('src') !== src) img.src = src;
+    Object.assign(img.style, { left: `${pw/2 - u0*k}px`, top: `${h/2 - v0*k}px`,
+                               width: `${cam.w*k}px`, height: `${cam.h*k}px` });
+  });
+}
+
+function render() {
+  const v = $('view'), w = v.clientWidth, h = v.clientHeight, n = Math.max(active.length, 1);
+  const pw = Math.floor(w / n), dpr = renderer.getPixelRatio();
+  const ps = +$('psize').value * 0.015;
+  active.forEach((M, i) => {
+    M.cloud.material.size = ps;
+    M.light.position.copy(camera.position);
+    M.spl.material.uniforms.viewport.value.set(pw * dpr, h * dpr);
+    if (M.ell.visible) sortBackToFront(M.ell.userData.inst);
+    if (M.spl.visible) sortBackToFront(M.spl.userData.inst);
+    renderer.setViewport(i*pw, 0, pw, h); renderer.setScissor(i*pw, 0, pw, h);
+    renderer.render(M.scene, camera);
+  });
+}
+
+// sort by view-space depth (as gsplat does) and copy staging -> instance buffers
+function sortBackToFront(I) {
+  const k = I.k, cp = camera.position, fw = camera.getWorldDirection(new THREE.Vector3());
+  const d = new Float32Array(k);
+  for (let i = 0; i < k; i++) d[i] = (I.ctr[i*3]-cp.x)*fw.x + (I.ctr[i*3+1]-cp.y)*fw.y + (I.ctr[i*3+2]-cp.z)*fw.z;
+  const order = Array.from({ length:k }, (_, i) => i).sort((a, b) => d[b] - d[a]);
+  for (const [name, attr] of Object.entries(I.attrs)) {
+    const sz = attr.itemSize, src = I.stage[name], dst = attr.array;
+    order.forEach((s, j) => dst.set(src.subarray(s*sz, s*sz+sz), j*sz));
+    attr.needsUpdate = true;
+  }
+}
+
+// ---------- angle curves ----------
+let plots = [];
+const WING = ['#ee7f1a', '#22a04c'];   // L/R colours match wing labels
+const GROUPS = [
+  ['Body', ['yaw','pitch','roll'], ['#2f6fdb', '#d98a00', '#c43d5a']],
+  ['Wing φ (stroke)', ['phi_L','phi_R'], WING],
+  ['Wing η (pitch)', ['eta_L','eta_R'], WING],
+];
+
+function buildCurves() {
+  plots.forEach(p => p.destroy()); plots = [];
+  const box = $('curves'); box.innerHTML = '';
+  if (SHOT) return;
+  const M = active.find(m => m.angles) || Object.values(methods).find(m => m.angles);
+  if (!M) { box.innerHTML = '<div id="nodata">No angles for this dataset (kinematics not run yet).</div>'; return; }
+  const A = M.angles, x = A.frame_id;
+  const bad = A.status.map(s => s !== 'ok');
+  const width = Math.floor((box.clientWidth - 16) / 3);
+  for (const [title, cols, colors] of GROUPS) {
+    const div = document.createElement('div'); box.appendChild(div);
+    const opts = {
+      title: `${title}  (${M.name})`, width, height: 190,
+      scales: { x: { time:false } },
+      axes: [{ stroke:'#5d6470', grid:{ stroke:'#eceef1' } }, { stroke:'#5d6470', grid:{ stroke:'#eceef1' } }],
+      series: [{ label:'frame' }, ...cols.map((c,i) => ({ label:c, stroke:colors[i], width:1.2, spanGaps:false }))],
+      cursor: { drag:{ x:false, y:false } },
+      hooks: {
+        drawClear: [u => {        // shade status != ok
+          const ctx = u.ctx; ctx.save(); ctx.fillStyle = 'rgba(0,0,0,0.06)';
+          for (let i = 0; i < x.length; i++) if (bad[i]) {
+            const a = u.valToPos(x[i]-0.5, 'x', true), b = u.valToPos(x[i]+0.5, 'x', true);
+            ctx.fillRect(a, u.bbox.top, Math.max(b-a,1), u.bbox.height);
+          }
+          ctx.restore();
+        }],
+        draw: [u => {             // current-frame cursor
+          const px = u.valToPos(frames[fi], 'x', true), ctx = u.ctx;
+          ctx.save(); ctx.strokeStyle = '#1f2328'; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(px, u.bbox.top); ctx.lineTo(px, u.bbox.top+u.bbox.height); ctx.stroke(); ctx.restore();
+        }],
+      },
+    };
+    const u = new uPlot(opts, [x, ...cols.map(c => A[c])], div);
+    u.over.addEventListener('click', () => {
+      const idx = u.cursor.idx; if (idx == null) return;
+      const j = frames.indexOf(x[idx]); if (j >= 0) setFrame(j);
+    });
+    plots.push(u);
+  }
+}
+
+// ---------- controls ----------
+function setFrame(j) { fi = Math.max(0, Math.min(frames.length-1, j)); $('slider').value = fi; update(); }
+$('slider').oninput = e => setFrame(+e.target.value);
+$('prev').onclick = () => setFrame(fi-1);
+$('next').onclick = () => setFrame(fi+1);
+$('play').onclick = () => { playing = !playing; $('play').textContent = playing ? '❚❚' : '▶'; if (playing) tick(); };
+function tick() { if (!playing) return; setFrame(fi+1 >= frames.length ? 0 : fi+1); setTimeout(() => requestAnimationFrame(tick), 40); }
+$('dataset').onchange = e => loadDataset(e.target.value);
+['stage','vectors','follow'].forEach(id => $(id).onchange = update);
+$('up').onchange = () => { frameCamera(); render(); };
+$('viewsel').onchange = () => {
+  syncControls(); if ($('viewsel').value === 'free') frameCamera(); else autoZoom(); layout(); update(); };
+$('overlay').onchange = () => { layout(); };
+$('ropac').oninput = () => { layout(); };
+$('zoom').oninput = () => { $('zoom_v').textContent = `${(+$('zoom').value).toFixed(1)}×`; layout(); };
+$('psize').oninput = render;
+['render','color','sigma','alpha'].forEach(id => $(id).onchange = () => { syncControls(); update(); });
+$('minop').oninput = () => { $('minop_v').textContent = (+$('minop').value).toFixed(2); update(); };
+function syncControls() {
+  const m = $('render').value, show = (id, on) => $(id).style.display = on ? '' : 'none';
+  show('g_psize', m === 'centers');
+  for (const id of ['g_sigma', 'g_alpha', 'g_minop']) show(id, m === 'ellipsoids');
+  show('g_cam', $('viewsel').value !== 'free');
+}
+syncControls();
+window.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowRight') setFrame(fi+1);
+  else if (e.key === 'ArrowLeft') setFrame(fi-1);
+  else if (e.key === ' ') { e.preventDefault(); $('play').click(); }
+});
+// re-fit the canvas whenever the 3D area changes size (e.g. after the curve panels appear);
+// without this the drawing buffer keeps its old height and the view is squashed vertically
+new ResizeObserver(() => layout()).observe($('view'));
+window.addEventListener('resize', () => buildCurves());
+
+loadIndex();
+</script>
+</body>
+</html>
