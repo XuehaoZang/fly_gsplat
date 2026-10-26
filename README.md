@@ -66,7 +66,8 @@
 
 ## 5. kinematics — 坐标系与角度
 
-- 入口 `kinematics/run.py`。输入：`<run>/<param_set>/` 下一段连续帧的 `_labeled.csv`。输出：`<run>/kinematics/angles.csv`。
+- 入口 `kinematics/run.py`。输入：`<run>/<param_set>/` 下一段连续帧的 `_labeled.csv`，以及 `--up`（输入点云坐标系里哪个方向朝上，必填）。输出：`<run>/kinematics/angles.csv`。
+- 坐标系：**真实 4 相机的 easyWand 坐标系里 −z 朝上**（三台侧向相机的图像上方都指向 −z；翅根中点相对体轴的偏移也指向 −z），所以真实数据用 `--up=-z`（要带等号，否则 `-z` 会被当成选项）；合成数据的 GT 是 +z 朝上，用 `--up=+z`。计算前先转到 +z 朝上的实验室坐标系（−z 时绕 x 轴转 180°），角度都在这个坐标系里定义；头默认取朝上的一端。TODO：按体点云的质心分布判断头尾。
 - 步骤：
   1. 体长轴 x_body（`body_axis.py`）：先找锚点帧（两翅展开、体点云细长），再用上一帧的轴作引导逐帧取体点云的头/尾端点质心，最后用锚点校验并整段翻转。
   2. 体坐标系（`body.py`）：y_body 由左右翅根确定（远端点 + 连通分量），拍动平面法向是 x_body 绕 y_body 转 -45°，由此得到 yaw / pitch / roll。
@@ -92,7 +93,7 @@ python -m dataset.make_hull         --data data/<run>
 python -m train.run                 --config train/configs/<run>.json
 python -m gaussians.run             --run <recon_dir>
 python -m segment.run               --run <recon_dir> --fps 16000
-python -m kinematics.run            --run <recon_dir>
+python -m kinematics.run            --run <recon_dir> --up=-z
 python -m viz.view                  --run <recon_dir>
 python -m eval.synth                --trial LOW
 ```

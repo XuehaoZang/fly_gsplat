@@ -23,7 +23,15 @@ OUTPUT_COLUMNS: list[str] = [
     "span_R_x", "span_R_y", "span_R_z",
     "status",
 ]
-"""angles.csv 的列。角度单位为度；sp_normal 是拍动平面法向；span 是 φ/θ 所用的翅展单位向量。"""
+"""angles.csv 的列。角度单位为度，在实验室坐标系（+z 朝上）里定义；sp_normal 是拍动平面法向，span 是 φ/θ 所用的
+翅展单位向量，这两组向量写回输入点云的坐标系，方便叠加显示。"""
+
+DATA_TO_LAB = {
+    "+z": np.eye(3),
+    "-z": np.diag([1.0, -1.0, -1.0]),
+}
+"""输入点云坐标系 -> 实验室坐标系（+z 朝上）。真实 4 相机的 easyWand 坐标系里 -z 才朝上（绕 x 轴转 180°）；
+合成数据是 +z 朝上。两种矩阵都是自己的逆。"""
 
 
 @dataclass
@@ -44,11 +52,13 @@ def discover_frames(param_dir: Path) -> dict[int, Path]:
     return {fid: sorted(paths)[-1] for fid, paths in sorted(by_frame.items())}
 
 
-def load_parts(csv_path: Path) -> FrameParts:
+def load_parts(csv_path: Path, to_lab: np.ndarray | None = None) -> FrameParts:
+    """读一帧的点并转到实验室坐标系（to_lab 为 None 时不转）。"""
     df = pd.read_csv(csv_path, usecols=lambda c: c in ("x", "y", "z", "part_label", "if_keep"))
     kept = df[df["if_keep"].astype(bool)] if "if_keep" in df.columns else df
 
     def xyz(label: str) -> np.ndarray:
-        return kept.loc[kept["part_label"] == label, ["x", "y", "z"]].to_numpy(dtype=float)
+        xyz = kept.loc[kept["part_label"] == label, ["x", "y", "z"]].to_numpy(dtype=float)
+        return xyz if to_lab is None else xyz @ to_lab.T
 
     return FrameParts(body=xyz("body"), wing_L=xyz("wing_L"), wing_R=xyz("wing_R"))

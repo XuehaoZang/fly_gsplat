@@ -1,6 +1,9 @@
 """第 5 步 kinematics：一段连续帧的 `_labeled.csv` -> angles.csv。
 
-    python -m kinematics.run --run <recon_dir> [--param-set ratio3_sh0_dense]
+    python -m kinematics.run --run <recon_dir> --up=-z [--param-set ratio3_sh0_dense]
+
+--up：输入点云坐标系里哪个方向朝上（必填）。真实 4 相机（easyWand 标定）是 -z，合成数据是 +z。
+计算前先转到 +z 朝上的实验室坐标系；头的方向默认取朝上的一端（锚点帧和链重启时），见 body_axis.py。
 
 输入：<recon_dir>/<param_set>/f####/<method>/<时间戳>/gaussian_features_f####_labeled.csv
 输出：<recon_dir>/kinematics/angles.csv，每帧一行（列见 io.OUTPUT_COLUMNS）。
@@ -16,7 +19,7 @@ import pandas as pd
 
 from .body import estimate_body_frame
 from .body_axis import sequence_x_body
-from .io import OUTPUT_COLUMNS, FrameParts, discover_frames, load_parts
+from .io import DATA_TO_LAB, OUTPUT_COLUMNS, FrameParts, discover_frames, load_parts
 from .wing import estimate_chord, estimate_span, phi_theta
 
 MIN_POINTS = 10
@@ -80,6 +83,7 @@ def compute_angles(frames: dict[int, FrameParts]) -> pd.DataFrame:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--run", type=Path, required=True, help="重建结果目录，例如 outputs/ctrl_009/<run>")
+    ap.add_argument("--up", required=True, choices=sorted(DATA_TO_LAB), help="真实 4 相机 -z，合成数据 +z")
     ap.add_argument("--param-set", default="ratio3_sh0_dense")
     args = ap.parse_args()
 
@@ -87,9 +91,13 @@ def main() -> None:
     if not paths:
         raise SystemExit(f"no *_labeled.csv under {args.run / args.param_set}")
     print(f"[kinematics] {len(paths)} frames f{min(paths):04d}..f{max(paths):04d}")
-    frames = {fid: load_parts(p) for fid, p in paths.items()}
+    to_lab = DATA_TO_LAB[args.up]
+    frames = {fid: load_parts(p, to_lab) for fid, p in paths.items()}
 
     df = compute_angles(frames)
+    for vec in ("sp_normal", "span_L", "span_R"):  # 向量写回输入坐标系（to_lab 是自己的逆）
+        cols = [f"{vec}_x", f"{vec}_y", f"{vec}_z"]
+        df[cols] = df[cols].to_numpy() @ to_lab
     out = args.run / "kinematics" / "angles.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(out, index=False)
