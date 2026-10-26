@@ -5,7 +5,8 @@
 输入：<recon_dir>/<param_set>/f####/<method>/<时间戳>/gaussian_features_f####_marked.csv
 输出：同目录下的 gaussian_features_f####_labeled.csv，即在输入表后面加 part_label ∈ {body, wing_L, wing_R}
      和 confidence ∈ {high, low} 两列。
-累积窗口为 ±round(36 × fps / 16000) 帧；靠近段首、段尾的帧窗口会变短。
+累积窗口为 ±round(36 × fps / 16000) 帧，body 命中阈值按窗口帧数等比换算（16000 fps 时 >19 帧）；
+靠近段首、段尾的帧窗口会变短。某帧失败时删除该帧已有的 _labeled.csv。
 """
 from __future__ import annotations
 
@@ -15,7 +16,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .motion import body_voxels, frame_voxels, half_window_for_fps, label_frame
+from .motion import body_hit_thresh, body_voxels, frame_voxels, half_window_for_fps, label_frame
 
 MARKED_GLOB = "f*/*/*/gaussian_features_f*_marked.csv"
 _FRAME_RE = re.compile(r"gaussian_features_f(\d+)_marked\.csv$")
@@ -42,7 +43,9 @@ def main() -> None:
     if not paths:
         raise SystemExit(f"no *_marked.csv under {args.run / args.param_set}")
     half_window = half_window_for_fps(args.fps)
-    print(f"[segment] {len(paths)} frames f{min(paths):04d}..f{max(paths):04d}, half_window={half_window}")
+    hit_thresh = body_hit_thresh(half_window)
+    print(f"[segment] {len(paths)} frames f{min(paths):04d}..f{max(paths):04d}, "
+          f"half_window={half_window}, body hit thresh={hit_thresh}")
 
     tables = {fid: pd.read_csv(p) for fid, p in paths.items()}
     voxels = {fid: frame_voxels(df.loc[df["if_keep"].astype(bool), ["x", "y", "z"]].to_numpy(dtype=float))
@@ -51,16 +54,18 @@ def main() -> None:
     n_low, failed = 0, []
     for fid, df in tables.items():
         window = [voxels[i] for i in range(fid - half_window, fid + half_window + 1) if i in voxels]
+        labeled_path = paths[fid].with_name(paths[fid].name.replace("_marked.csv", "_labeled.csv"))
         try:
-            part_label, confidence = label_frame(df, body_voxels(window))
+            part_label, confidence = label_frame(df, body_voxels(window, hit_thresh))
         except Exception as e:  # noqa: BLE001
             failed.append(fid)
+            labeled_path.unlink(missing_ok=True)  # 不留旧标签，避免下游混用
             print(f"[segment] f{fid:04d} FAILED: {type(e).__name__}: {e}")
             continue
         out = df.copy()
         out["part_label"] = part_label
         out["confidence"] = confidence
-        out.to_csv(paths[fid].with_name(paths[fid].name.replace("_marked.csv", "_labeled.csv")), index=False)
+        out.to_csv(labeled_path, index=False)
         n_low += confidence == "low"
 
     print(f"[segment] ok {len(tables) - len(failed)}/{len(tables)} (low confidence {n_low}), failed {failed}")
