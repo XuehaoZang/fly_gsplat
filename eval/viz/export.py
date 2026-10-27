@@ -5,7 +5,8 @@
 Input : <run>/<param_set>/f####/splatfacto/<ts>/gaussian_features_f####{_labeled,_marked,}.csv
         <run>/<param_set>/f####/splatfacto/<ts>/{splat.ply, dataparser_transforms.json}  (orientation)
         <run>/kinematics/angles.csv, else kinematics_<param_set>.csv   (optional; angles + span/normal vectors)
-        frame dir of the training input (transforms.json; optional; cameras for the "view from camN" mode)
+        frame dir of the training input (transforms.json; optional; cameras for the "view from camN" mode),
+        found via <run>/train_meta.json (train.run) or <run>/sweep_meta.json (old gpu/schedule)
 Output: <out>/<dataset>/gsplat/{meta.json, points.bin, angles.json, cameras.json}
 
 points.bin is float32, row-major, one row per Gaussian, all frames concatenated;
@@ -84,7 +85,14 @@ def frames_root(run):
     run = os.path.abspath(run)
     if os.path.basename(run) == "recon":  # synth: <trial>/recon next to <trial>/dataset
         return os.path.join(os.path.dirname(run), "dataset")
-    meta_path = os.path.join(run, "sweep_meta.json")
+    train_meta = os.path.join(run, "train_meta.json")  # written by train.run; data_dir relative to the repo root
+    if os.path.exists(train_meta):
+        with open(train_meta) as f:
+            data_dir = json.load(f)["data_dir"]
+        repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        root = os.path.join(repo, data_dir)  # an absolute data_dir stays as is
+        return root if os.path.isdir(root) else None
+    meta_path = os.path.join(run, "sweep_meta.json")  # old gpu/schedule runs
     if not os.path.exists(meta_path):
         return None
     with open(meta_path) as f:
