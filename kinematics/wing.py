@@ -160,3 +160,76 @@ def estimate_chord(
         chord=chosen,
         chord_conf=float(np.clip(ratio / DIAG_LENGTH_RATIO_DECISIVE, 0.0, 1.0)),
     )
+
+
+def plate_span(fit, body_cm: np.ndarray) -> np.ndarray:
+    """平板翅展（翅根 -> 翅尖）：平板主轴，令其指向平板质心远离身体质心的方向。"""
+    out_ref = fit.centroid - np.asarray(body_cm, dtype=float)
+    out_ref_norm = float(np.linalg.norm(out_ref))
+    cos_margin = abs(float(np.dot(fit.span_axis, out_ref)) / out_ref_norm) if out_ref_norm > 0.0 else 0.0
+    if cos_margin < SPAN_ORIENT_MIN_COS_MARGIN:
+        raise ValueError(f"plate_span: span sign ambiguous (|cos|={cos_margin:.4f} < {SPAN_ORIENT_MIN_COS_MARGIN})")
+    return geo.orient_to_reference(fit.span_axis, out_ref)
+
+
+
+LINK_MIN_COS = 0.5
+"""相邻两帧弦线 |cos| 不小于该值（夹角 <= 60°）才连成一条连续链；否则断链。"""
+
+
+def plate_chord_line(fit, span: np.ndarray) -> np.ndarray:
+    """未定号的弦线 = 平板法向 × 翅展。"""
+    return geo.unit(np.cross(fit.normal, span))
+
+
+def resolve_chord_signs(
+    frame_ids: list[int], span: dict[int, np.ndarray], chord_line: dict[int, np.ndarray]
+) -> tuple[dict[int, np.ndarray], dict[int, float]]:
+    """一只翅整段弦线定号：前缘朝运动方向 + 逐帧连续链。
+
+    1. 连续链：相邻帧都有效且 |c_t·c_{t+1}| >= LINK_MIN_COS 时相连，链内按点积 >= 0 逐帧对齐符号。
+       翻转（换向）时弦向转得快但逐帧仍连续，链会穿过换向，所以一条链同时拿到上、下拍两侧的证据。
+    2. 运动证据：翅展中心差分 v = s_{t+1} − s_{t−1}，去掉沿翅展的分量后与弦线点积 e_t = c_t·v⊥。
+       e_t 的大小正比于翅展角速度，换向附近角速度趋于零，证据自然趋于零，不会被硬判。
+    3. 每条链取 sign(Σ e_t) 作为整体符号（前缘 = 运动方向）。返回 (frame_id -> 定号弦向, frame_id -> 所在链的
+       一致度 |Σe|/Σ|e|)。整条链没有任何运动证据时沿用上一条链末帧的方向。
+    """
+    valid = [f for f in frame_ids if f in chord_line]
+    chains: list[list[int]] = []
+    aligned: dict[int, np.ndarray] = {}
+    for f in valid:
+        c = chord_line[f]
+        prev = f - 1
+        if chains and chains[-1][-1] == prev and abs(float(np.dot(aligned[prev], c))) >= LINK_MIN_COS:
+            aligned[f] = c if float(np.dot(aligned[prev], c)) >= 0.0 else -c
+            chains[-1].append(f)
+        else:
+            aligned[f] = c
+            chains.append([f])
+
+    out: dict[int, np.ndarray] = {}
+    conf: dict[int, float] = {}
+    last: np.ndarray | None = None
+    for chain in chains:
+        e = []
+        for f in chain:
+            if (f - 1) in span and (f + 1) in span:
+                v = span[f + 1] - span[f - 1]
+                v = v - span[f] * float(np.dot(v, span[f]))
+                e.append(float(np.dot(aligned[f], v)))
+        total, mag = float(np.sum(e)), float(np.sum(np.abs(e)))
+        if mag > 0.0:
+            sign = 1.0 if total >= 0.0 else -1.0
+            c_val = abs(total) / mag
+        else:
+            sign = 1.0 if last is None or float(np.dot(last, aligned[chain[0]])) >= 0.0 else -1.0
+            c_val = 0.0
+        for f in chain:
+            out[f] = sign * aligned[f]
+            conf[f] = c_val
+        last = out[chain[-1]]
+    return out, conf
+
+
+def eta_from_chord(chord: np.ndarray, span: np.ndarray, body_frame: BodyFrame, side: str) -> float:
+    return _eta(chord, span, body_frame.n_sp, SIGN_LEFT[side])

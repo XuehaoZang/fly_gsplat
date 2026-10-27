@@ -1,7 +1,7 @@
 """单帧体坐标系与身体角度 yaw / pitch / roll。
 
 x_body：体长轴（头向），通常由 body_axis.sequence_x_body 给出；缺失时退回本帧 PCA 主轴并令其朝上。
-y_body：右翅根 -> 左翅根，投影到垂直 x_body 的平面。
+y_body：右翅根 -> 左翅根，投影到垂直 x_body 的平面；也可以由调用方直接给出（如关键帧 roll 插值，见 y_body_from_roll）。
 z_body = x_body × y_body。
 n_sp：拍动平面法向，x_body 绕 y_body 转 -45°。
 翅根位置用"远端点 + 最大连通分量"求质心（far+CC）。
@@ -107,11 +107,28 @@ def _calculate_roll(yaw_rad: float, pitch_rad: float, y_body: np.ndarray) -> flo
     return math.atan2(float(np.dot(y_body, e_z)), float(np.dot(y_body, e_y)))
 
 
+def zero_roll_basis(x_body: np.ndarray) -> tuple[float, float, np.ndarray, np.ndarray]:
+    """(yaw, pitch)（弧度）和零滚转系 (e_y, e_z)；两者都垂直于 x_body，roll 是 y_body 在其中的角度。"""
+    yaw = math.atan2(x_body[1], x_body[0])
+    pitch = math.pi / 2 - math.acos(float(np.clip(np.dot(x_body, UP), -1.0, 1.0)))
+    cy, sy = math.cos(yaw), math.sin(yaw)
+    cp, sp = math.cos(pitch), math.sin(pitch)
+    return yaw, pitch, np.array([-sy, cy, 0.0]), np.array([-sp * cy, -sp * sy, cp])
+
+
+def y_body_from_roll(x_body: np.ndarray, roll_deg: float) -> np.ndarray:
+    """由 roll 重建 y_body（_calculate_roll 的逆）。"""
+    _, _, e_y, e_z = zero_roll_basis(geo.unit(x_body))
+    r = math.radians(roll_deg)
+    return math.cos(r) * e_y + math.sin(r) * e_z
+
+
 def estimate_body_frame(
     body_xyz: np.ndarray,
     wingL_xyz: np.ndarray,
     wingR_xyz: np.ndarray,
     x_body: np.ndarray | None = None,
+    y_body: np.ndarray | None = None,
 ) -> BodyFrame:
     body_cm = body_xyz.mean(axis=0)
 
@@ -121,9 +138,12 @@ def estimate_body_frame(
         _, eigvecs, _ = geo.weighted_pca(body_xyz)
         x_body = geo.orient_to_reference(eigvecs[:, -1], UP)
 
-    hinge_L = wing_hinge(wingL_xyz, body_cm)
-    hinge_R = wing_hinge(wingR_xyz, body_cm)
-    y_body = geo.project_onto_plane(hinge_L - hinge_R, x_body)
+    if y_body is None:
+        hinge_L = wing_hinge(wingL_xyz, body_cm)
+        hinge_R = wing_hinge(wingR_xyz, body_cm)
+        y_body = geo.project_onto_plane(hinge_L - hinge_R, x_body)
+    else:
+        y_body = geo.project_onto_plane(np.asarray(y_body, dtype=float), x_body)
 
     z_body = np.cross(x_body, y_body)
     z_body = z_body / np.linalg.norm(z_body)
