@@ -17,11 +17,66 @@
 |---|---|---|---|---|
 | 1 | `dataset/` | 逐帧 | `Camera{1-4}_sparse.mat`、`calibration_easyWandData.mat` | `f####/images/*.png`、`f####/transforms.json`、`f####/init_points.ply` |
 | 2 | `train/` | 逐帧（2 个 GPU 并行） | `f####/` | `splat.ply`、`dataparser_transforms.json` |
-| 3 | `gaussians/` | 逐帧 | `splat.ply` + `dataparser_transforms.json` | `gaussian_features_f####.csv` 和 `_marked.csv`（多一列 `if_keep`，默认全保留） |
+| 3 | `gaussians/` | 逐帧 | `splat.ply` + `dataparser_transforms.json`（轮廓 clean 另读第 1 步的图像和 `transforms.json`） | `gaussian_features_f####.csv` 和 `_marked.csv`（多一列 `if_keep`，默认全保留） |
 | 4 | `segment/` | **整段** | 一段连续帧的 `_marked.csv` | `gaussian_features_f####_labeled.csv` |
-| 5 | `kinematics/` | **整段** | 一段连续帧的 `_labeled.csv` | `kinematics/angles.csv` |
+| 5 | `kinematics/` | **整段** | 一段连续帧的 `_labeled.csv`（平板法另读同目录 `splat.ply`） | `kinematics/angles.csv` |
 
-横跨各模块的部分：`viz/`（任意模块的输出都能直接查看）、`eval/`（合成数据 GT 打分）、`utils/`（公共函数）。
+横跨各模块的部分：`eval/viz/`（任意阶段的输出都能直接查看）、`eval/`（合成数据 GT 打分，**尚未实现**）、`utils/`（公共函数：`camera.py` 相机换算、`geometry.py` 几何原语、`pointcloud.py` kNN 连通分量）。
+
+
+## 输入输出总览
+
+一段视频（例：`ctrl_009` 第 003 段，帧 425–904）从原始数据到角度，盘上依次出现这些文件（`<run>` = 训练配置里的 `name`）：
+
+```
+/mnt/x/.../Expr_009_mov_003/Camera{1..4}_003_sparse.mat     原始稀疏录像（NAS，只读）
+data/ctrl_009/003/calibration_easyWandData.mat              easyWand 标定（只读）
+│
+├─ 1 dataset ─────────────────────────────────────────────────────────────────────────────
+│  data/ctrl_009/003/f####/images/P{f}CAM{1..4}.png        sparse_to_images   白底整幅灰度图
+│  data/ctrl_009/003/f####/transforms.json                 make_transforms    4 台相机（nerfstudio 格式）
+│  data/ctrl_009/003/f####/init_points.ply                 make_hull          可视外壳点云（训练初始化）
+│
+├─ 2 train ───────────────────────────────────────────────────────────────────────────────
+│  outputs/ctrl_009/<run>/train_meta.json                  参数组、迭代数、data_dir（viz 靠它找回第 1 步的图像）
+│  outputs/ctrl_009/<run>/_progress/*.jsonl, train_summary.json
+│  outputs/ctrl_009/<run>/<param_set>/f####/splatfacto/<时间戳>/
+│      splat.ply  dataparser_transforms.json  config.yml   nerfstudio 归一化空间里的高斯
+│
+├─ 3 gaussians（写在同一个 <时间戳>/ 目录里）─────────────────────────────────────────────
+│      gaussian_features_f####.csv                         每个高斯一行，标定坐标系，米
+│      gaussian_features_f####_marked.csv                  + if_keep（默认全 True）
+│
+├─ 4 segment（同上目录）──────────────────────────────────────────────────────────────────
+│      gaussian_features_f####_labeled.csv                 + part_label ∈ {body, wing_L, wing_R}, confidence
+│
+└─ 5 kinematics ─────────────────────────────────────────────────────────────────────────
+   outputs/ctrl_009/<run>/kinematics/angles.csv            每帧一行：yaw/pitch/roll、φ/θ/η（L/R）原始值和 *_smooth、诊断列、status
+
+查看：eval.viz.export 把 <run> 打包到 outputs/viz/<run>/gsplat/，eval.viz.view 在浏览器里看点云、标签、相机叠图和角度曲线。
+```
+
+**每一步读什么、写什么**
+
+| 步 | 读 | 写 | 必填参数 | 逐帧 / 整段 |
+|---|---|---|---|---|
+| 1a `dataset.sparse_to_images` | `Camera*_sparse.mat`、标定（取图像尺寸） | `f####/images/` | `--sparse --calib --out --frames a-b` | 逐帧 |
+| 1b `dataset.make_transforms` | 标定 | `f####/transforms.json` | `--calib --out` | 逐帧（各帧相同） |
+| 1c `dataset.make_hull` | 图像 + `transforms.json` | `f####/init_points.ply` | `--data` | 逐帧 |
+| 2 `train.run` | 第 1 步的 `f####/` 全部三样 | `splat.ply` 等 | `--config`（配置里写 `frames`） | 逐帧，多 GPU |
+| 3 `gaussians.run` | `splat.ply` + `dataparser_transforms.json`；`--silhouette-clean` 时另读第 1 步的 `f####/images/` 和 `transforms.json` | `_features.csv`、`_marked.csv` | `--run`（clean 时加 `--silhouette-clean --data`） | 逐帧 |
+| 4 `segment.run` | 一段连续帧的 `_marked.csv`（≥20 帧，正常 ≥73 帧） | `_labeled.csv` | `--run --fps` | **整段** |
+| 5 `kinematics.run` | 一段连续帧的 `_labeled.csv`；平板法另读同目录 `splat.ply` + `dataparser_transforms.json` | `kinematics/angles.csv` | `--run --up --fps` | **整段** |
+
+**贯穿各步的约定**
+
+- 帧范围一律写成 `a-b` / `{start, end}`，含 a 不含 b。帧号就是 sparse 录像里的帧号，文件名 `f####` 补零到 4 位。
+- 坐标：第 1–4 步都在 easyWand 标定坐标系（米）。真实 4 相机装置里 **−z 朝上**，合成数据 +z 朝上；第 5 步用 `--up` 转到 +z 朝上的实验室坐标系再算角度。
+- 帧率：真实 4 相机 16000 fps，合成数据 5000 fps，必须显式传（第 4 步按它换算累积窗口和阈值）。
+- 后面的步骤只增加列、不删行：`_features` → `_marked`（+if_keep）→ `_labeled`（+part_label, confidence），行号和 `splat.ply` 里的高斯一一对应。
+- 失败的处理：第 4 步某帧失败会删掉该帧旧的 `_labeled.csv`；第 5 步失败帧角度为 NaN、原因写在 `status`。
+- 训练不是确定性的：同一帧重训，点云中心差约 0.06 mm，单帧角度可差到几度到几十度（roll、η 最明显）。比较两版第 3–5 步时要用同一次训练的结果。
+
 
 ---
 
@@ -60,7 +115,8 @@
   - 换算：nerfstudio 坐标 x_ns = s·(R x + t)。位置用 x = Rᵀ(x_ns/s − t)，方向向量用 v = Rᵀ v_ns，尺度用 exp(log_scale)/s。
   - `orientation_xyz` 是高斯最短轴的方向，已经转到实验室坐标系。**2026-10-20 之前盘上所有 CSV 的这一列都还在 nerfstudio 坐标系里，是错的**；其他列都正确。
 - `remove_floaters.py`（可选）：在 k=10 近邻图上做连通分量（只保留邻距不超过 75 分位数的边），所在分量不超过 10 个点的高斯记为 floater，结果写入 `if_keep` 列。
-- 后续步骤目前只用 `x,y,z` 和 `if_keep`。
+- `silhouette_clean.py`（可选，`--silhouette-clean --data <第 1 步目录>`，推荐）：把每个高斯中心投影到 4 台相机的前景掩码（与 `make_hull` 同一掩码），去掉"白色（RGB 均值 > 0.8）且至少一台相机在掩码外"或"至少两台相机离掩码超过 2 px"的高斯，写入 `if_keep`（与 `--remove-floaters` 取与）。只要求多数相机一致：真实数据里常有一台相机看翅膀很淡（003 左翅约 24% 的高斯只落在 3 台相机的掩码里）。合成 LOW 上删 5.1% 的高斯，其中 99.5% 离 GT 表面 > 100 µm。
+- 后续步骤用 `x,y,z`、`if_keep`；第 5 步的平板法另按行号从同目录 `splat.ply` 读完整协方差（第 3 步逐行写、不删点，读时用中心坐标核对）。
 
 ## 4. segment — 基于运动的 3D 点分割
 
@@ -72,22 +128,28 @@
 
 ## 5. kinematics — 坐标系与角度
 
-- 入口 `kinematics/run.py`。输入：`<run>/<param_set>/` 下一段连续帧的 `_labeled.csv`，以及 `--up`（输入点云坐标系里哪个方向朝上，必填）。输出：`<run>/kinematics/angles.csv`。
+- 入口 `kinematics/run.py`。输入：`<run>/<param_set>/` 下一段连续帧的 `_labeled.csv`（平板法另读同目录的 `splat.ply` + `dataparser_transforms.json`），`--up`（输入点云坐标系里哪个方向朝上）和 `--fps`（真实 4 相机 16000，合成 5000），都必填。输出：`<run>/kinematics/angles.csv`（`--out-name` 可改名）。
 - 坐标系：**真实 4 相机的 easyWand 坐标系里 −z 朝上**（三台侧向相机的图像上方都指向 −z；翅根中点相对体轴的偏移也指向 −z），所以真实数据用 `--up=-z`（要带等号，否则 `-z` 会被当成选项）；合成数据的 GT 是 +z 朝上，用 `--up=+z`。计算前先转到 +z 朝上的实验室坐标系（−z 时绕 x 轴转 180°），角度都在这个坐标系里定义；头默认取朝上的一端。TODO：按体点云的质心分布判断头尾。
-- 步骤：
+- 步骤（默认 `--wing-method plate --roll keyframe`；旧方法 `diag`（对角线弦向）/`hinge`（逐帧翅根 roll）保留作对照）：
   1. 体长轴 x_body（`body_axis.py`）：先找锚点帧（两翅展开、体点云细长），再用上一帧的轴作引导逐帧取体点云的头/尾端点质心，最后用锚点校验并整段翻转。
-  2. 体坐标系（`body.py`）：y_body 由左右翅根确定（远端点 + 连通分量），拍动平面法向是 x_body 绕 y_body 转 -45°，由此得到 yaw / pitch / roll。
-  3. 翅角（`wing.py`）：翅展为翅平面内点的 PCA 主轴，得到 φ、θ；弦向用 MATLAB `find_chords_quad.m` 的对角线法，符号按逐帧连续性确定，得到 η。
-- `angles.csv` 每帧一行：`frame_id, yaw, pitch, roll, phi_L, theta_L, eta_L, phi_R, theta_R, eta_R, sp_normal_*, chord_conf_L/R, span_L_*, span_R_*, status`（角度单位为度，均为原始值）。失败帧的角度为 NaN，原因写在 `status`。
-- 目前不做平滑、不做 η 解缠，所以 fps 暂时用不到。加入平滑时再增加 `--fps` 参数（真实 4 相机 16000，合成数据 5000）。
-- 目前只用了高斯中心。用大小、颜色等其他属性，或者用模型拟合，是以后的研究方向，不改变这一步的输入和输出。
+  2. 翅平板（`wing_plate.py`）：每只翅用高斯的完整协方差，取 3σ 连通的最大块，按"中心离平面距离 + 沿法向 2σ 厚度"投票出平板（拒掉漂浮块和贴附的厚团）；法向 = 平板内点 2σ 椭球并集的最小主轴，翅展 = 连通块 3σ 并集的主轴（投影到平板平面）。
+  3. roll（`run.py`）：每个拍动周期取一帧关键帧（两翅展夹角最大、两翅平板内点质量 ≥ 0.4），在关键帧上 y_body = span_L − span_R；对关键帧 roll 拟合 GCV 平滑样条（对应 MATLAB `calcBodyRoll.m`）。段首段尾 ±round(36 × fps / 16000) 帧（segment 累积窗口不完整、身体标签不可靠）不当关键帧。拍动周期由两翅展夹角序列的自相关估计。
+  4. 身体平滑（`smooth.py`，移植 MATLAB `smoothBodyAngles.m`）：Hampel + 零相位 Butterworth（yaw/pitch 100 Hz，roll 200 Hz），段首段尾帧不参与、取最近值 → `yaw/pitch/roll_smooth`。拍动平面法向是 x_body 绕 y_body 转 −45°。
+  5. 左右翻转纠正：平滑体坐标系里左翅展指向右侧且右翅展指向左侧时交换两翅（`wing_swapped`）。
+  6. 弦向 = 平板法向 × 翅展；符号 = 前缘朝运动方向（翅展的帧间变化）+ 逐帧连续链（`wing.resolve_chord_signs`）。
+  7. φ/θ/η 在**平滑后的体坐标系**里计算（逐帧体坐标系下的值保留为 `*_rawbody`）。φ、η 以整段圆均值为中心表示（不在 ±180° 处折回，切口远离数据，也不会像逐帧 unwrap 那样累积整圈漂移）。
+  8. 翅角平滑（`smooth.py`，移植 MATLAB `smoothWingAngles.m`，窗口按 fps 换算）：`wing_masked` 帧（segment 低置信即两翅粘连，或平板内点质量 < 0.4）和段首段尾帧当作缺失，PCHIP 补；另加 φ 自身 Hampel；η 判反段（与迭代参考相差 > 90°）只在计算平滑曲线时翻转 180°，原始 η 和弦向量不改 → `phi/theta/eta_{L,R}_smooth`。
+- `angles.csv` 每帧一行：`frame_id, yaw, pitch, roll, phi/theta/eta_{L,R}, sp_normal_*, chord_conf_L/R, span_L/R_*, chord_L/R_*, status`，plate 时另有 `plate_flat/mass/n_{L,R}, roll_keyframe, segment_low_conf, wing_swapped, wing_masked_{L,R}`，以及 `yaw/pitch/roll_smooth, *_rawbody, phi/theta/eta_{L,R}_smooth, eta_flipfix_{L,R}`。角度单位为度；失败帧为 NaN，原因写在 `status`。向量列写回输入点云的坐标系。
+- 合成数据（LOW/MID/HIGH 各 1 段，排除段首段尾，扣除常数偏差后的 RMSE，2026-10-27）：身体 yaw 1.7–2.7°、pitch 0.8–1.0°、roll 3.8–8.4°；翅（平滑后）φ 6.5–10.4°、θ 10.5–13.5°、η 9.6–12.5°。改动前（不 clean、对角线法、原始值）分别约为 yaw 11–32°、φ 20–41°、θ 17–22°、η 63–111°。θ 是目前最大的缺口。
+- 已知问题：真实数据里两翅粘连（segment 低置信）占 10–19% 的帧，换向处会出现 10–16 帧的屏蔽缺口，缺口旁若恰有离群帧会把平滑曲线拉出过冲（如 009 的 1100–1120 帧）。
 
 ---
 
 ## 数据（`data/`，gitignore，详见 `data/MANIFEST.md`）
 
 - `data/ctrl_009/<mov>/f####/`：真实数据，第 1 步的输出。
-- `outputs/ctrl_009/<run>/`：16 段真实视频（valid480），已经跑完第 2–4 步，可以直接用于第 5 步和可视化。
+- `outputs/ctrl_009/<run>/`：16 段真实视频（valid480），已经跑完第 2–5 步（2026-10-21 用当时主线重跑第 3–5 步，即旧的对角线法、不 clean）。
+- `outputs/proto_wing_plate/{synth_LOW,synth_MID,synth_HIGH,real_003,real_009}/`：当前第 3–5 步（轮廓 clean + 平板法）的结果，`noclean/`、`clean/` 两套，`composite_v*_*.png` 是新旧对照图。
 - `data/synth/{LOW,MID,HIGH}/`：合成数据，包括 GT（`gt.h5`）、渲染图、自重建结果、L2 标签，用于 `eval/` 打分。
 
 ## 运行
@@ -97,11 +159,12 @@ python -m dataset.sparse_to_images  --sparse /mnt/x/<...>/Expr_009_mov_003 --cal
 python -m dataset.make_transforms   --calib <easyWand.mat> --out data/<run>
 python -m dataset.make_hull         --data data/<run> [--frames 425-905]
 python -m train.run                 --config train/configs/<run>.json
-python -m gaussians.run             --run <recon_dir>
+python -m gaussians.run             --run <recon_dir> --silhouette-clean --data data/<run>
 python -m segment.run               --run <recon_dir> --fps 16000
-python -m kinematics.run            --run <recon_dir> --up=-z
-python -m viz.view                  --run <recon_dir>
-python -m eval.synth                --trial LOW
+python -m kinematics.run            --run <recon_dir> --up=-z --fps 16000
+python -m eval.viz.export           --run <recon_dir> [<recon_dir> ...] --out outputs/viz
+python -m eval.viz.view             --data outputs/viz          # 浏览器打开 http://localhost:8765
+# python -m eval.synth              --trial LOW                 # 尚未实现
 ```
 
 ## 环境
