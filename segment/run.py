@@ -7,6 +7,7 @@
      和 confidence ∈ {high, low} 两列。
 累积窗口为 ±round(36 × fps / 16000) 帧，body 命中阈值按窗口帧数等比换算（16000 fps 时 >19 帧）；
 靠近段首、段尾的帧窗口会变短。某帧失败时删除该帧已有的 _labeled.csv。
+帧数不超过命中阈值（16000 fps 时 ≤ 19 帧）时直接报错；所有帧都失败时以非 0 退出。
 """
 from __future__ import annotations
 
@@ -44,6 +45,10 @@ def main() -> None:
         raise SystemExit(f"no *_marked.csv under {args.run / args.param_set}")
     half_window = half_window_for_fps(args.fps)
     hit_thresh = body_hit_thresh(half_window)
+    if len(paths) <= hit_thresh:
+        raise SystemExit(f"[segment] {len(paths)} frames, but a body voxel must be hit in > {hit_thresh} frames "
+                         f"of the ±{half_window}-frame window: need at least {hit_thresh + 1} consecutive frames "
+                         f"(normally ≥ {2 * half_window + 1})")
     print(f"[segment] {len(paths)} frames f{min(paths):04d}..f{max(paths):04d}, "
           f"half_window={half_window}, body hit thresh={hit_thresh}")
 
@@ -69,6 +74,8 @@ def main() -> None:
         n_low += confidence == "low"
 
     print(f"[segment] ok {len(tables) - len(failed)}/{len(tables)} (low confidence {n_low}), failed {failed}")
+    if len(failed) == len(tables):
+        raise SystemExit("[segment] every frame failed")
 
 
 if __name__ == "__main__":
